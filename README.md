@@ -1,7 +1,7 @@
 Yocto Layer for RealSense
 ============================
 This layer adds the packages necessary for adding support for Intel® RealSense cameras via [librealsense](https://github.com/IntelRealSense/librealsense) to your Ostro distribution.
-This layer adds the packages necessary for RealSense [Linux SDK](https://github.com/IntelRealSense/realsense_sdk) and Middlewares to your Ostro distribution.
+This layer also adds the packages necessary for RealSense [Linux SDK](https://github.com/IntelRealSense/realsense_sdk) and Middlewares to your Ostro distribution.
 
 
 ## Dependencies

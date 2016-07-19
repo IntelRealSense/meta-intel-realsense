@@ -1,22 +1,18 @@
 DESCRIPTION = "Linux person tracking MW binary and headers"
 SECTION="examples"
 LICENSE = "Intel"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=f235a25ae606c05d89cf485b7ab9663b"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=fe550471340e52860f40f0bb24b3a699"
 
-SRC_URI="https://s3-eu-west-1.amazonaws.com/realsense-linux/x86_64-ostro-linux-gnu/slam/librealsense_slam_binaryversion_07_01_2016.tar.gz"
-SRC_URI[md5sum] = "110236d47d43e450062fd3807a3c3932"
-SRC_URI[sha256sum] = "d3d47e221ec528cd8fc5804055329808b2e60575c12a4cefae814a279e075441"
-
-
-RDEPENDS_${PN} = " libpng12 opencv"
-PR = "r0"
+SRC_URI="https://s3-eu-west-1.amazonaws.com/realsense-linux/x86_64-ostro-linux-gnu/slam/librealsense_slamdr_20160718.tar.bz2"
+SRC_URI[md5sum] = "9e9f2e096ed4381863d92f0e780babd7"
+SRC_URI[sha256sum] = "fff467ee50fb1ff25544a3fffde62ee95237a3d9d63cbdf7cd7b0922978a0ac9"
 
 inherit pkgconfig
 
-S = "${WORKDIR}/librealsense_object_recognition_20160714"
+S = "${WORKDIR}/librealsense_slamdr_20160718"
 
 PR = "r0"
-PACKAGES = "${PN} ${PN}-dev ${PN}-dbg"
+PACKAGES = "${PN} ${PN}-dev"
 
 
 do_configure() {
@@ -29,10 +25,11 @@ do_install() {
 	oe_runmake install DESTDIR=${D}
 }
 
-FILES_${PN}="/usr/lib/*.so \ 
-	    /usr/local/OR"
+INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
+INHIBIT_PACKAGE_STRIP = "1"
 
-FILES_${PN}-dev = "/usr/include \
-  	          "
+FILES_${PN}="/usr/lib/*"
+
+FILES_${PN}-dev = "/usr/include"
 
 

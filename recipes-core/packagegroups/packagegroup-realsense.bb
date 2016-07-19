@@ -6,4 +6,5 @@ RDEPENDS_${PN} = " \
     packagegroup-librealsense \
     persontracking \
     projectionopt \
+    realsensesdk \
 "

@@ -7,4 +7,5 @@ RDEPENDS_${PN} = " \
     persontracking \
     projectionopt \
     realsensesdk \
+    slam \
 "

@@ -9,6 +9,8 @@ SRC_URI[sha256sum] = "fff467ee50fb1ff25544a3fffde62ee95237a3d9d63cbdf7cd7b092297
 
 inherit pkgconfig
 
+RDEPENDS_${PN} = "ocl-icd"
+
 S = "${WORKDIR}/librealsense_slamdr_20160718"
 
 PR = "r0"

@@ -3,9 +3,9 @@ SECTION="examples"
 LICENSE = "Intel"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=f235a25ae606c05d89cf485b7ab9663b"
 
-SRC_URI="https://s3-eu-west-1.amazonaws.com/realsense-linux/x86_64-ostro-linux-gnu/person_tracking/librealsense_persontracking_0.1_20160630.tar.xy.tar"
-SRC_URI[md5sum] = "046c2c894862a4c714fefd072928e285"
-SRC_URI[sha256sum] = "d3d47e221ec528cd8fc5804055329808b2e60575c12a4cefae814a279e075441"
+SRC_URI="https://s3-eu-west-1.amazonaws.com/realsense-linux/x86_64-ostro-linux-gnu/person_tracking/librealsense_persontracking_0.1.3_17.07.16.tar.gz"
+SRC_URI[md5sum] = "3840f752af53f2ab2277a2d61b3f9f1e"
+SRC_URI[sha256sum] = "b2eb28069f21d08ddd3d82465595606cbc2ad51ce6ca8d0c573379fe96be9158"
 
 
 RDEPENDS_${PN} = " libpng12 opencv"

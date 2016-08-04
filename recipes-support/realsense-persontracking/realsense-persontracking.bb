@@ -8,7 +8,7 @@ SRC_URI[md5sum] = "c2f689632722bcfe740ab1eb0d287dbe"
 SRC_URI[sha256sum] = "43aae99e1bf0a98f15c9d55b03f2b2d72e513c9a01bef2f22bc489be2de2d573"
 
 
-RDEPENDS_${PN} = " realsensesdk libpng12 opencv"
+RDEPENDS_${PN} = " realsense-sdk libpng12 opencv"
 PR = "r0"
 
 inherit pkgconfig

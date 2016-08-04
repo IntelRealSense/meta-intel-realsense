@@ -1,7 +1,7 @@
-DESCRIPTION = "realsensesdk package groups"
+DESCRIPTION = "realsense-sdk package groups"
 
 inherit packagegroup
 
 RDEPENDS_${PN} = " \
-    realsensesdk \
+    realsense-sdk \
 "

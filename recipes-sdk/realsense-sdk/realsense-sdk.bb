@@ -3,8 +3,8 @@ SECTION="examples"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=4151db0f01967ef808d8b232acf49628"
 
-SRC_URI="git://github.com/IntelRealSense/realsense_sdk.git;branch=development"
-SRCREV="d85713b8246e9d2f147cd1a5c07a0951a32ea09c"
+SRC_URI="git://github.com/IntelRealSense/realsense_sdk.git;branch=master"
+SRCREV="e5388b61cb9b6627ec2d9d04d2285c2694c6f062"
 
 DEPENDS="librealsense log4cxx gtest iotivity opencv"
 RDEPENDS_${PN}= "librealsense opencv gtest"

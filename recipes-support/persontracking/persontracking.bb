@@ -8,29 +8,26 @@ SRC_URI[md5sum] = "c2f689632722bcfe740ab1eb0d287dbe"
 SRC_URI[sha256sum] = "43aae99e1bf0a98f15c9d55b03f2b2d72e513c9a01bef2f22bc489be2de2d573"
 
 
-RDEPENDS_${PN} = " libpng12 opencv"
+RDEPENDS_${PN} = " realsensesdk libpng12 opencv"
 PR = "r0"
 
 inherit pkgconfig
 
-S = "${WORKDIR}/ostro"
+S = "${WORKDIR}/git"
 
 PR = "r0"
 PACKAGES = "${PN} ${PN}-dev ${PN}-dbg"
-
-
-do_configure() {
-}
 
 do_compile() {
 }
 
 do_install() {
-	oe_runmake install DESTDIR=${D}
+	oe_runmake install DESTDIR=${D} LINUX_DISTRIBUTION=yocto
 }
 
-FILES_${PN}="/usr/lib/*.so \ 
-	    /usr/local/persontracking"
+FILES_${PN}="/usr/lib/*.so \
+	    /usr/local/persontracking \
+	    /usr/share/librealsense"
 
 FILES_${PN}-dev = "/usr/include \
   	          "

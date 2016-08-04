@@ -4,8 +4,8 @@ LICENSE = "Intel"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=f235a25ae606c05d89cf485b7ab9663b"
 
 SRC_URI="https://s3-eu-west-1.amazonaws.com/realsense-linux/x86_64-ostro-linux-gnu/object_recognition/librealsense_object_recognition_20160803.tar.bz2"
-SRC_URI[md5sum] = "110236d47d43e450062fd3807a3c3932"
-SRC_URI[sha256sum] = "87a2a277ed3628f5a34f030c89f1eeb55783fdebff56f62124e7ccf5f149fbea"
+SRC_URI[md5sum] = "c771ed6c7cccef135d079e0d67f0ecd1"
+SRC_URI[sha256sum] = "aed44430262d1d27e2d3860b0ec9fd8b092fa0d13aee51c9b2310b6f836a1b0d"
 
 inherit pkgconfig
 

@@ -13,7 +13,7 @@ PR = "r0"
 
 inherit pkgconfig
 
-S = "${WORKDIR}/ostro"
+S = "${WORKDIR}"
 
 PR = "r0"
 PACKAGES = "${PN} ${PN}-dev ${PN}-dbg"

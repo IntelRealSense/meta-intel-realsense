@@ -22,11 +22,12 @@ do_compile() {
 }
 
 do_install() {
-	oe_runmake install DESTDIR=${D}
+	oe_runmake install DESTDIR=${D} LINUX_DISTRIBUTION=yocto
 }
 
 FILES_${PN}="/usr/lib/*.so \ 
-	    /usr/local/OR"
+	    /usr/local/object_recognition \
+	    /usr/share/librealsense"
 
 FILES_${PN}-dev = "/usr/include \
   	          "

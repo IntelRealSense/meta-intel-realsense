@@ -14,6 +14,7 @@ S = "${WORKDIR}/librealsense_object_recognition_20160803"
 INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
 INHIBIT_PACKAGE_STRIP = "1"
 
+RDEPENDS_${PN} = " libopencv-imgproc libopencv-highgui libopencv-core protobuf boost-system zlib boost-filesystem boost-thread libopencv-video libopencv-imgcodecs"
 PR = "r0"
 PACKAGES = "${PN} ${PN}-dev ${PN}-dbg"
 

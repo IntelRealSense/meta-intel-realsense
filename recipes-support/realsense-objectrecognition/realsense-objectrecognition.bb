@@ -1,7 +1,7 @@
 DESCRIPTION = "Linux object recognition MW binary and headers"
 SECTION="examples"
 LICENSE = "Intel"
-LIC_FILES_CHKSUM = "file://LICENSE.pdf;md5=c36402458f1ce36eb23408ee1ec1bdc9"
+LIC_FILES_CHKSUM = "file://LICENCE.pdf;md5=c36402458f1ce36eb23408ee1ec1bdc9"
 
 SRC_URI="https://s3-eu-west-1.amazonaws.com/realsense-linux/x86_64-ostro-linux-gnu/object_recognition/librealsense_object_recognition_20160803.tar.bz2"
 SRC_URI[md5sum] = "c771ed6c7cccef135d079e0d67f0ecd1"

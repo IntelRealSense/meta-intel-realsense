@@ -25,7 +25,7 @@ do_install() {
 	oe_runmake install DESTDIR=${D} LINUX_DISTRIBUTION=yocto
 }
 
-FILES_${PN}="/usr/lib/*.so \ 
+FILES_${PN}="/usr/lib \
 	    /usr/local/object_recognition \
 	    /usr/share/librealsense"
 

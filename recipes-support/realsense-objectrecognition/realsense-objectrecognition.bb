@@ -11,6 +11,9 @@ inherit pkgconfig
 
 S = "${WORKDIR}/librealsense_object_recognition_20160803"
 
+INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
+INHIBIT_PACKAGE_STRIP = "1"
+
 PR = "r0"
 PACKAGES = "${PN} ${PN}-dev ${PN}-dbg"
 

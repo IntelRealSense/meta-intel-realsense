@@ -11,8 +11,8 @@ RDEPENDS_${PN}-graphical-examples = "libgl-mesa librealsense"
 RDEPENDS_${PN}-tests = "librealsense"
 
 SRC_URI = "https://github.com/IntelRealSense/librealsense/archive/v${PV}.tar.gz"
-SRC_URI[md5sum] = "efaad7fe0815a38331d9dd197de795fc"
-SRC_URI[sha256sum] = "95f074e6ea356f0ae3aa448a5e4666a702621ecc4b88b645e19c50c9239adcb5"
+SRC_URI[md5sum] = "598baaccfda193ddf796312cc1edcddc"
+SRC_URI[sha256sum] = "931ea66f67fe782f512e27d1361371719191497d54d4ba5725051991387c20c5"
 
 PR = "r0"
 
@@ -32,7 +32,9 @@ EXTRA_OEMAKE = "\
 
 do_install () {
 	install -d "${D}${bindir}"
-	install -m 755 ${S}/bin/* ${D}${bindir}
+	install -m 755 ${S}/bin/c-* ${D}${bindir}
+	install -m 755 ${S}/bin/cpp-* ${D}${bindir}
+	install -m 755 ${S}/bin/tests/* ${D}${bindir}
 
 	install -d "${D}${libdir}"
 	install -m 0644 ${S}/lib/librealsense.so ${D}${libdir}
@@ -49,11 +51,13 @@ PACKAGES = "${PN} ${PN}-dbg ${PN}-dev ${PN}-examples ${PN}-graphical-examples ${
 
 FILES_${PN} = "${libdir}/* ${sysconfdir}/udev/rules.d/*"
 FILES_${PN}-dev += "${includedir}/${PN}"
+
 FILES_${PN}-examples += "\
 	${bindir}/cpp-enumerate-devices \
 	${bindir}/cpp-headless \
 	${bindir}/cpp-motion-module \
 	${bindir}/cpp-callback \
+	${bindir}/cpp-mm-fw-update \
 "
 
 FILES_${PN}-graphical-examples += "\
@@ -64,8 +68,6 @@ FILES_${PN}-graphical-examples += "\
 	${bindir}/cpp-callback-2 \
 	${bindir}/cpp-capture \
 	${bindir}/cpp-config-ui \
-	${bindir}/cpp-multi-threading-1 \
-	${bindir}/cpp-multi-threading-2 \
 	${bindir}/cpp-multicam \
 	${bindir}/cpp-pointcloud \
 	${bindir}/cpp-restart \
@@ -76,10 +78,12 @@ FILES_${PN}-graphical-examples += "\
 "
 
 FILES_${PN}-tests += "\
-	${bindir}/unit-tests-live-f200 \
-	${bindir}/unit-tests-live-r200 \
-	${bindir}/unit-tests-live-sr300 \
-	${bindir}/unit-tests-offline \
+	${bindir}/F200-live-test \
+	${bindir}/LR200-live-test \
+	${bindir}/offline-test \
+	${bindir}/R200-live-test \
+	${bindir}/SR300-live-test \
+	${bindir}/ZR300-live-test \
 "
 
 # Configuration is not required

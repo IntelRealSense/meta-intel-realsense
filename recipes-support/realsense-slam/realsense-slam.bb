@@ -3,15 +3,15 @@ SECTION="examples"
 LICENSE = "Intel"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=fe550471340e52860f40f0bb24b3a699"
 
-SRC_URI="https://s3-eu-west-1.amazonaws.com/realsense-linux/x86_64-ostro-linux-gnu/slam/librealsense_slamdr_20160718.tar.bz2"
-SRC_URI[md5sum] = "9e9f2e096ed4381863d92f0e780babd7"
-SRC_URI[sha256sum] = "fff467ee50fb1ff25544a3fffde62ee95237a3d9d63cbdf7cd7b0922978a0ac9"
+SRC_URI="https://s3-eu-west-1.amazonaws.com/realsense-linux/x86_64-ostro-linux-gnu/slam/librealsense_slam_20160830.tar.bz2"
+SRC_URI[md5sum] = "d211550fa906774fbe45676fe6867f34"
+SRC_URI[sha256sum] = "54f7ccdb4192c7eecefdafc167068a66e08e9e7720931016126ef72685ab5aff"
 
 inherit pkgconfig
 
-RDEPENDS_${PN} = "ocl-icd"
+RDEPENDS_${PN} = "ocl-icd opencv"
 
-S = "${WORKDIR}/librealsense_slamdr_20160718"
+S = "${WORKDIR}/librealsense_slam_20160830"
 
 PR = "r0"
 PACKAGES = "${PN} ${PN}-dev"

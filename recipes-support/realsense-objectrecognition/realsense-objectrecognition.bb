@@ -3,13 +3,13 @@ SECTION="examples"
 LICENSE = "Intel"
 LIC_FILES_CHKSUM = "file://LICENSE.md;md5=83f213feb5545ba55f98e2c4c9da3e03"
 
-SRC_URI="https://s3-eu-west-1.amazonaws.com/realsense-linux/x86_64-ostro-linux-gnu/object_recognition/librealsense_object_recognition_20160815.tar.bz2"
-SRC_URI[md5sum] = "6293c69bdbecb3103ac2cd2014a51efb"
-SRC_URI[sha256sum] = "1f01b7a3984a8d06f96c387dcd338226b253769ecc922e79585e8076fae371b7"
+SRC_URI="https://s3-eu-west-1.amazonaws.com/realsense-linux/x86_64-ostro-linux-gnu/object_recognition/librealsense_object_recognition_20160830.tar.bz2"
+SRC_URI[md5sum] = "38010b062046b90f51668a4163ad6e7c"
+SRC_URI[sha256sum] = "8581a471d03e4beefb812ebf18e6e925c6a21bc8f135011113bc852a47b82981"
 
 inherit pkgconfig
 
-S = "${WORKDIR}/librealsense_object_recognition_20160815"
+S = "${WORKDIR}/librealsense_object_recognition_20160830"
 
 INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
 INHIBIT_PACKAGE_STRIP = "1"
@@ -24,7 +24,7 @@ do_compile() {
 
 do_install() {
 	install -d "${D}${libdir}"
-    	install -m 0644 ${S}/lib/* ${D}${libdir}
+	install -m 0644 ${S}/lib/* ${D}${libdir}
 
         mkdir -p "${D}/usr/share/librealsense/object_recognition"
         install -m 0644 ${S}/classifiers/* ${D}/usr/share/librealsense/object_recognition
@@ -36,6 +36,7 @@ do_install() {
 }
 
 FILES_${PN} += "/usr/lib/libgrabber.so \
+    /usr/lib/libobject_recognition.so \
     /usr/lib/libcore.so \
     /usr/lib/libstereoMatching.so \
     /usr/lib/libomekcv.so \

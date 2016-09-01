@@ -26,13 +26,13 @@ do_install() {
 	install -d "${D}${libdir}"
 	install -m 0644 ${S}/lib/* ${D}${libdir}
 
-        mkdir -p "${D}/usr/share/librealsense/object_recognition"
-        install -m 0644 ${S}/classifiers/* ${D}/usr/share/librealsense/object_recognition
+    mkdir -p "${D}/usr/share/librealsense/object_recognition"
+    install -m 0644 ${S}/classifiers/* ${D}/usr/share/librealsense/object_recognition
 
-        mkdir -p "${D}${includedir}/librealsense/object_recognition"
-        install -m 0644 ${S}/include/* ${D}/usr/share/librealsense/object_recognition
+    mkdir -p "${D}${includedir}/librealsense/object_recognition"
+    install -m 0644 ${S}/include/* ${D}/usr/include/librealsense/object_recognition
 
-        ln -sf libcaffe.so.1.0.0-rc3 ${D}${libdir}/libcaffe.so
+    ln -sf libcaffe.so.1.0.0-rc3 ${D}${libdir}/libcaffe.so
 }
 
 FILES_${PN} += "/usr/lib/libgrabber.so \

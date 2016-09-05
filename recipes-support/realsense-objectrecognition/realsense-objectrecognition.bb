@@ -14,9 +14,10 @@ S = "${WORKDIR}/librealsense_object_recognition_20160830"
 INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
 INHIBIT_PACKAGE_STRIP = "1"
 
-RDEPENDS_${PN} = " libopencv-imgproc libopencv-highgui libopencv-core protobuf boost-system zlib boost-filesystem boost-thread libopencv-video libopencv-imgcodecs"
+RDEPENDS_${PN} = " libunwind libopencv-imgproc libopencv-highgui libopencv-core protobuf boost-system zlib boost-filesystem boost-thread libopencv-video libopencv-imgcodecs"
 PR = "r0"
 PACKAGES = "${PN} ${PN}-dev ${PN}-dbg"
+
 
 
 do_compile() {
@@ -24,7 +25,10 @@ do_compile() {
 
 do_install() {
 	install -d "${D}${libdir}"
-	install -m 0644 ${S}/lib/* ${D}${libdir}
+	install -m 0644 ${S}/lib/libcaffe.so.1.0.0-rc3 ${D}${libdir}
+	install -m 0644 ${S}/lib/libgflags.so.2.2 ${D}${libdir}
+	install -m 0644 ${S}/lib/libglog.so.0 ${D}${libdir}
+	install -m 0644 ${S}/lib/libobject_recognition.so ${D}${libdir}
 
     mkdir -p "${D}/usr/share/librealsense/object_recognition"
     install -m 0644 ${S}/classifiers/* ${D}/usr/share/librealsense/object_recognition

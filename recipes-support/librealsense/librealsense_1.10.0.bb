@@ -11,8 +11,8 @@ RDEPENDS_${PN}-graphical-examples = "libgl-mesa librealsense"
 RDEPENDS_${PN}-tests = "librealsense"
 
 SRC_URI = "https://github.com/IntelRealSense/librealsense/archive/v${PV}.tar.gz"
-SRC_URI[md5sum] = "598baaccfda193ddf796312cc1edcddc"
-SRC_URI[sha256sum] = "931ea66f67fe782f512e27d1361371719191497d54d4ba5725051991387c20c5"
+SRC_URI[md5sum] = "2e32980fe2578d18c67afb0d5daed049"
+SRC_URI[sha256sum] = "0364a3265a232874b0ccffcb3a534e05dde3f6dfc20a7c288ffdd0b11d82f2ce"
 
 PR = "r0"
 

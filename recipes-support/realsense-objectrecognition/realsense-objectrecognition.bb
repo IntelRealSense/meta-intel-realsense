@@ -3,18 +3,18 @@ SECTION="examples"
 LICENSE = "Intel"
 LIC_FILES_CHKSUM = "file://LICENSE.md;md5=83f213feb5545ba55f98e2c4c9da3e03"
 
-SRC_URI="https://s3-eu-west-1.amazonaws.com/realsense-linux/x86_64-ostro-linux-gnu/object_recognition/librealsense_object_recognition_20160830.tar.bz2"
-SRC_URI[md5sum] = "38010b062046b90f51668a4163ad6e7c"
-SRC_URI[sha256sum] = "8581a471d03e4beefb812ebf18e6e925c6a21bc8f135011113bc852a47b82981"
+SRC_URI="https://s3-eu-west-1.amazonaws.com/realsense-linux/x86_64-ostro-linux-gnu/object_recognition/librealsense_objectrecognition20160907.tar.bz2"
+SRC_URI[md5sum] = "877ee9aac3ec2a4c0779d297f5ddb234"
+SRC_URI[sha256sum] = "27b831b1d2b8ae6828e08aeb6673caaa5ee7b75d26d92783c74d170ffbe78671"
 
 inherit pkgconfig
 
-S = "${WORKDIR}/librealsense_object_recognition_20160830"
+S = "${WORKDIR}/librealsense_objectrecognition"
 
 INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
 INHIBIT_PACKAGE_STRIP = "1"
 
-RDEPENDS_${PN} = " libunwind libopencv-imgproc libopencv-highgui libopencv-core protobuf boost-system zlib boost-filesystem boost-thread libopencv-video libopencv-imgcodecs"
+RDEPENDS_${PN} = " libopencv-imgproc libopencv-highgui libopencv-core protobuf boost-system zlib boost-filesystem boost-thread libopencv-video libopencv-imgcodecs"
 PR = "r0"
 PACKAGES = "${PN} ${PN}-dev ${PN}-dbg"
 
@@ -25,10 +25,7 @@ do_compile() {
 
 do_install() {
 	install -d "${D}${libdir}"
-	install -m 0644 ${S}/lib/libcaffe.so.1.0.0-rc3 ${D}${libdir}
-	install -m 0644 ${S}/lib/libgflags.so.2.2 ${D}${libdir}
-	install -m 0644 ${S}/lib/libglog.so.0 ${D}${libdir}
-	install -m 0644 ${S}/lib/libobject_recognition.so ${D}${libdir}
+	install -m 0644 ${S}/lib/ostro/* ${D}${libdir}
 
     mkdir -p "${D}/usr/share/librealsense/object_recognition"
     install -m 0644 ${S}/classifiers/* ${D}/usr/share/librealsense/object_recognition

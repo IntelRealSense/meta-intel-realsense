@@ -3,15 +3,15 @@ SECTION="examples"
 LICENSE = "Intel"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=fe550471340e52860f40f0bb24b3a699"
 
-SRC_URI="https://s3-eu-west-1.amazonaws.com/realsense-linux/x86_64-ostro-linux-gnu/slam/librealsense_slam_20160830.tar.bz2"
-SRC_URI[md5sum] = "d211550fa906774fbe45676fe6867f34"
-SRC_URI[sha256sum] = "54f7ccdb4192c7eecefdafc167068a66e08e9e7720931016126ef72685ab5aff"
+SRC_URI="https://s3-eu-west-1.amazonaws.com/realsense-linux/x86_64-ostro-linux-gnu/slam/librealsense_slam_20160906.tar.bz2"
+SRC_URI[md5sum] = "2380b52f05789c139365f516edbc05a0"
+SRC_URI[sha256sum] = "14e8470e554143423399a53a9125ce912030b7ea1e23b7528548d50c7bc65d5d"
 
 inherit pkgconfig
 
 RDEPENDS_${PN} = "ocl-icd opencv"
 
-S = "${WORKDIR}/librealsense_slam_20160830"
+S = "${WORKDIR}/librealsense_slam"
 
 PR = "r0"
 PACKAGES = "${PN} ${PN}-dev"
@@ -24,7 +24,7 @@ do_compile() {
 }
 
 do_install() {
-	oe_runmake install DESTDIR=${D}
+	oe_runmake install DESTDIR=${D} LINUX_DISTRIBUTION=yocto
 }
 
 INHIBIT_PACKAGE_DEBUG_SPLIT = "1"

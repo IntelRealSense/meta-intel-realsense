@@ -1,7 +1,7 @@
 DESCRIPTION = "Linux person tracking MW binary and headers"
 SECTION="examples"
 LICENSE = "Intel"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=fe550471340e52860f40f0bb24b3a699"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=f7c23b289a820d06b7c0ba8064f70fd8"
 
 SRC_URI="https://s3-eu-west-1.amazonaws.com/realsense-linux/x86_64-ostro-linux-gnu/slam/librealsense_slam_20160908.tar.bz2"
 SRC_URI[md5sum] = "044b593bd6b9dcee3eefe76808a8a596"

@@ -1,11 +1,11 @@
 DESCRIPTION = "Linux person tracking MW binary and headers"
 SECTION="examples"
 LICENSE = "Intel"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=f7c23b289a820d06b7c0ba8064f70fd8"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=c3a7207e0adf283763469a41486cd4f5"
 
-SRC_URI="https://s3-eu-west-1.amazonaws.com/realsense-linux/x86_64-ostro-linux-gnu/slam/librealsense_slam_20160908.tar.bz2"
-SRC_URI[md5sum] = "044b593bd6b9dcee3eefe76808a8a596"
-SRC_URI[sha256sum] = "5319d2cd3346dded09429d8a75c562f2594aa3f7bb78e6944b0b547d25e37138"
+SRC_URI="https://s3-eu-west-1.amazonaws.com/realsense-linux/x86_64-ostro-linux-gnu/slam/librealsense_slam_20160914.tar.bz2"
+SRC_URI[md5sum] = "17ce4c5f89861b56d04caa5a3db86860"
+SRC_URI[sha256sum] = "2a15d71044ea7e5a05bd4f4aa8924af5190fc93dc20d2d4030b4d3410672376f"
 
 inherit pkgconfig
 

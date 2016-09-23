@@ -10,7 +10,10 @@ RDEPENDS_${PN}-examples = "librealsense"
 RDEPENDS_${PN}-graphical-examples = "libgl-mesa librealsense"
 RDEPENDS_${PN}-tests = "librealsense"
 
-SRC_URI = "https://github.com/IntelRealSense/librealsense/archive/v${PV}.tar.gz"
+SRC_URI = " \
+  https://github.com/IntelRealSense/librealsense/archive/v${PV}.tar.gz \
+  file://0001-Make-use-of-LDFLAGS.patch \
+  "
 SRC_URI[md5sum] = "2e32980fe2578d18c67afb0d5daed049"
 SRC_URI[sha256sum] = "0364a3265a232874b0ccffcb3a534e05dde3f6dfc20a7c288ffdd0b11d82f2ce"
 
@@ -28,6 +31,7 @@ EXTRA_OEMAKE = "\
     'CXX=${CXX}' \
     'CFLAGS=${CFLAGS} -std=c11 -fPIC -pedantic -DRS_USE_$(BACKEND)_BACKEND $(LIBUSB_FLAGS)' \
     'CXXFLAGS=${CXXFLAGS} -std=c++11 -fPIC -pedantic -mssse3 -O3 -Wno-missing-field-initializers -Wno-switch -Wno-multichar -DRS_USE_$(BACKEND)_BACKEND $(LIBUSB_FLAGS)' \
+    'LDFLAGS=${LDFLAGS}' \
 "
 
 do_install () {

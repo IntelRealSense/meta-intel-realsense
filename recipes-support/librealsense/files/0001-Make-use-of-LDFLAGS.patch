@@ -1,0 +1,43 @@
+From 42f7e9b359a2704372fa0d6278086f0cac010535 Mon Sep 17 00:00:00 2001
+From: Amarnath Valluri <amarnath.valluri@intel.com>
+Date: Tue, 27 Sep 2016 14:36:23 +0300
+Subject: [PATCH] Make use of LDFLAGS
+
+Upstream-status:Not-Submitted[Upstream is moving to cmake build]
+
+Signed-off-by: Amarnath Valluri <amarnath.valluri@intel.com>
+---
+ Makefile | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 27f1f39..4224624 100644
+--- a/Makefile
++++ b/Makefile
+@@ -93,14 +93,14 @@ obj obj/libuvc lib bin:
+ 
+ # Rules for building the sample programs
+ bin/c-%: examples/c-%.c lib/librealsense.so | bin
+-	$(CC) $< $(REALSENSE_FLAGS) $(GLFW3_FLAGS) -o $@
++	$(CC) $< $(REALSENSE_FLAGS) $(GLFW3_FLAGS) $(LDFLAGS) -o $@
+ 
+ bin/cpp-%: examples/cpp-%.cpp lib/librealsense.so | bin
+-	$(CXX) $< -std=c++11 $(REALSENSE_FLAGS) $(GLFW3_FLAGS) -o $@
++	$(CXX) $< -std=c++11 $(REALSENSE_FLAGS) $(GLFW3_FLAGS) $(LDFLAGS) -o $@
+ 
+ # Rules for building the library itself
+ lib/librealsense.so: $(OBJECTS) | lib
+-	$(CXX) -std=c++11 -shared $(OBJECTS) $(LIBUSB_FLAGS) -o $@
++	$(CXX) -std=c++11 -shared $(OBJECTS) $(LIBUSB_FLAGS) $(LDFLAGS) -o $@
+ 
+ lib/librealsense.a: $(OBJECTS) | lib
+ 	ar rvs $@ `find obj/ -name "*.o"`
+@@ -124,4 +124,4 @@ obj/verify.o: src/verify.c | obj
+ all-tests: F200-live-test LR200-live-test R200-live-test SR300-live-test ZR300-live-test offline-test
+ 
+ %-test: unit-tests/* lib/librealsense.so
+-	$(CXX) unit-tests/*.cpp -std=c++11 -o bin/tests/$@ -D$(if $(findstring live,$@),LIVE_TEST,OFFLINE_TEST) -D$(firstword $(subst -, ,$@))_TEST -DMAKEFILE $(REALSENSE_FLAGS)
++	$(CXX) unit-tests/*.cpp -std=c++11 -o bin/tests/$@ -D$(if $(findstring live,$@),LIVE_TEST,OFFLINE_TEST) -D$(firstword $(subst -, ,$@))_TEST -DMAKEFILE $(REALSENSE_FLAGS) $(LDFLAGS)
+-- 
+2.5.0
+

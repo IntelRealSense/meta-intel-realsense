@@ -1,0 +1,260 @@
+From 6a2e988e7655b55b9280a442eb713362abfb97b5 Mon Sep 17 00:00:00 2001
+From: Scott Ware <scott.r.ware@intel.com>
+Date: Fri, 19 Aug 2016 16:43:35 +0100
+Subject: [PATCH 1/2] Add support for RealSense camera formats
+
+Signed-off-by: Scott Ware <scott.r.ware@intel.com>
+---
+ drivers/media/usb/uvc/uvc_driver.c | 80 ++++++++++++++++++++++++++++++++++++++
+ drivers/media/usb/uvc/uvcvideo.h   | 68 +++++++++++++++++++++++++++-----
+ include/uapi/linux/videodev2.h     | 19 +++++++--
+ 3 files changed, 154 insertions(+), 13 deletions(-)
+
+diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
+index 4531441..3995e2e 100644
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -122,6 +122,86 @@ static struct uvc_format_desc uvc_fmts[] = {
+ 		.guid		= UVC_GUID_FORMAT_H264,
+ 		.fcc		= V4L2_PIX_FMT_H264,
+ 	},
++	{
++		.name		= "Greyscale 8 L/R (Y8I)",
++		.guid		= UVC_GUID_FORMAT_Y8I,
++		.fcc		= V4L2_PIX_FMT_Y8I,
++	},
++	{
++		.name		= "Greyscale 12 L/R (Y12I)",
++		.guid		= UVC_GUID_FORMAT_Y12I,
++		.fcc		= V4L2_PIX_FMT_Y12I,
++	},
++	{
++		.name		= "Depth data 16-bit (Z16)",
++		.guid		= UVC_GUID_FORMAT_Z16,
++		.fcc		= V4L2_PIX_FMT_Z16,
++	},
++	{
++		.name		= "Bayer 10-bit (SRGGB10P)",
++		.guid		= UVC_GUID_FORMAT_RW10,
++		.fcc		= V4L2_PIX_FMT_SRGGB10P,
++	},
++	{
++		.name		= "Raw data 8-bit (RAW8)",
++		.guid		= UVC_GUID_FORMAT_RAW8,
++		.fcc		= V4L2_PIX_FMT_RAW8,
++	},
++	{
++		.name		= "Raw data 10-bit (RW10)",
++		.guid		= UVC_GUID_FORMAT_RW10,
++		.fcc		= V4L2_PIX_FMT_RW10,
++	},
++	{
++		.name		= "Raw data 10-bit (RW16)",
++		.guid		= UVC_GUID_FORMAT_RW16,
++		.fcc		= V4L2_PIX_FMT_RW16,
++	},
++	{
++		.name		= "Depth 16-bit (INVZ)",
++		.guid		= UVC_GUID_FORMAT_INVZ,
++		.fcc		= V4L2_PIX_FMT_INVZ,
++	},
++	{
++		.name		= "Depth:IR 16:8 24-bit (INZI)",
++		.guid		= UVC_GUID_FORMAT_INZI,
++		.fcc		= V4L2_PIX_FMT_INZI,
++	},
++	{
++		.name		= "Depth 16-bit (INVR)",
++		.guid		= UVC_GUID_FORMAT_INVR,
++		.fcc		= V4L2_PIX_FMT_INVR,
++	},
++	{
++		.name		= "Depth:IR 16:8 24-bit (INRI)",
++		.guid		= UVC_GUID_FORMAT_INRI,
++		.fcc		= V4L2_PIX_FMT_INRI,
++	},
++	{
++		.name		= "Infrared 8-bit (INVI)",
++		.guid		= UVC_GUID_FORMAT_INVI,
++		.fcc		= V4L2_PIX_FMT_INVI,
++	},
++	{
++		.name		= "FlickerIR 8-bit (RELI)",
++		.guid		= UVC_GUID_FORMAT_RELI,
++		.fcc		= V4L2_PIX_FMT_RELI,
++	},
++	{
++		.name		= "Luminosity data 8-bit (L8)",
++		.guid		= UVC_GUID_FORMAT_L8,
++		.fcc		= V4L2_PIX_FMT_Y8,
++	},
++	{
++		.name		= "Luminosity data 16-bit (L16)",
++		.guid		= UVC_GUID_FORMAT_L16,
++		.fcc		= V4L2_PIX_FMT_Y16,
++	},
++	{
++		.name		= "Depth data 16-bit (D16)",
++		.guid		= UVC_GUID_FORMAT_D16,
++		.fcc		= V4L2_PIX_FMT_Z16,
++	},
+ };
+ 
+ /* ------------------------------------------------------------------------
+diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
+index 9e35982..684446c 100644
+--- a/drivers/media/usb/uvc/uvcvideo.h
++++ b/drivers/media/usb/uvc/uvcvideo.h
+@@ -76,6 +76,31 @@
+ #define UVC_GUID_FORMAT_UYVY \
+ 	{ 'U',  'Y',  'V',  'Y', 0x00, 0x00, 0x10, 0x00, \
+ 	 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71}
++#define UVC_GUID_FORMAT_BY8 \
++	{ 'B',  'Y',  '8',  ' ', 0x00, 0x00, 0x10, 0x00, \
++	 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71}
++#define UVC_GUID_FORMAT_RGBP \
++	{ 'R',  'G',  'B',  'P', 0x00, 0x00, 0x10, 0x00, \
++	 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71}
++#define UVC_GUID_FORMAT_M420 \
++	{ 'M',  '4',  '2',  '0', 0x00, 0x00, 0x10, 0x00, \
++	 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71}
++
++#define UVC_GUID_FORMAT_H264 \
++	{ 'H',  '2',  '6',  '4', 0x00, 0x00, 0x10, 0x00, \
++	 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71}
++#define UVC_GUID_FORMAT_Y8I \
++	{ 'Y',  '8',  'I',  ' ', 0x00, 0x00, 0x10, 0x00, \
++	 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71}
++#define UVC_GUID_FORMAT_Y12I \
++	{ 'Y',  '1',  '2',  'I', 0x00, 0x00, 0x10, 0x00, \
++	 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71}
++#define UVC_GUID_FORMAT_Z16 \
++	{ 'Z',  '1',  '6',  ' ', 0x00, 0x00, 0x10, 0x00, \
++	 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71}
++#define UVC_GUID_FORMAT_RW10 \
++	{ 'R',  'W',  '1',  '0', 0x00, 0x00, 0x10, 0x00, \
++	 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71}
+ #define UVC_GUID_FORMAT_Y800 \
+ 	{ 'Y',  '8',  '0',  '0', 0x00, 0x00, 0x10, 0x00, \
+ 	 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71}
+@@ -91,18 +116,41 @@
+ #define UVC_GUID_FORMAT_Y16 \
+ 	{ 'Y',  '1',  '6',  ' ', 0x00, 0x00, 0x10, 0x00, \
+ 	 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71}
+-#define UVC_GUID_FORMAT_BY8 \
+-	{ 'B',  'Y',  '8',  ' ', 0x00, 0x00, 0x10, 0x00, \
++#define UVC_GUID_FORMAT_RAW8 \
++    { 'R',  'A',  'W',  '8', 0x66, 0x1a, 0x42, 0xa2, \
++     0x90, 0x65, 0xd0, 0x18, 0x14, 0xa8, 0xef, 0x8a}
++#define UVC_GUID_FORMAT_RW10 \
++    { 'R',  'W',  '1',  '0', 0x00, 0x00, 0x10, 0x00, \
++     0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71}
++#define UVC_GUID_FORMAT_RW16 \
++    { 'R',  'W',  '1',  '6', 0x00, 0x00, 0x10, 0x00, \
++     0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71}
++#define UVC_GUID_FORMAT_INVZ \
++	{ 'I',  'N',  'V',  'Z', 0x90, 0x2d, 0x58, 0x4a, \
++	 0x92, 0x0b, 0x77, 0x3f, 0x1f, 0x2c, 0x55, 0x6b}
++#define UVC_GUID_FORMAT_INZI \
++	{ 'I',  'N',  'Z',  'I', 0x66, 0x1a, 0x42, 0xa2, \
++	 0x90, 0x65, 0xd0, 0x18, 0x14, 0xa8, 0xef, 0x8a}
++#define UVC_GUID_FORMAT_INVR \
++	{ 'I',  'N',  'V',  'R', 0x90, 0x2d, 0x58, 0x4a, \
++	 0x92, 0x0b, 0x77, 0x3f, 0x1f, 0x2c, 0x55, 0x6b}
++#define UVC_GUID_FORMAT_INRI \
++	{ 'I',  'N',  'R',  'I', 0x90, 0x2d, 0x58, 0x4a, \
++	 0x92, 0x0b, 0x77, 0x3f, 0x1f, 0x2c, 0x55, 0x6b}
++#define UVC_GUID_FORMAT_INVI \
++	{ 'I',  'N',  'V',  'I', 0xdb, 0x57, 0x49, 0x5e, \
++	 0x8e, 0x3f, 0xf4, 0x79, 0x53, 0x2b, 0x94, 0x6f}
++#define UVC_GUID_FORMAT_RELI \
++	{ 'R',  'E',  'L',  'I', 0x14, 0x13, 0x43, 0xf9, \
++	 0xa7, 0x5a, 0xee, 0x6b, 0xbf, 0x01, 0x2e, 0x23}
++#define UVC_GUID_FORMAT_L8 \
++	{ '2', 0x00,  0x00,  0x00, 0x00, 0x00, 0x10, 0x00, \
+ 	 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71}
+-#define UVC_GUID_FORMAT_RGBP \
+-	{ 'R',  'G',  'B',  'P', 0x00, 0x00, 0x10, 0x00, \
++#define UVC_GUID_FORMAT_L16 \
++	{ 'Q', 0x00,  0x00,  0x00, 0x00, 0x00, 0x10, 0x00, \
+ 	 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71}
+-#define UVC_GUID_FORMAT_M420 \
+-	{ 'M',  '4',  '2',  '0', 0x00, 0x00, 0x10, 0x00, \
+-	 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71}
+-
+-#define UVC_GUID_FORMAT_H264 \
+-	{ 'H',  '2',  '6',  '4', 0x00, 0x00, 0x10, 0x00, \
++#define UVC_GUID_FORMAT_D16 \
++	{ 'P', 0x00,  0x00,  0x00, 0x00, 0x00, 0x10, 0x00, \
+ 	 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71}
+ 
+ /* ------------------------------------------------------------------------
+diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
+index c9e51c2..46c59ed 100644
+--- a/include/uapi/linux/videodev2.h
++++ b/include/uapi/linux/videodev2.h
+@@ -303,9 +303,6 @@ struct v4l2_pix_format {
+ #define V4L2_PIX_FMT_GREY    v4l2_fourcc('G', 'R', 'E', 'Y') /*  8  Greyscale     */
+ #define V4L2_PIX_FMT_Y4      v4l2_fourcc('Y', '0', '4', ' ') /*  4  Greyscale     */
+ #define V4L2_PIX_FMT_Y6      v4l2_fourcc('Y', '0', '6', ' ') /*  6  Greyscale     */
+-#define V4L2_PIX_FMT_Y10     v4l2_fourcc('Y', '1', '0', ' ') /* 10  Greyscale     */
+-#define V4L2_PIX_FMT_Y12     v4l2_fourcc('Y', '1', '2', ' ') /* 12  Greyscale     */
+-#define V4L2_PIX_FMT_Y16     v4l2_fourcc('Y', '1', '6', ' ') /* 16  Greyscale     */
+ 
+ /* Grey bit-packed formats */
+ #define V4L2_PIX_FMT_Y10BPACK    v4l2_fourcc('Y', '1', '0', 'B') /* 10  Greyscale bit-packed */
+@@ -430,6 +427,22 @@ struct v4l2_pix_format {
+ #define V4L2_PIX_FMT_JPGL	v4l2_fourcc('J', 'P', 'G', 'L') /* JPEG-Lite */
+ #define V4L2_PIX_FMT_SE401      v4l2_fourcc('S', '4', '0', '1') /* se401 janggu compressed rgb */
+ #define V4L2_PIX_FMT_S5C_UYVY_JPG v4l2_fourcc('S', '5', 'C', 'I') /* S5C73M3 interleaved UYVY/JPEG */
++#define V4L2_PIX_FMT_Y8I      v4l2_fourcc('Y', '8', 'I', ' ') /* Greyscale 8-bit L/R interleaved */
++#define V4L2_PIX_FMT_Y12I     v4l2_fourcc('Y', '1', '2', 'I') /* Greyscale 12-bit L/R interleaved */
++#define V4L2_PIX_FMT_Z16      v4l2_fourcc('Z', '1', '6', ' ') /* Depth data 16-bit */
++#define V4L2_PIX_FMT_Y8       v4l2_fourcc('Y', '8', ' ', ' ') /* Greyscale 8-bit */
++#define V4L2_PIX_FMT_Y10      v4l2_fourcc('Y', '1', '0', ' ') /* Greyscale 10-bit */
++#define V4L2_PIX_FMT_Y12      v4l2_fourcc('Y', '1', '2', ' ') /* Greyscale 12-bit */
++#define V4L2_PIX_FMT_Y16      v4l2_fourcc('Y', '1', '6', ' ') /* Greyscale 16-bit */
++#define V4L2_PIX_FMT_RAW8     v4l2_fourcc('R', 'A', 'W', '8') /* Raw data 8-bit */
++#define V4L2_PIX_FMT_RW10     v4l2_fourcc('R', 'W', '1', '0') /* Raw data 10-bit */
++#define V4L2_PIX_FMT_RW16     v4l2_fourcc('R', 'W', '1', '6') /* Raw data 16-bit */
++#define V4L2_PIX_FMT_INVZ     v4l2_fourcc('I', 'N', 'V', 'Z') /* 16 Depth */
++#define V4L2_PIX_FMT_INZI     v4l2_fourcc('I', 'N', 'Z', 'I') /* 24 Depth/IR 16:8 */
++#define V4L2_PIX_FMT_INVR     v4l2_fourcc('I', 'N', 'V', 'R') /* 16 Depth */
++#define V4L2_PIX_FMT_INRI     v4l2_fourcc('I', 'N', 'R', 'I') /* 24 Depth/IR 16:8 */
++#define V4L2_PIX_FMT_INVI     v4l2_fourcc('I', 'N', 'V', 'I') /* 8 IR */
++#define V4L2_PIX_FMT_RELI     v4l2_fourcc('R', 'E', 'L', 'I') /* 8 IR alternating on off illumination */
+ 
+ /*
+  *	F O R M A T   E N U M E R A T I O N
+-- 
+1.9.1
+
+
+From 49250b207505d8c44d723bee6ab022eadb5f48a8 Mon Sep 17 00:00:00 2001
+From: Scott Ware <scott.r.ware@intel.com>
+Date: Fri, 19 Aug 2016 17:21:57 +0100
+Subject: [PATCH 2/2] Add 10bit raw bayer packed format
+
+---
+ include/uapi/linux/videodev2.h | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
+index 46c59ed..83028f4 100644
+--- a/include/uapi/linux/videodev2.h
++++ b/include/uapi/linux/videodev2.h
+@@ -367,6 +367,11 @@ struct v4l2_pix_format {
+ #define V4L2_PIX_FMT_SGBRG12 v4l2_fourcc('G', 'B', '1', '2') /* 12  GBGB.. RGRG.. */
+ #define V4L2_PIX_FMT_SGRBG12 v4l2_fourcc('B', 'A', '1', '2') /* 12  GRGR.. BGBG.. */
+ #define V4L2_PIX_FMT_SRGGB12 v4l2_fourcc('R', 'G', '1', '2') /* 12  RGRG.. GBGB.. */
++	/* 10bit raw bayer packed, 5 bytes for every 4 pixels */
++#define V4L2_PIX_FMT_SBGGR10P v4l2_fourcc('p', 'B', 'A', 'A')
++#define V4L2_PIX_FMT_SGBRG10P v4l2_fourcc('p', 'G', 'A', 'A')
++#define V4L2_PIX_FMT_SGRBG10P v4l2_fourcc('p', 'g', 'A', 'A')
++#define V4L2_PIX_FMT_SRGGB10P v4l2_fourcc('p', 'R', 'A', 'A')
+ 	/* 10bit raw bayer a-law compressed to 8 bits */
+ #define V4L2_PIX_FMT_SBGGR10ALAW8 v4l2_fourcc('a', 'B', 'A', '8')
+ #define V4L2_PIX_FMT_SGBRG10ALAW8 v4l2_fourcc('a', 'G', 'A', '8')
+-- 
+1.9.1
+

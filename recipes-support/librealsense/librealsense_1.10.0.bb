@@ -10,7 +10,8 @@ RDEPENDS_${PN}-examples = "librealsense"
 RDEPENDS_${PN}-graphical-examples = "libgl-mesa librealsense"
 RDEPENDS_${PN}-tests = "librealsense"
 
-SRC_URI = "https://github.com/IntelRealSense/librealsense/archive/v${PV}.tar.gz"
+SRC_URI = "https://github.com/IntelRealSense/librealsense/archive/v${PV}.tar.gz \
+           file://librealsense-config.cmake"
 SRC_URI[md5sum] = "2e32980fe2578d18c67afb0d5daed049"
 SRC_URI[sha256sum] = "0364a3265a232874b0ccffcb3a534e05dde3f6dfc20a7c288ffdd0b11d82f2ce"
 
@@ -45,12 +46,18 @@ do_install () {
 
 	install -d "${D}${sysconfdir}/udev/rules.d"
 	install -m 0644 ${S}/config/99-realsense-libusb.rules ${D}${sysconfdir}/udev/rules.d
+
+	install -d "${D}${datadir}/${PN}/cmake"
+	install -m 0644 ${WORKDIR}/librealsense-config.cmake ${D}${datadir}/${PN}/cmake
 }
 
 PACKAGES = "${PN} ${PN}-dbg ${PN}-dev ${PN}-examples ${PN}-graphical-examples ${PN}-tests"
 
 FILES_${PN} = "${libdir}/* ${sysconfdir}/udev/rules.d/*"
-FILES_${PN}-dev += "${includedir}/${PN}"
+FILES_${PN}-dev += "\
+        ${includedir}/${PN} \
+        ${datadir}/${PN}/cmake/* \
+"
 
 FILES_${PN}-examples += "\
 	${bindir}/cpp-enumerate-devices \

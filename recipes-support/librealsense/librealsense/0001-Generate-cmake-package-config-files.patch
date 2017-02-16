@@ -1,0 +1,107 @@
+From d2b42da6ab3d0a358e303e5be01fa699b8358bae Mon Sep 17 00:00:00 2001
+From: Dmitry Rozhkov <dmitry.rozhkov@linux.intel.com>
+Date: Wed, 15 Feb 2017 11:14:16 +0200
+Subject: [PATCH] Generate cmake package config files
+
+By now developers are supposed either to include librealsense into
+their workspace or to make it install to a standard location like
+/usr/local. Generating cmake package config files helps to make
+librealsense relocatable and more suitable for cross-compilation.
+
+Also it helps to detect if the library is missing at configure
+time. For that a develper needs to have in her CMakeList.txt the
+following:
+
+cmake_minimum_required(VERSION 2.8.11)
+
+find_package(realsense CONFIG REQUIRED)
+add_executable(hello main.cpp )
+target_include_directories(hello PRIVATE realsense::realsense)
+target_compile_definitions(hello PRIVATE realsense::realsense)
+target_link_libraries(hello LINK_RIVATE realsense::realsense)
+
+No need to hardcode paths to headers and binaries in case the
+lib is installed in a non-standard location.
+
+For ROS builds similar config files are generated auto-magically
+by catkin. But catkin maintains its own package registry where
+non-catkin packages can't find the lib.
+
+Upstream-Statis: Submitted [https://github.com/IntelRealSense/librealsense/pull/441]
+
+Signed-off-by: Dmitry Rozhkov <dmitry.rozhkov@linux.intel.com>
+---
+ CMakeLists.txt           | 25 ++++++++++++++++++++-----
+ realsenseConfig.cmake.in | 10 ++++++++++
+ 2 files changed, 30 insertions(+), 5 deletions(-)
+ create mode 100644 realsenseConfig.cmake.in
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index d6ed86e..3a1d111 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -203,9 +203,11 @@ else()
+     add_library(realsense STATIC ${REALSENSE_CPP} ${REALSENSE_HPP})
+ endif()
+ 
+-target_include_directories(realsense PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/ ${LIBUSB1_INCLUDE_DIRS})
++target_include_directories(realsense PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
++                                            $<INSTALL_INTERFACE:include>
++                                     PRIVATE ${LIBUSB1_INCLUDE_DIRS})
+ 
+-IF (${ROS_BUILD_TYPE})
++if(${ROS_BUILD_TYPE})
+     install(TARGETS realsense
+         RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+         LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+@@ -214,15 +216,28 @@ IF (${ROS_BUILD_TYPE})
+ 
+     install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME}/
+         DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
+-ELSE()
+-    install( TARGETS realsense
++else()
++    set(CMAKECONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/realsense")
++
++    install(TARGETS realsense
++        EXPORT realsenseTargets
+         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+     )
+ 
+     install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/librealsense DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+-ENDIF()
++
++    include(CMakePackageConfigHelpers)
++    configure_package_config_file(realsenseConfig.cmake.in realsenseConfig.cmake
++                                  INSTALL_DESTINATION ${CMAKECONFIG_INSTALL_DIR}
++                                  PATH_VARS CMAKE_INSTALL_INCLUDEDIR)
++
++    install(EXPORT realsenseTargets FILE realsenseTargets.cmake NAMESPACE realsense::
++            DESTINATION ${CMAKECONFIG_INSTALL_DIR})
++    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/realsenseConfig.cmake"
++            DESTINATION ${CMAKECONFIG_INSTALL_DIR})
++endif()
+ 
+ option(BUILD_EXAMPLES "Build realsense examples." OFF)
+ if(BUILD_EXAMPLES)
+diff --git a/realsenseConfig.cmake.in b/realsenseConfig.cmake.in
+new file mode 100644
+index 0000000..5ee394f
+--- /dev/null
++++ b/realsenseConfig.cmake.in
+@@ -0,0 +1,10 @@
++@PACKAGE_INIT@
++
++set(realsense_VERSION_MAJOR "@REALSENSE_VERSION_MAJOR@")
++set(realsense_VERSION_MINOR "@REALSENSE_VERSION_MINOR@")
++set(realsense_VERSION_PATCH "@REALSENSE_VERSION_PATCH@")
++
++set_and_check(realsense_INCLUDE_DIR "@PACKAGE_CMAKE_INSTALL_INCLUDEDIR@")
++
++include("${CMAKE_CURRENT_LIST_DIR}/realsenseTargets.cmake")
++set(realsense_LIBRARY realsense::realsense)
+-- 
+2.7.4
+

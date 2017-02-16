@@ -32,6 +32,7 @@ FILES_${PN} = "\
 FILES_${PN}-dev += "\
 	${libdir}/*.so \
 	${includedir}/${PN} \
+	${libdir}/cmake \
 "
 FILES_${PN}-dbg += "${bindir}/.debug"
 FILES_${PN}-examples += "\

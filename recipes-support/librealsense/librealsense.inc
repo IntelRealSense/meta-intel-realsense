@@ -20,6 +20,10 @@ EXTRA_OECMAKE = " \
 do_install_append() {
 	install -d "${D}${sysconfdir}/udev/rules.d"
 	install -m 0644 ${S}/config/99-realsense-libusb.rules ${D}${sysconfdir}/udev/rules.d
+
+	install -d "${D}${exec_prefix}/local/bin"
+	install -m 0755 ${S}/config/usb-R200-in ${D}${exec_prefix}/local/bin
+	install -m 0755 ${S}/config/usb-R200-in_udev ${D}${exec_prefix}/local/bin
 }
 
 PACKAGES = "${PN} ${PN}-dbg ${PN}-dev"
@@ -28,13 +32,17 @@ PACKAGES += "${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', '${PN}-exampl
 FILES_${PN} = "\
 	${libdir}/*.so.* \
 	${sysconfdir}/udev/rules.d/* \
+	${exec_prefix}/local/bin/* \
 "
+
 FILES_${PN}-dev += "\
 	${libdir}/*.so \
 	${includedir}/${PN} \
 	${libdir}/cmake \
 "
+
 FILES_${PN}-dbg += "${bindir}/.debug"
+
 FILES_${PN}-examples += "\
 	${bindir}/cpp-callback \
 	${bindir}/cpp-enumerate-devices \
@@ -43,6 +51,7 @@ FILES_${PN}-examples += "\
 	${bindir}/cpp-tutorial-1-depth \
 	${bindir}/c-tutorial-1-depth \
 "
+
 FILES_${PN}-graphical-examples += "\
 	${bindir}/cpp-alignimages \
 	${bindir}/cpp-callback-2 \

@@ -20,10 +20,6 @@ EXTRA_OECMAKE = " \
 do_install_append() {
 	install -d "${D}${sysconfdir}/udev/rules.d"
 	install -m 0644 ${S}/config/99-realsense-libusb.rules ${D}${sysconfdir}/udev/rules.d
-
-	install -d "${D}${exec_prefix}/local/bin"
-	install -m 0755 ${S}/config/usb-R200-in ${D}${exec_prefix}/local/bin
-	install -m 0755 ${S}/config/usb-R200-in_udev ${D}${exec_prefix}/local/bin
 }
 
 PACKAGES = "${PN} ${PN}-dbg ${PN}-dev"
@@ -32,7 +28,6 @@ PACKAGES += "${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', '${PN}-exampl
 FILES_${PN} = "\
 	${libdir}/*.so.* \
 	${sysconfdir}/udev/rules.d/* \
-	${exec_prefix}/local/bin/* \
 "
 
 FILES_${PN}-dev += "\

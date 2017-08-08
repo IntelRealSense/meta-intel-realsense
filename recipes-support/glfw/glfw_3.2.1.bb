@@ -5,8 +5,9 @@ LICENSE = "Zlib | Libpng"
 LIC_FILES_CHKSUM = "file://COPYING.txt;md5=352912f8ce21ff7d8b592a4edbe48f50"
 
 DEPENDS = "libpng libglu zlib libxi libxcursor libxinerama libxrandr"
+REQUIRED_DISTRO_FEATURES = "x11"
 
-inherit pkgconfig cmake
+inherit pkgconfig cmake distro_features_check
 
 SRC_URI = "https://github.com/glfw/glfw/releases/download/${PV}/${PN}-${PV}.zip"
 SRC_URI[md5sum] = "824c99eea073bdd6d2fec76b538f79af"

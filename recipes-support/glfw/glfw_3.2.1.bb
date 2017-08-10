@@ -19,10 +19,6 @@ S = "${WORKDIR}/${PN}-${PV}"
 
 EXTRA_OECMAKE += "-DBUILD_SHARED_LIBS=ON -DLIB_SUFFIX=${@d.getVar('baselib', True).replace('lib', '')}"
 
-PACKAGES = "${PN} ${PN}-dbg ${PN}-dev"
-
-FILES_${PN} = "${libdir}"
-FILES_${PN}-dev += "${includedir}/GLFW"
-
-# Avoid errors regarding cmake library files not being shipped
-INSANE_SKIP_${PN} = "${ERROR_QA}"
+FILES_${PN}-dev += "\
+	${libdir}/cmake \
+"

@@ -7,6 +7,7 @@ This layer adds the packages necessary for adding support for IntelÂ® RealSenseâ
 * Yocto Poky 2.0 (Jethro)
 * Yocto Poky 2.1 (Krogoth)
 * Yocto Poky 2.2 (Morty)
+* Yocto Poky 2.3 (Pyro)
 * Wind River IDP 3.X
 
 ## Dependencies

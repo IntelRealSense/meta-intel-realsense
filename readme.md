@@ -39,7 +39,7 @@ Usage
 1. Checkout the branch which corresponds to your version of Wind River IDP (e.g. `idp_3.x`)
 2. Include the following in your project configure command
 ```bitbake
-    --with-layer=/path/to/meta-intel-librealsense
+    --with-layer=/path/to/meta-intel-realsense
     --with-package=librealsense,librealsense-examples
 ```
 

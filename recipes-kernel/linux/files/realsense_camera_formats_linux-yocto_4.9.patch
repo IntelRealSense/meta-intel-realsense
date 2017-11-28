@@ -1,37 +1,37 @@
-From e51a2de7f62757810c7ee299b40248c761ef9f89 Mon Sep 17 00:00:00 2001
+From 816eb6a607fb84517d529cc22b8bb372916cfef5 Mon Sep 17 00:00:00 2001
 From: Scott Ware <scott.r.ware@intel.com>
-Date: Fri, 11 Aug 2017 11:44:46 +0100
-Subject: [PATCH] Add support for RealSense camera formats
+Date: Mon, 27 Nov 2017 13:05:42 +0000
+Subject: [PATCH 4/4] Add support for RealSense camera formats
 
 Signed-off-by: Scott Ware <scott.r.ware@intel.com>
 ---
- drivers/media/usb/uvc/uvc_driver.c | 55 ++++++++++++++++++++++++++++++++++++++
- drivers/media/usb/uvc/uvcvideo.h   | 33 +++++++++++++++++++++++
- include/uapi/linux/videodev2.h     |  9 +++++++
- 3 files changed, 97 insertions(+)
+ drivers/media/usb/uvc/uvc_driver.c | 60 ++++++++++++++++++++++++++++++++++++++
+ drivers/media/usb/uvc/uvcvideo.h   | 36 +++++++++++++++++++++++
+ include/uapi/linux/videodev2.h     |  9 ++++++
+ 3 files changed, 105 insertions(+)
 
 diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
-index cde43b6..f226fa8 100644
+index 2afaca3b..dee4db9 100644
 --- a/drivers/media/usb/uvc/uvc_driver.c
 +++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -168,6 +168,61 @@
+@@ -168,6 +168,66 @@
  		.guid		= UVC_GUID_FORMAT_RW10,
  		.fcc		= V4L2_PIX_FMT_SRGGB10P,
  	},
 +	{
 +		.name		= "Raw data 8-bit (RAW8)",
 +		.guid		= UVC_GUID_FORMAT_RAW8,
-+		.fcc		= V4L2_PIX_FMT_RAW8,
++		.fcc		= V4L2_PIX_FMT_GREY,
 +	},
 +	{
-+		.name		= "Raw data 10-bit (RW16)",
++		.name		= "Raw data 16-bit (RW16)",
 +		.guid		= UVC_GUID_FORMAT_RW16,
 +		.fcc		= V4L2_PIX_FMT_RW16,
 +	},
 +	{
 +		.name		= "Depth 16-bit (INVZ)",
 +		.guid		= UVC_GUID_FORMAT_INVZ,
-+		.fcc		= V4L2_PIX_FMT_INVZ,
++		.fcc		= V4L2_PIX_FMT_Z16,
 +	},
 +	{
 +		.name		= "Depth:IR 16:8 24-bit (INZI)",
@@ -51,7 +51,7 @@ index cde43b6..f226fa8 100644
 +	{
 +		.name		= "Infrared 8-bit (INVI)",
 +		.guid		= UVC_GUID_FORMAT_INVI,
-+		.fcc		= V4L2_PIX_FMT_INVI,
++		.fcc		= V4L2_PIX_FMT_GREY,
 +	},
 +	{
 +		.name		= "FlickerIR 8-bit (RELI)",
@@ -61,7 +61,7 @@ index cde43b6..f226fa8 100644
 +	{
 +		.name		= "Luminosity data 8-bit (L8)",
 +		.guid		= UVC_GUID_FORMAT_L8,
-+		.fcc		= V4L2_PIX_FMT_Y8,
++		.fcc		= V4L2_PIX_FMT_GREY,
 +	},
 +	{
 +		.name		= "Luminosity data 16-bit (L16)",
@@ -73,14 +73,19 @@ index cde43b6..f226fa8 100644
 +		.guid		= UVC_GUID_FORMAT_D16,
 +		.fcc		= V4L2_PIX_FMT_Z16,
 +	},
++	{
++		.name		= "16-bit Bayer BGBG/GRGR",
++		.guid		= UVC_GUID_FORMAT_BAYER16,
++		.fcc		= V4L2_PIX_FMT_SBGGR16,
++	},
  };
  
  /* ------------------------------------------------------------------------
 diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
-index 7e4d3ee..6704db7 100644
+index 90f69a7..e4fe3a3 100644
 --- a/drivers/media/usb/uvc/uvcvideo.h
 +++ b/drivers/media/usb/uvc/uvcvideo.h
-@@ -131,6 +131,39 @@
+@@ -131,6 +131,42 @@
  #define UVC_GUID_FORMAT_RW10 \
  	{ 'R',  'W',  '1',  '0', 0x00, 0x00, 0x10, 0x00, \
  	 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71}
@@ -117,6 +122,9 @@ index 7e4d3ee..6704db7 100644
 +#define UVC_GUID_FORMAT_D16 \
 +	{ 'P', 0x00,  0x00,  0x00, 0x00, 0x00, 0x10, 0x00, \
 +	 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71}
++#define UVC_GUID_FORMAT_BAYER16 \
++    { 'R',  'W',  '1',  '6', 0x66, 0x1a, 0x42, 0xa2, \
++     0x90, 0x65, 0xd0, 0x18, 0x14, 0xa8, 0xef, 0x8a}
  
  /* ------------------------------------------------------------------------
   * Driver specific constants.

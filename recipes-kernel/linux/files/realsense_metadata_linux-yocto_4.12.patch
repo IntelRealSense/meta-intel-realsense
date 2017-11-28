@@ -1,20 +1,20 @@
-From 40372933e35f76a56b5c3aa3b29bd453d014541a Mon Sep 17 00:00:00 2001
+From 1fe0b4ffd89e90b1db534101e0c9616d377bf8e3 Mon Sep 17 00:00:00 2001
 From: Scott Ware <scott.r.ware@intel.com>
-Date: Tue, 28 Nov 2017 11:19:06 +0000
-Subject: [PATCH 3/4] Realsense metadata
+Date: Tue, 28 Nov 2017 16:24:41 +0000
+Subject: [PATCH 2/4] Realsense metadata
 
 Signed-off-by: Scott Ware <scott.r.ware@intel.com>
 ---
  drivers/media/usb/uvc/uvc_driver.c | 117 +++++++++++++++++++++++++++++++++++++
- drivers/media/usb/uvc/uvc_video.c  |  18 ++++--
+ drivers/media/usb/uvc/uvc_video.c  |  15 +++--
  drivers/media/usb/uvc/uvcvideo.h   |   3 +-
- 3 files changed, 131 insertions(+), 7 deletions(-)
+ 3 files changed, 130 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
-index bd2b5df..b54a37a 100644
+index 39061f1..3b8b3dc 100644
 --- a/drivers/media/usb/uvc/uvc_driver.c
 +++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -2623,6 +2623,123 @@ static struct usb_device_id uvc_ids[] = {
+@@ -2769,6 +2769,123 @@ static int uvc_clock_param_set(const char *val, struct kernel_param *kp)
  	  .bInterfaceSubClass	= 1,
  	  .bInterfaceProtocol	= 0,
  	  .driver_info		= UVC_QUIRK_FORCE_Y8 },
@@ -136,10 +136,10 @@ index bd2b5df..b54a37a 100644
 +	  .bInterfaceProtocol	= 0,
 +	  .driver_info		= UVC_QUIRK_APPEND_UVC_HEADER },
  	/* Generic USB Video Class */
- 	{ USB_INTERFACE_INFO(USB_CLASS_VIDEO, 1, 0) },
- 	{}
+ 	{ USB_INTERFACE_INFO(USB_CLASS_VIDEO, 1, UVC_PC_PROTOCOL_UNDEFINED) },
+ 	{ USB_INTERFACE_INFO(USB_CLASS_VIDEO, 1, UVC_PC_PROTOCOL_15) },
 diff --git a/drivers/media/usb/uvc/uvc_video.c b/drivers/media/usb/uvc/uvc_video.c
-index 20ccc9d..226da0f 100644
+index 47d93a9..b7944a4 100644
 --- a/drivers/media/usb/uvc/uvc_video.c
 +++ b/drivers/media/usb/uvc/uvc_video.c
 @@ -1221,9 +1221,12 @@ static void uvc_video_decode_bulk(struct urb *urb, struct uvc_streaming *stream,
@@ -158,27 +158,25 @@ index 20ccc9d..226da0f 100644
  		} while (ret == -EAGAIN);
  
  		/* If an error occurred skip the rest of the payload. */
-@@ -1255,9 +1258,12 @@ static void uvc_video_decode_bulk(struct urb *urb, struct uvc_streaming *stream,
+@@ -1255,8 +1258,12 @@ static void uvc_video_decode_bulk(struct urb *urb, struct uvc_streaming *stream,
  		if (!stream->bulk.skip_payload && buf != NULL) {
  			uvc_video_decode_end(stream, buf, stream->bulk.header,
  				stream->bulk.payload_size);
 -			if (buf->state == UVC_BUF_STATE_READY)
--				buf = uvc_queue_next_buffer(&stream->queue,
--							    buf);
 +			if (buf->state == UVC_BUF_STATE_READY) {
 +				if (stream->dev->quirks & UVC_QUIRK_APPEND_UVC_HEADER)
 +					uvc_video_decode_data(stream, buf, stream->bulk.header, stream->bulk.header_size);
 +
-+				buf = uvc_queue_next_buffer(&stream->queue, buf);
+ 				uvc_queue_next_buffer(&stream->queue, buf);
 +			}
  		}
  
  		stream->bulk.header_size = 0;
 diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
-index a49cd07..19d2b53 100644
+index 3f3b52c..6b43d5e 100644
 --- a/drivers/media/usb/uvc/uvcvideo.h
 +++ b/drivers/media/usb/uvc/uvcvideo.h
-@@ -194,7 +194,7 @@
+@@ -191,7 +191,7 @@
  /* Maximum number of packets per URB. */
  #define UVC_MAX_PACKETS		32
  /* Maximum status buffer size in bytes of interrupt URB. */
@@ -187,7 +185,7 @@ index a49cd07..19d2b53 100644
  
  #define UVC_CTRL_CONTROL_TIMEOUT	300
  #define UVC_CTRL_STREAMING_TIMEOUT	5000
-@@ -215,6 +215,7 @@
+@@ -212,6 +212,7 @@
  #define UVC_QUIRK_RESTRICT_FRAME_RATE	0x00000200
  #define UVC_QUIRK_RESTORE_CTRLS_ON_INIT	0x00000400
  #define UVC_QUIRK_FORCE_Y8		0x00000800

@@ -8,7 +8,7 @@ This layer depends on packages provided by the following layers:
 
 Usage
 =====
-1. Checkout the branch which corresponds with your version of Yocto (e.g. `pyro`)
+1. Checkout the branch which corresponds with your version of Yocto (e.g. `rocko`)
 2. Add the `meta-intel-realsense` layer to `conf/bblayers.conf` in your `build` directory
 ```bitbake
 	BBLAYERS += "path/to/meta-intel-realsense"

@@ -8,10 +8,9 @@ require librealsense.inc
 DEPENDS += "${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', 'libpng libglu glfw gtk+3', '', d)}"
 
 SRC_URI = "\
-	git://github.com/IntelRealSense/librealsense.git;branch=master \
+	git://github.com/IntelRealSense/librealsense.git;tag=v${PV} \
 	file://Remove-R200-fix-from-udev-rules.patch \
 "
-SRCREV = "0040d1f21b2f6e0b9d6e6cb7153fb12acdd8796b"
 
 PR = "r0"
 

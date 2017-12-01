@@ -33,9 +33,13 @@ Usage
 ```bitbake
     require include/intel-librealsense.inc
 ```
-5. If you are building an image with a graphical desktop you can add the following to `conf/auto.conf`
+5. Include librealsense in your image by adding the following to `conf/auto.conf`
 ```bitbake
-    CORE_IMAGE_EXTRA_INSTALL += "librealsense-graphical-examples"
+    CORE_IMAGE_EXTRA_INSTALL += "librealsense2 librealsense2-examples"
+```
+6. If you are building an image with a graphical desktop you can add the following to `conf/auto.conf`
+```bitbake
+    CORE_IMAGE_EXTRA_INSTALL += "librealsense2-graphical-examples"
 ```
 
 ### Wind River IDP

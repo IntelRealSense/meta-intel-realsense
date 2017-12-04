@@ -9,6 +9,7 @@ SRC_URI = "\
 	git://github.com/IntelRealSense/librealsense.git;branch=legacy \
 	file://0001-Generate-cmake-package-config-files.patch \
 	file://0002-Remove-R200-fix-from-udev-rules.patch \
+	file://0003-Fix-build-for-GCC-7.X.patch \
 "
 SRCREV = "7332ecadc057552c178addd577d24a2756f8789a"
 

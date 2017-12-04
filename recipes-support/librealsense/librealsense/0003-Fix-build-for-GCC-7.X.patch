@@ -1,0 +1,25 @@
+From 20c01f34ba8949866744e21ad6aa2065e6d03055 Mon Sep 17 00:00:00 2001
+From: Scott Ware <scott.r.ware@intel.com>
+Date: Mon, 4 Dec 2017 16:16:17 +0000
+Subject: [PATCH] Fix build for GCC 7.X
+
+Signed-off-by: Scott Ware <scott.r.ware@intel.com>
+---
+ src/types.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/types.h b/src/types.h
+index 0455c83..a964bf3 100644
+--- a/src/types.h
++++ b/src/types.h
+@@ -22,6 +22,7 @@
+ #include <atomic>
+ #include <map>          
+ #include <algorithm>
++#include <functional>
+ 
+ const uint8_t RS_STREAM_NATIVE_COUNT    = 5;
+ const int RS_USER_QUEUE_SIZE = 20;
+-- 
+1.9.1
+

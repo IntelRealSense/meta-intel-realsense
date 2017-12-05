@@ -12,7 +12,7 @@ inherit cmake pkgconfig
 
 do_install_append() {
 	install -d "${D}${sysconfdir}/udev/rules.d"
-	install -m 0644 ${S}/config/99-realsense-libusb.rules ${D}${sysconfdir}/udev/rules.d
+	install -m 0644 ${S}/config/99-realsense-libusb.rules ${D}${sysconfdir}/udev/rules.d/99-${PN}-libusb.rules
 }
 
 FILES_${PN} = "\

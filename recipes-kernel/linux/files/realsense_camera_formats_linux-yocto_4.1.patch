@@ -5,16 +5,16 @@ Subject: [PATCH 1/4] Add support for RealSense camera formats
 
 Signed-off-by: Scott Ware <scott.r.ware@intel.com>
 ---
- drivers/media/usb/uvc/uvc_driver.c | 85 ++++++++++++++++++++++++++++++++++++++
- drivers/media/usb/uvc/uvcvideo.h   | 63 ++++++++++++++++++++++++++++
- include/uapi/linux/videodev2.h     | 16 +++++++
- 3 files changed, 164 insertions(+)
+ drivers/media/usb/uvc/uvc_driver.c | 90 ++++++++++++++++++++++++++++++++++++++
+ drivers/media/usb/uvc/uvcvideo.h   | 66 ++++++++++++++++++++++++++++
+ include/uapi/linux/videodev2.h     | 17 +++++++
+ 3 files changed, 173 insertions(+)
 
 diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
 index 5970dd6..bd2b5df 100644
 --- a/drivers/media/usb/uvc/uvc_driver.c
 +++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -147,6 +147,91 @@ static struct uvc_format_desc uvc_fmts[] = {
+@@ -147,6 +147,96 @@ static struct uvc_format_desc uvc_fmts[] = {
  		.guid		= UVC_GUID_FORMAT_H264,
  		.fcc		= V4L2_PIX_FMT_H264,
  	},
@@ -103,6 +103,11 @@ index 5970dd6..bd2b5df 100644
 +		.guid		= UVC_GUID_FORMAT_BAYER16,
 +		.fcc		= V4L2_PIX_FMT_SBGGR16,
 +	},
++	{
++		.name		= "Packed raw data 10-bit",
++		.guid		= UVC_GUID_FORMAT_W10,
++		.fcc		= V4L2_PIX_FMT_W10,
++	},
  };
  
  /* ------------------------------------------------------------------------
@@ -110,7 +115,7 @@ diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
 index 1b594c2..a49cd07 100644
 --- a/drivers/media/usb/uvc/uvcvideo.h
 +++ b/drivers/media/usb/uvc/uvcvideo.h
-@@ -119,6 +119,69 @@
+@@ -119,6 +119,72 @@
  #define UVC_GUID_FORMAT_H264 \
  	{ 'H',  '2',  '6',  '4', 0x00, 0x00, 0x10, 0x00, \
  	 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71}
@@ -177,6 +182,9 @@ index 1b594c2..a49cd07 100644
 +#define UVC_GUID_FORMAT_BAYER16 \
 +    { 'R',  'W',  '1',  '6', 0x66, 0x1a, 0x42, 0xa2, \
 +     0x90, 0x65, 0xd0, 0x18, 0x14, 0xa8, 0xef, 0x8a}
++#define UVC_GUID_FORMAT_W10 \
++	{ 'W',  '1',  '0',  ' ', 0x00, 0x00, 0x10, 0x00, \
++	 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71}
  
  /* ------------------------------------------------------------------------
   * Driver specific constants.
@@ -184,7 +192,7 @@ diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
 index fa376f7..4e7df21 100644
 --- a/include/uapi/linux/videodev2.h
 +++ b/include/uapi/linux/videodev2.h
-@@ -529,6 +529,22 @@ struct v4l2_pix_format {
+@@ -529,6 +529,23 @@ struct v4l2_pix_format {
  #define V4L2_PIX_FMT_JPGL	v4l2_fourcc('J', 'P', 'G', 'L') /* JPEG-Lite */
  #define V4L2_PIX_FMT_SE401      v4l2_fourcc('S', '4', '0', '1') /* se401 janggu compressed rgb */
  #define V4L2_PIX_FMT_S5C_UYVY_JPG v4l2_fourcc('S', '5', 'C', 'I') /* S5C73M3 interleaved UYVY/JPEG */
@@ -204,6 +212,7 @@ index fa376f7..4e7df21 100644
 +#define V4L2_PIX_FMT_INRI     v4l2_fourcc('I', 'N', 'R', 'I') /* 24 Depth/IR 16:8 */
 +#define V4L2_PIX_FMT_INVI     v4l2_fourcc('I', 'N', 'V', 'I') /* 8 IR */
 +#define V4L2_PIX_FMT_RELI     v4l2_fourcc('R', 'E', 'L', 'I') /* 8 IR alternating on off illumination */
++#define V4L2_PIX_FMT_W10      v4l2_fourcc('W', '1', '0', ' ') /* Packed raw data 10-bit */
  
  /* SDR formats - used only for Software Defined Radio devices */
  #define V4L2_SDR_FMT_CU8          v4l2_fourcc('C', 'U', '0', '8') /* IQ u8 */

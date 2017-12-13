@@ -5,16 +5,16 @@ Subject: [PATCH 3/4] Realsense metadata
 
 Signed-off-by: Scott Ware <scott.r.ware@intel.com>
 ---
- drivers/media/usb/uvc/uvc_driver.c | 117 +++++++++++++++++++++++++++++++++++++
+ drivers/media/usb/uvc/uvc_driver.c | 126 +++++++++++++++++++++++++++++++++++++
  drivers/media/usb/uvc/uvc_video.c  |  18 ++++--
  drivers/media/usb/uvc/uvcvideo.h   |   3 +-
- 3 files changed, 131 insertions(+), 7 deletions(-)
+ 3 files changed, 140 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
 index 3e5300d..6de2173 100644
 --- a/drivers/media/usb/uvc/uvc_driver.c
 +++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -2730,6 +2730,123 @@ static struct usb_device_id uvc_ids[] = {
+@@ -2730,6 +2730,132 @@ static struct usb_device_id uvc_ids[] = {
  	  .bInterfaceSubClass	= 1,
  	  .bInterfaceProtocol	= 0,
  	  .driver_info		= UVC_QUIRK_FORCE_Y8 },
@@ -131,6 +131,15 @@ index 3e5300d..6de2173 100644
 +				| USB_DEVICE_ID_MATCH_INT_INFO,
 +	  .idVendor		= 0x8086,
 +	  .idProduct		= 0x0aa5,
++	  .bInterfaceClass	= USB_CLASS_VIDEO,
++	  .bInterfaceSubClass	= 1,
++	  .bInterfaceProtocol	= 0,
++	  .driver_info		= UVC_QUIRK_APPEND_UVC_HEADER },
++	/* Intel D405 S depth camera */
++	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
++				| USB_DEVICE_ID_MATCH_INT_INFO,
++	  .idVendor		= 0x8086,
++	  .idProduct		= 0x0b0c,
 +	  .bInterfaceClass	= USB_CLASS_VIDEO,
 +	  .bInterfaceSubClass	= 1,
 +	  .bInterfaceProtocol	= 0,

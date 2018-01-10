@@ -3,14 +3,14 @@ Yocto Layer for librealsense
 This layer adds the packages necessary for adding support for Intel® RealSense™ cameras via [librealsense](https://github.com/IntelRealSense/librealsense) to your Yocto distribution.
 
 ## Supported Branches
+* Yocto Poky 2.1 (Krogoth)
 * Yocto Poky 2.2 (Morty)
 * Yocto Poky 2.3 (Pyro)
 * Yocto Poky 2.4 (Rocko)
 
 ## Legacy Branches
 * Yocto Poky 1.8 (Fido)
-* Yocto Poky 2.0 (Jethro) 
-* Yocto Poky 2.1 (Krogoth)
+* Yocto Poky 2.0 (Jethro)
 * Wind River IDP 3.X
 
 ## Dependencies

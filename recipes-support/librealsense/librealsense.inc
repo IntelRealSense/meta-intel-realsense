@@ -2,7 +2,10 @@ AUTHOR = "Intel Corporation"
 SECTION = "libs"
 LICENSE = "Apache-2.0"
 
-DEPENDS = "libusb1"
+DEPENDS = "\
+    udev \
+    libusb1 \
+"
 
 RDEPENDS_${PN} = "bash"
 RDEPENDS_${PN}-examples += "${PN}"

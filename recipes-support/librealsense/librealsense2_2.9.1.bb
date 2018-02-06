@@ -35,6 +35,7 @@ PACKAGES = "\
 	${PN}-dev \
 	${PN}-staticdev \
 	${PN}-examples \
+	${PN}-tools \
 "
 
 PACKAGES += "${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', '${PN}-graphical-examples', '', d)}"
@@ -49,21 +50,29 @@ FILES_${PN}-python = "\
 "
 
 FILES_${PN}-examples += "\
-	${bindir}/rs-enumerate-devices \
+	${bindir}/rs-color \
+	${bindir}/rs-depth \
+	${bindir}/rs-distance \
 	${bindir}/rs-save-to-disk \
-	${bindir}/rs-terminal \
 "
 
 FILES_${PN}-graphical-examples += "\
-	${bindir}/realsense-viewer \
 	${bindir}/rs-align \
 	${bindir}/rs-capture \
-	${bindir}/rs-color \
-	${bindir}/rs-data-collect \
-	${bindir}/rs-depth \
-	${bindir}/rs-depth-quality \
-	${bindir}/rs-distance \
+	${bindir}/rs-measure \
 	${bindir}/rs-multicam \
 	${bindir}/rs-pointcloud \
 	${bindir}/rs-sensor-control \
+	${bindir}/rs-software-device \
 "
+
+FILES_${PN}-tools += "\
+    ${bindir}/realsense-viewer \
+    ${bindir}/rs-data-collect \
+    ${bindir}/rs-depth-quality \
+    ${bindir}/rs-enumerate-devices \
+    ${bindir}/rs-fw-logger \
+    ${bindir}/rs-rosbag-inspector \
+    ${bindir}/rs-terminal \
+"
+

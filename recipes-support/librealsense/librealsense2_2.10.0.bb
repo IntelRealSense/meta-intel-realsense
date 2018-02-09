@@ -15,7 +15,7 @@ PR = "r0"
 S = "${WORKDIR}/git"
 
 EXTRA_OECMAKE = " \
-	-DBUILD_SHARED_LIBS:BOOL=ON -DBUILD_UNIT_TESTS:BOOL=OFF -DBUILD_EXAMPLES:BOOL=ON \
+	-DBUILD_SHARED_LIBS:BOOL=ON -DBUILD_UNIT_TESTS:BOOL=OFF -DBUILD_EXAMPLES:BOOL=ON -DUSE_SYSTEM_LIBUSB:BOOL=ON \
 	-DBUILD_GRAPHICAL_EXAMPLES:BOOL=${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', 'ON', 'OFF', d)} \
 "
 
@@ -47,6 +47,7 @@ FILES_${PN}-graphical-examples += "\
 	${bindir}/rs-measure \
 	${bindir}/rs-multicam \
 	${bindir}/rs-pointcloud \
+	${bindir}/rs-post-processing \
 	${bindir}/rs-sensor-control \
 	${bindir}/rs-software-device \
 "

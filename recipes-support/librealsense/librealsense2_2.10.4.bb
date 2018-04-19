@@ -6,7 +6,7 @@ require librealsense.inc
 DEPENDS += "${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', 'libpng libglu glfw gtk+3', '', d)}"
 
 SRC_URI = "\
-	git://github.com/IntelRealSense/librealsense.git;tag=v${PV} \
+	git://github.com/IntelRealSense/librealsense.git;branch=development;tag=v${PV} \
 	file://Remove-R200-fix-from-udev-rules.patch \
 "
 
@@ -48,6 +48,7 @@ FILES_${PN}-graphical-examples += "\
 	${bindir}/rs-multicam \
 	${bindir}/rs-pointcloud \
 	${bindir}/rs-post-processing \
+	${bindir}/rs-record-playback \
 	${bindir}/rs-sensor-control \
 	${bindir}/rs-software-device \
 "

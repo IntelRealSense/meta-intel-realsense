@@ -22,15 +22,3 @@ FILES_${PN} = "\
 	${libdir}/${PN}.so.* \
 	${sysconfdir}/udev/rules.d/* \
 "
-
-FILES_${PN}-dev += "\
-	${libdir}/*.so \
-	${includedir}/${PN} \
-	${libdir}/cmake \
-	${libdir}/pkgconfig \
-"
-
-FILES_${PN}-dbg += "\
-	${bindir}/.debug \
-	${libdir}/.debug \
-"

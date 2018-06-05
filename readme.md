@@ -2,17 +2,6 @@ Yocto Layer for librealsense
 ============================
 This layer adds the packages necessary for adding support for Intel® RealSense™ cameras via [librealsense](https://github.com/IntelRealSense/librealsense) to your Yocto distribution.
 
-## Supported Branches
-* Yocto Poky 2.1 (Krogoth)
-* Yocto Poky 2.2 (Morty)
-* Yocto Poky 2.3 (Pyro)
-* Yocto Poky 2.4 (Rocko)
-
-## Legacy Branches
-* Yocto Poky 1.8 (Fido)
-* Yocto Poky 2.0 (Jethro)
-* Wind River IDP 3.X
-
 ## Dependencies
 This layer depends on packages provided by the following layers:
 * `meta-openembedded` [http://cgit.openembedded.org/meta-openembedded/]
@@ -20,7 +9,7 @@ This layer depends on packages provided by the following layers:
 Usage
 =====
 ### Yocto Poky
-1. Checkout the branch which corresponds with your version of Yocto (e.g. `pyro`)
+1. Checkout the branch which corresponds with your version of Yocto
 2. Add the `meta-intel-realsense` layer to `conf/bblayers.conf` in your `build` directory
 ```bitbake
 	BBLAYERS += "path/to/meta-intel-realsense"
@@ -40,14 +29,6 @@ Usage
 6. If you are building an image with a graphical desktop you can add the following to `conf/auto.conf`
 ```bitbake
     CORE_IMAGE_EXTRA_INSTALL += "librealsense2-graphical-examples"
-```
-
-### Wind River IDP
-1. Checkout the branch which corresponds to your version of Wind River IDP (e.g. `idp_3.x`)
-2. Include the following in your project configure command
-```bitbake
-    --with-layer=/path/to/meta-intel-realsense
-    --with-package=librealsense,librealsense-examples
 ```
 
 License

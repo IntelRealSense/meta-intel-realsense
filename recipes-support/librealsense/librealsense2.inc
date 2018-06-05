@@ -7,29 +7,22 @@ EXTRA_OECMAKE = " \
 
 PACKAGECONFIG ??= ""
 
-PACKAGES = "\
-	${PN} \
-	${PN}-dbg \
-	${PN}-dev \
-	${PN}-staticdev \
+PACKAGES += "\
 	${PN}-examples \
 	${PN}-tools \
+	${PN}-debug-tools \
 "
 
 PACKAGES += "${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', '${PN}-graphical-examples', '', d)}"
 
-FILES_${PN}-staticdev += "\
-	${libdir}/*.a \
-"
-
-FILES_${PN}-examples += "\
+FILES_${PN}-examples = "\
 	${bindir}/rs-color \
 	${bindir}/rs-depth \
 	${bindir}/rs-distance \
 	${bindir}/rs-save-to-disk \
 "
 
-FILES_${PN}-graphical-examples += "\
+FILES_${PN}-graphical-examples = "\
 	${bindir}/rs-align \
 	${bindir}/rs-capture \
 	${bindir}/rs-measure \
@@ -41,10 +34,14 @@ FILES_${PN}-graphical-examples += "\
 	${bindir}/rs-software-device \
 "
 
-FILES_${PN}-tools += "\
+FILES_${PN}-tools = "\
     ${bindir}/realsense-viewer \
-    ${bindir}/rs-data-collect \
+	${bindir}/rs-convert \
     ${bindir}/rs-depth-quality \
+"
+
+FILES_${PN}-debug-tools = "\
+    ${bindir}/rs-data-collect \
     ${bindir}/rs-enumerate-devices \
     ${bindir}/rs-fw-logger \
     ${bindir}/rs-rosbag-inspector \

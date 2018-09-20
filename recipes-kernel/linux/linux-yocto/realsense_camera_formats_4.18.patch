@@ -1,6 +1,6 @@
-From 9c914fd17b4b3c8376da4fec5624ca710edb2d02 Mon Sep 17 00:00:00 2001
+From 0b089fdd49ba946ca0104b093226e7200ce86c35 Mon Sep 17 00:00:00 2001
 From: Scott Ware <scott.r.ware@intel.com>
-Date: Wed, 6 Jun 2018 14:14:52 +0100
+Date: Thu, 20 Sep 2018 12:04:09 +0100
 Subject: [PATCH 1/4] Add support for RealSense camera formats
 
 Signed-off-by: Scott Ware <scott.r.ware@intel.com>
@@ -12,10 +12,10 @@ Signed-off-by: Scott Ware <scott.r.ware@intel.com>
  4 files changed, 65 insertions(+)
 
 diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
-index 6d22b22..57819c1 100644
+index 8e13820..d360ebd 100644
 --- a/drivers/media/usb/uvc/uvc_driver.c
 +++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -203,6 +203,43 @@ static struct uvc_format_desc uvc_fmts[] = {
+@@ -209,6 +209,43 @@ static struct uvc_format_desc uvc_fmts[] = {
  		.guid		= UVC_GUID_FORMAT_INZI,
  		.fcc		= V4L2_PIX_FMT_INZI,
  	},
@@ -60,7 +60,7 @@ index 6d22b22..57819c1 100644
  
  /* ------------------------------------------------------------------------
 diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
-index 0539878..8c99aab 100644
+index be5cf17..b843ea0 100644
 --- a/drivers/media/usb/uvc/uvcvideo.h
 +++ b/drivers/media/usb/uvc/uvcvideo.h
 @@ -153,6 +153,28 @@
@@ -90,16 +90,16 @@ index 0539878..8c99aab 100644
 +	{ 'R',  'W',  '1',  '6', 0x66, 0x1a, 0x42, 0xa2, \
 +	0x90, 0x65, 0xd0, 0x18, 0x14, 0xa8, 0xef, 0x8a}
  
- /* ------------------------------------------------------------------------
-  * Driver specific constants.
+ #define UVC_GUID_FORMAT_D3DFMT_L8 \
+ 	{0x32, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, \
 diff --git a/drivers/media/v4l2-core/v4l2-ioctl.c b/drivers/media/v4l2-core/v4l2-ioctl.c
-index d06941c..c50ec39 100644
+index dd21006..b83dfaf 100644
 --- a/drivers/media/v4l2-core/v4l2-ioctl.c
 +++ b/drivers/media/v4l2-core/v4l2-ioctl.c
-@@ -1243,6 +1243,9 @@ static void v4l_fill_fmtdesc(struct v4l2_fmtdesc *fmt)
- 	case V4L2_TCH_FMT_TU08:		descr = "8-bit unsigned touch data"; break;
+@@ -1251,6 +1251,9 @@ static void v4l_fill_fmtdesc(struct v4l2_fmtdesc *fmt)
  	case V4L2_META_FMT_VSP1_HGO:	descr = "R-Car VSP1 1-D Histogram"; break;
  	case V4L2_META_FMT_VSP1_HGT:	descr = "R-Car VSP1 2-D Histogram"; break;
+ 	case V4L2_META_FMT_UVC:		descr = "UVC payload header metadata"; break;
 +	/* Librealsense formats*/
 +	case V4L2_PIX_FMT_RW16:		descr = "16-bit Raw data"; break;
 +	case V4L2_PIX_FMT_W10:		descr = "10-bit packed 8888[2222]"; break;
@@ -107,10 +107,10 @@ index d06941c..c50ec39 100644
  	default:
  		/* Compressed formats */
 diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
-index 1c095b5..3e20f2b 100644
+index 600877b..772033d 100644
 --- a/include/uapi/linux/videodev2.h
 +++ b/include/uapi/linux/videodev2.h
-@@ -668,6 +668,9 @@ struct v4l2_pix_format {
+@@ -669,6 +669,9 @@ struct v4l2_pix_format {
  #define V4L2_PIX_FMT_Z16      v4l2_fourcc('Z', '1', '6', ' ') /* Depth data 16-bit */
  #define V4L2_PIX_FMT_MT21C    v4l2_fourcc('M', 'T', '2', '1') /* Mediatek compressed block mode  */
  #define V4L2_PIX_FMT_INZI     v4l2_fourcc('I', 'N', 'Z', 'I') /* Intel Planar Greyscale 10-bit and Depth 16-bit */
@@ -118,8 +118,8 @@ index 1c095b5..3e20f2b 100644
 +#define V4L2_PIX_FMT_W10      v4l2_fourcc('W', '1', '0', ' ') /* Packed raw data 10-bit */
 +#define V4L2_PIX_FMT_CONFIDENCE_MAP	v4l2_fourcc('C', ' ', ' ', ' ') /* Two pixels in one byte */
  
- /* SDR formats - used only for Software Defined Radio devices */
- #define V4L2_SDR_FMT_CU8          v4l2_fourcc('C', 'U', '0', '8') /* IQ u8 */
+ /* 10bit raw bayer packed, 32 bytes for every 25 pixels, last LSB 6 bits unused */
+ #define V4L2_PIX_FMT_IPU3_SBGGR10	v4l2_fourcc('i', 'p', '3', 'b') /* IPU3 packed 10-bit BGGR bayer */
 -- 
 2.7.4
 

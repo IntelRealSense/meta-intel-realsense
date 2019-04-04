@@ -1,20 +1,20 @@
-From e680f4a3a21e8c87f5fe9fbb52753eb26f14d734 Mon Sep 17 00:00:00 2001
+From fa8ebf2d1d218456da61d363eaae58fd72872709 Mon Sep 17 00:00:00 2001
 From: Scott Ware <scott.r.ware@intel.com>
-Date: Thu, 20 Sep 2018 12:41:39 +0100
-Subject: [PATCH 3/4] Enable UVC Metadata
+Date: Thu, 4 Apr 2019 12:18:45 +0100
+Subject: [PATCH 2/4] Enable UVC Metadata
 
 Signed-off-by: Scott Ware <scott.r.ware@intel.com>
 ---
- drivers/media/usb/uvc/uvc_driver.c | 137 +++++++++++++++++++++++++++++++++++++
+ drivers/media/usb/uvc/uvc_driver.c | 172 +++++++++++++++++++++++++++++++++++++
  drivers/media/usb/uvc/uvcvideo.h   |   2 +-
  include/uapi/linux/videodev2.h     |   1 +
- 3 files changed, 139 insertions(+), 1 deletion(-)
+ 3 files changed, 174 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
-index d360ebd..2a96d76 100644
+index d0ec234..696d105 100644
 --- a/drivers/media/usb/uvc/uvc_driver.c
 +++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -2377,6 +2377,8 @@ static const struct uvc_device_info uvc_quirk_force_y8 = {
+@@ -2345,6 +2345,8 @@ static const struct uvc_device_info uvc_quirk_force_y8 = {
  };
  
  #define UVC_QUIRK_INFO(q) (kernel_ulong_t)&(struct uvc_device_info){.quirks = q}
@@ -23,7 +23,7 @@ index d360ebd..2a96d76 100644
  
  /*
   * The Logitech cameras listed below have their interface class set to
-@@ -2850,6 +2852,141 @@ static const struct usb_device_id uvc_ids[] = {
+@@ -2818,6 +2820,176 @@ static const struct usb_device_id uvc_ids[] = {
  	  .bInterfaceSubClass	= 1,
  	  .bInterfaceProtocol	= 0,
  	  .driver_info		= (kernel_ulong_t)&uvc_quirk_force_y8 },
@@ -58,7 +58,7 @@ index d360ebd..2a96d76 100644
 +	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
 +				| USB_DEVICE_ID_MATCH_INT_INFO,
 +	  .idVendor			= 0x8086,
-+      .idProduct		= 0x0ad4,
++	  .idProduct		= 0x0ad4,
 +	  .bInterfaceClass	= USB_CLASS_VIDEO,
 +	  .bInterfaceSubClass	= 1,
 +	  .bInterfaceProtocol	= 0,
@@ -72,6 +72,15 @@ index d360ebd..2a96d76 100644
 +	  .bInterfaceSubClass	= 1,
 +	  .bInterfaceProtocol	= 0,
 +	  .driver_info           = UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
++	/* Intel D400 IMU Module */
++	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
++				| USB_DEVICE_ID_MATCH_INT_INFO,
++	  .idVendor			= 0x8086,
++	  .idProduct		= 0x0af2,
++	  .bInterfaceClass	= USB_CLASS_VIDEO,
++	  .bInterfaceSubClass	= 1,
++	  .bInterfaceProtocol	= 0,
++	  .driver_info		= UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
 +	/* Intel D420/PWG depth camera */
 +	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
 +				| USB_DEVICE_ID_MATCH_INT_INFO,
@@ -98,7 +107,7 @@ index d360ebd..2a96d76 100644
 +	  .bInterfaceClass	= USB_CLASS_VIDEO,
 +	  .bInterfaceSubClass	= 1,
 +	  .bInterfaceProtocol	= 0,
-+      .driver_info           = UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
++	  .driver_info           = UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
 +	/* Intel D400_MM/PSRT depth camera */
 +	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
 +				| USB_DEVICE_ID_MATCH_INT_INFO,
@@ -135,7 +144,7 @@ index d360ebd..2a96d76 100644
 +	  .bInterfaceSubClass	= 1,
 +	  .bInterfaceProtocol	= 0,
 +	  .driver_info           = UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
-+    /* Intel SR300 depth camera */
++	/* Intel SR300 depth camera */
 +	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
 +				| USB_DEVICE_ID_MATCH_INT_INFO,
 +	  .idVendor			= 0x8086,
@@ -144,7 +153,7 @@ index d360ebd..2a96d76 100644
 +	  .bInterfaceSubClass	= 1,
 +	  .bInterfaceProtocol	= 0,
 +	  .driver_info           = UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
-+    /* Intel D405 S depth camera */
++	/* Intel D405 S depth camera */
 +	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
 +				| USB_DEVICE_ID_MATCH_INT_INFO,
 +	  .idVendor			= 0x8086,
@@ -153,7 +162,7 @@ index d360ebd..2a96d76 100644
 +	  .bInterfaceSubClass	= 1,
 +	  .bInterfaceProtocol	= 0,
 +	  .driver_info           = UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
-+    /* Intel L500 depth camera */
++	/* Intel L500 depth camera */
 +	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
 +				| USB_DEVICE_ID_MATCH_INT_INFO,
 +	  .idVendor			= 0x8086,
@@ -162,14 +171,40 @@ index d360ebd..2a96d76 100644
 +	  .bInterfaceSubClass	= 1,
 +	  .bInterfaceProtocol	= 0,
 +	  .driver_info           = UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
++	/* Intel D435i depth camera */
++	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
++				| USB_DEVICE_ID_MATCH_INT_INFO,
++	  .idVendor			= 0x8086,
++	  .idProduct		= 0x0b3a,
++	  .bInterfaceClass	= USB_CLASS_VIDEO,
++	  .bInterfaceSubClass	= 1,
++	  .bInterfaceProtocol	= 0,
++	  .driver_info		= UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
++	/* Intel D430i depth camera */
++	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
++				| USB_DEVICE_ID_MATCH_INT_INFO,
++	  .idVendor			= 0x8086,
++	  .idProduct		= 0x0b4b,
++	  .bInterfaceClass	= USB_CLASS_VIDEO,
++	  .bInterfaceSubClass	= 1,
++	  .bInterfaceProtocol	= 0,
++	  .driver_info		= UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
++	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
++				| USB_DEVICE_ID_MATCH_INT_INFO,
++	  .idVendor			= 0x8086,
++	  .idProduct		= 0x0b3d,
++	  .bInterfaceClass	= USB_CLASS_VIDEO,
++	  .bInterfaceSubClass	= 1,
++	  .bInterfaceProtocol	= 0,
++	  .driver_info		= UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
  	/* Generic USB Video Class */
  	{ USB_INTERFACE_INFO(USB_CLASS_VIDEO, 1, UVC_PC_PROTOCOL_UNDEFINED) },
  	{ USB_INTERFACE_INFO(USB_CLASS_VIDEO, 1, UVC_PC_PROTOCOL_15) },
 diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
-index b843ea0..a5c9f22 100644
+index 0ea3715..e17ad54 100644
 --- a/drivers/media/usb/uvc/uvcvideo.h
 +++ b/drivers/media/usb/uvc/uvcvideo.h
-@@ -192,7 +192,7 @@
+@@ -170,7 +170,7 @@
  /* Maximum number of packets per URB. */
  #define UVC_MAX_PACKETS		32
  /* Maximum status buffer size in bytes of interrupt URB. */
@@ -179,10 +214,10 @@ index b843ea0..a5c9f22 100644
  #define UVC_CTRL_CONTROL_TIMEOUT	500
  #define UVC_CTRL_STREAMING_TIMEOUT	5000
 diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
-index 772033d..da27148 100644
+index 082dc14..fab1e7a 100644
 --- a/include/uapi/linux/videodev2.h
 +++ b/include/uapi/linux/videodev2.h
-@@ -699,6 +699,7 @@ struct v4l2_pix_format {
+@@ -707,6 +707,7 @@ struct v4l2_pix_format {
  #define V4L2_META_FMT_VSP1_HGO    v4l2_fourcc('V', 'S', 'P', 'H') /* R-Car VSP1 1-D Histogram */
  #define V4L2_META_FMT_VSP1_HGT    v4l2_fourcc('V', 'S', 'P', 'T') /* R-Car VSP1 2-D Histogram */
  #define V4L2_META_FMT_UVC         v4l2_fourcc('U', 'V', 'C', 'H') /* UVC Payload Header metadata */

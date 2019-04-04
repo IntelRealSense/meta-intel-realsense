@@ -1,0 +1,25 @@
+From 594a9880f178104c59fceedb62ca90bd728d32e5 Mon Sep 17 00:00:00 2001
+From: Scott Ware <scott.r.ware@intel.com>
+Date: Thu, 4 Apr 2019 17:28:00 +0100
+Subject: [PATCH 3/3] Discard frame on buffer overflow
+
+Signed-off-by: Scott Ware <scott.r.ware@intel.com>
+---
+ drivers/media/usb/uvc/uvc_video.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/media/usb/uvc/uvc_video.c b/drivers/media/usb/uvc/uvc_video.c
+index 255aa70..cc92b022 100644
+--- a/drivers/media/usb/uvc/uvc_video.c
++++ b/drivers/media/usb/uvc/uvc_video.c
+@@ -1095,6 +1095,7 @@ static void uvc_video_decode_data(struct uvc_streaming *stream,
+ 	/* Complete the current frame if the buffer size was exceeded. */
+ 	if (len > maxlen) {
+ 		uvc_trace(UVC_TRACE_FRAME, "Frame complete (overflow).\n");
++		buf->error = 1;
+ 		buf->state = UVC_BUF_STATE_READY;
+ 	}
+ }
+-- 
+2.7.4
+

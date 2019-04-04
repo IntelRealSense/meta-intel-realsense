@@ -1,7 +1,7 @@
-From 5d4492bcb3dc339ca0fa7a9f17efbf4500bdb545 Mon Sep 17 00:00:00 2001
+From d8fb5056fb97e08dea18813a9ecc955578ea155f Mon Sep 17 00:00:00 2001
 From: Scott Ware <scott.r.ware@intel.com>
-Date: Wed, 6 Jun 2018 14:29:10 +0100
-Subject: [PATCH 4/4] Bug fix for incomplete PowerLineFrequency enumeration map
+Date: Wed, 3 Apr 2019 21:53:39 +0100
+Subject: [PATCH 5/5] Bug fix for incomplete PowerLineFrequency enumeration map
 
 Signed-off-by: Scott Ware <scott.r.ware@intel.com>
 ---

@@ -7,16 +7,25 @@ DEPENDS = "\
 
 DEPENDS += "${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', 'libpng libglu glfw gtk+3', '', d)}"
 
-RDEPENDS_${PN} = "bash"
-RDEPENDS_${PN}-examples += "${PN}"
-RDEPENDS_${PN}-graphical-examples += "${PN} libgl-mesa"
-
-EXTRA_OECMAKE = " \
-	-DBUILD_SHARED_LIBS:BOOL=ON -DBUILD_UNIT_TESTS:BOOL=OFF -DBUILD_EXAMPLES:BOOL=ON -DUSE_SYSTEM_LIBUSB:BOOL=ON \
-	-DBUILD_GRAPHICAL_EXAMPLES:BOOL=${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', 'ON', 'OFF', d)} \
+RDEPENDS_${PN} = "\
+    bash \
+"
+RDEPENDS_${PN}-examples += "\
+    ${PN} \
+"
+RDEPENDS_${PN}-graphical-examples += "\
+    ${PN} \
+    libgl-mesa \
 "
 
-PACKAGECONFIG ??= ""
+EXTRA_OECMAKE = " \
+	-DBUILD_SHARED_LIBS:BOOL=ON \
+	-DBUILD_UNIT_TESTS:BOOL=OFF \
+	-DBUILD_EXAMPLES:BOOL=ON \
+	-DUSE_SYSTEM_LIBUSB:BOOL=ON \
+	-DBUILD_GRAPHICAL_EXAMPLES:BOOL=${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', 'ON', 'OFF', d)} \
+	-DBUILD_WITH_TM2:BOOL=OFF \
+"
 
 PACKAGES += "\
 	${PN}-examples \
@@ -45,10 +54,13 @@ FILES_${PN}-examples = "\
 
 FILES_${PN}-graphical-examples = "\
 	${bindir}/rs-align \
+	${bindir}/rs-callback \
 	${bindir}/rs-capture \
 	${bindir}/rs-measure \
+	${bindir}/rs-motion \
 	${bindir}/rs-multicam \
 	${bindir}/rs-pointcloud \
+	${bindir}/rs-pose \
 	${bindir}/rs-post-processing \
 	${bindir}/rs-record-playback \
 	${bindir}/rs-sensor-control \

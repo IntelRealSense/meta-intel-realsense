@@ -12,11 +12,11 @@ Usage
 1. Checkout the branch which corresponds with your version of Yocto
 2. Add the `meta-intel-realsense` layer to `conf/bblayers.conf` in your `build` directory
 ```bitbake
-	BBLAYERS += "path/to/meta-intel-realsense"
+    BBLAYERS += "path/to/meta-intel-realsense"
 ```
 3. Add dependency layers to `conf/bblayers.conf` in your `build` directory
 ```bitbake
-	BBLAYERS += "path/to/meta-openembedded/meta-oe"
+    BBLAYERS += "path/to/meta-openembedded/meta-oe"
 ```
 4. Create a new `conf/auto.conf` file in your `build` directory with the following contents
 ```bitbake
@@ -24,11 +24,30 @@ Usage
 ```
 5. Include librealsense in your image by adding the following to `conf/auto.conf`
 ```bitbake
-    CORE_IMAGE_EXTRA_INSTALL += "librealsense2 librealsense2-examples"
+    CORE_IMAGE_EXTRA_INSTALL += "librealsense2 librealsense2-tools"
+
+    # Optional
+    CORE_IMAGE_EXTRA_INSTALL += "librealsense2-debug-tools"
 ```
-6. If you are building an image with a graphical desktop you can add the following to `conf/auto.conf`
+### Samples
+To include sample apps in your image add the following to `conf/auto.conf`
+```bitbake
+    CORE_IMAGE_EXTRA_INSTALL += "librealsense2-examples"
+```
+If you are building an image with a graphical desktop you can also add the following
 ```bitbake
     CORE_IMAGE_EXTRA_INSTALL += "librealsense2-graphical-examples"
+```
+
+### Python
+To include Python support in your image include the following in your `conf/auto.conf`
+
+```bitbake
+    # Python 2.x
+    CORE_IMAGE_EXTRA_INSTALL += "python-pyrealsense2"
+
+    # Python 3.x
+    CORE_IMAGE_EXTRA_INSTALL += "python3-pyrealsense2"
 ```
 
 License

@@ -49,22 +49,28 @@ FILES_${PN}-examples = "\
 	${bindir}/rs-color \
 	${bindir}/rs-depth \
 	${bindir}/rs-distance \
+	${bindir}/rs-hello-realsense \
+	${bindir}/rs-pose \
+	${bindir}/rs-pose-and-image \
+	${bindir}/rs-pose-predict \
 	${bindir}/rs-save-to-disk \
 "
 
 FILES_${PN}-graphical-examples = "\
 	${bindir}/rs-align \
+	${bindir}/rs-align-advanced \
+	${bindir}/rs-ar-basic \
 	${bindir}/rs-callback \
 	${bindir}/rs-capture \
 	${bindir}/rs-measure \
 	${bindir}/rs-motion \
 	${bindir}/rs-multicam \
 	${bindir}/rs-pointcloud \
-	${bindir}/rs-pose \
 	${bindir}/rs-post-processing \
 	${bindir}/rs-record-playback \
 	${bindir}/rs-sensor-control \
 	${bindir}/rs-software-device \
+	${bindir}/rs-trajectory \
 "
 
 FILES_${PN}-tools = "\

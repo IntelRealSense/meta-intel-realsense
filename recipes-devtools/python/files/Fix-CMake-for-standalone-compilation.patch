@@ -1,18 +1,18 @@
-From 1a16d9c39898a5ad21e361a4fd9a6e532528a7bd Mon Sep 17 00:00:00 2001
+From 138ce0fcaee8a72b645b8f283a912753a3fe0351 Mon Sep 17 00:00:00 2001
 From: Scott Ware <scott.r.ware@intel.com>
-Date: Fri, 5 Apr 2019 12:31:55 +0100
+Date: Tue, 16 Apr 2019 12:22:17 +0100
 Subject: [PATCH] Fix CMake for standalone compilation
 
 Signed-off-by: Scott Ware <scott.r.ware@intel.com>
 ---
- CMakeLists.txt | 34 ++++++++++++++++------------------
- 1 file changed, 16 insertions(+), 18 deletions(-)
+ CMakeLists.txt | 37 ++++++++++++++++++-------------------
+ 1 file changed, 18 insertions(+), 19 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index f3cb13e..358807d 100644
+index 06798f7..27886bc 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -18,20 +18,27 @@ elseif(COMPILER_SUPPORTS_CXX0X)
+@@ -22,20 +22,27 @@ elseif(COMPILER_SUPPORTS_CXX0X)
      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
  endif()
  
@@ -37,7 +37,7 @@ index f3cb13e..358807d 100644
  pybind11_add_module(pyrealsense2 SHARED python.cpp)
  target_link_libraries(pyrealsense2 PRIVATE ${DEPENDENCIES})
 -set_target_properties(pyrealsense2 PROPERTIES VERSION
--        ${REALSENSE_VERSION_STRING} SOVERSION ${REALSENSE_VERSION_MAJOR})
+-    ${REALSENSE_VERSION_STRING} SOVERSION "${REALSENSE_VERSION_MAJOR}.${REALSENSE_VERSION_MINOR}")
  set_target_properties(pyrealsense2 PROPERTIES FOLDER Wrappers/python)
 -install(TARGETS pyrealsense2 EXPORT realsense2Targets
 -		RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
@@ -47,9 +47,11 @@ index f3cb13e..358807d 100644
  
  set(RAW_RS_CPP ../../src/backend.cpp pybackend_extras.cpp pybackend.cpp
             ../../src/linux/backend-v4l2.cpp ../../src/linux/backend-hid.cpp ../../src/types.cpp
-@@ -64,15 +71,6 @@ if(USE_EXTERNAL_USB)
+@@ -67,20 +74,12 @@ pybind11_add_module(pybackend2 SHARED ${RAW_RS_CPP} ${RAW_RS_HPP})
+ if(USE_EXTERNAL_USB)
      add_dependencies(pybackend2 libusb)
  endif()
++
  target_link_libraries(pybackend2 PRIVATE ${LIBUSB1_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
 -set_target_properties(pybackend2 PROPERTIES
 -                        VERSION     ${REALSENSE_VERSION_STRING}
@@ -65,6 +67,12 @@ index f3cb13e..358807d 100644
 -)
 +target_compile_definitions(pybackend2 PRIVATE RS2_USE_V4L2_BACKEND USE_SYSTEM_LIBUSB)
 +include_directories(pybackend2 ../../include ../../src)
+ 
+ if (BUILD_PYTHON_DOCS)
+ 	add_subdirectory(docs)
+-endif()
+\ No newline at end of file
++endif()
 -- 
 2.7.4
 

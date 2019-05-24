@@ -1,19 +1,19 @@
-From 138ce0fcaee8a72b645b8f283a912753a3fe0351 Mon Sep 17 00:00:00 2001
+From 493c03230dd884df6707cf5f8bf7d673b0894b1f Mon Sep 17 00:00:00 2001
 From: Scott Ware <scott.r.ware@intel.com>
-Date: Tue, 16 Apr 2019 12:22:17 +0100
+Date: Fri, 24 May 2019 20:37:09 +0100
 Subject: [PATCH] Fix CMake for standalone compilation
 
 Signed-off-by: Scott Ware <scott.r.ware@intel.com>
 ---
- CMakeLists.txt | 37 ++++++++++++++++++-------------------
- 1 file changed, 18 insertions(+), 19 deletions(-)
+ CMakeLists.txt | 43 +++++++++++++++++++-----------------------
+ 1 file changed, 19 insertions(+), 24 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 06798f7..27886bc 100644
+index 257e8f5..ed52d71 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -22,20 +22,27 @@ elseif(COMPILER_SUPPORTS_CXX0X)
-     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+@@ -7,20 +7,27 @@ if (NOT BUILD_PYTHON_BINDINGS)
+     message(WARNING "Python Bindings being built despite unset option because they are required for python documentation")
  endif()
  
 +find_package(PkgConfig)
@@ -47,15 +47,20 @@ index 06798f7..27886bc 100644
  
  set(RAW_RS_CPP ../../src/backend.cpp pybackend_extras.cpp pybackend.cpp
             ../../src/linux/backend-v4l2.cpp ../../src/linux/backend-hid.cpp ../../src/types.cpp
-@@ -67,20 +74,12 @@ pybind11_add_module(pybackend2 SHARED ${RAW_RS_CPP} ${RAW_RS_HPP})
- if(USE_EXTERNAL_USB)
-     add_dependencies(pybackend2 libusb)
+@@ -49,24 +56,12 @@ else() # Some other windows version
  endif()
-+
- target_link_libraries(pybackend2 PRIVATE ${LIBUSB1_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
+ 
+ pybind11_add_module(pybackend2 SHARED ${RAW_RS_CPP} ${RAW_RS_HPP})
+-include(libusb_config)
+-if(USE_EXTERNAL_USB)
+-    add_dependencies(pybackend2 libusb)
+-endif()
+-target_link_libraries(pybackend2 PRIVATE usb ${CMAKE_THREAD_LIBS_INIT})
 -set_target_properties(pybackend2 PROPERTIES
 -                        VERSION     ${REALSENSE_VERSION_STRING}
 -                        SOVERSION   ${REALSENSE_VERSION_MAJOR})
++add_dependencies(pybackend2 libusb)
++target_link_libraries(pybackend2 PRIVATE ${LIBUSB1_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
  set_target_properties(pybackend2 PROPERTIES FOLDER Wrappers/python)
 -include_directories(pybackend2 ../../include)
 -

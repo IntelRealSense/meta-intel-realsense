@@ -20,7 +20,6 @@ PR = "r0"
 S = "${WORKDIR}/git/wrappers/python"
 
 EXTRA_OECMAKE = " \
-	-DUSE_EXTERNAL_USB:BOOL=ON \
 	-DPYTHON_EXECUTABLE=${PYTHON} \
 "
 

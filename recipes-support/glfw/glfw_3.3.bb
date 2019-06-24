@@ -35,5 +35,5 @@ EXTRA_OECMAKE += "\
 "
 
 FILES_${PN}-dev += "\
-	${libdir}/cmake \
+    ${libdir}/cmake \
 "

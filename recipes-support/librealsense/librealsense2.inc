@@ -19,63 +19,63 @@ RDEPENDS_${PN}-graphical-examples += "\
 "
 
 EXTRA_OECMAKE = " \
-	-DBUILD_SHARED_LIBS:BOOL=ON \
-	-DBUILD_UNIT_TESTS:BOOL=OFF \
-	-DBUILD_EXAMPLES:BOOL=ON \
-	-DUSE_SYSTEM_LIBUSB:BOOL=ON \
-	-DBUILD_GRAPHICAL_EXAMPLES:BOOL=${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', 'ON', 'OFF', d)} \
-	-DBUILD_WITH_TM2:BOOL=OFF \
+    -DBUILD_SHARED_LIBS:BOOL=ON \
+    -DBUILD_UNIT_TESTS:BOOL=OFF \
+    -DBUILD_EXAMPLES:BOOL=ON \
+    -DUSE_SYSTEM_LIBUSB:BOOL=ON \
+    -DBUILD_GRAPHICAL_EXAMPLES:BOOL=${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', 'ON', 'OFF', d)} \
+    -DBUILD_WITH_TM2:BOOL=OFF \
 "
 
 PACKAGES += "\
-	${PN}-examples \
-	${PN}-tools \
-	${PN}-debug-tools \
+    ${PN}-examples \
+    ${PN}-tools \
+    ${PN}-debug-tools \
 "
 
 PACKAGES += "${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', '${PN}-graphical-examples', '', d)}"
 
 do_install_append() {
-	install -d "${D}${sysconfdir}/udev/rules.d"
-	install -m 0644 ${S}/config/99-realsense-libusb.rules ${D}${sysconfdir}/udev/rules.d/99-${BPN}-libusb.rules
+    install -d "${D}${sysconfdir}/udev/rules.d"
+    install -m 0644 ${S}/config/99-realsense-libusb.rules ${D}${sysconfdir}/udev/rules.d/99-${BPN}-libusb.rules
 }
 
 FILES_${PN} = "\
-	${libdir}/${PN}.so.* \
-	${sysconfdir}/udev/rules.d/* \
+    ${libdir}/${PN}.so.* \
+    ${sysconfdir}/udev/rules.d/* \
 "
 
 FILES_${PN}-examples = "\
-	${bindir}/rs-color \
-	${bindir}/rs-depth \
-	${bindir}/rs-distance \
-	${bindir}/rs-hello-realsense \
-	${bindir}/rs-pose \
-	${bindir}/rs-pose-and-image \
-	${bindir}/rs-pose-predict \
-	${bindir}/rs-save-to-disk \
+    ${bindir}/rs-color \
+    ${bindir}/rs-depth \
+    ${bindir}/rs-distance \
+    ${bindir}/rs-hello-realsense \
+    ${bindir}/rs-pose \
+    ${bindir}/rs-pose-and-image \
+    ${bindir}/rs-pose-predict \
+    ${bindir}/rs-save-to-disk \
 "
 
 FILES_${PN}-graphical-examples = "\
-	${bindir}/rs-align \
-	${bindir}/rs-align-advanced \
-	${bindir}/rs-ar-basic \
-	${bindir}/rs-callback \
-	${bindir}/rs-capture \
-	${bindir}/rs-measure \
-	${bindir}/rs-motion \
-	${bindir}/rs-multicam \
-	${bindir}/rs-pointcloud \
-	${bindir}/rs-post-processing \
-	${bindir}/rs-record-playback \
-	${bindir}/rs-sensor-control \
-	${bindir}/rs-software-device \
-	${bindir}/rs-trajectory \
+    ${bindir}/rs-align \
+    ${bindir}/rs-align-advanced \
+    ${bindir}/rs-ar-basic \
+    ${bindir}/rs-callback \
+    ${bindir}/rs-capture \
+    ${bindir}/rs-measure \
+    ${bindir}/rs-motion \
+    ${bindir}/rs-multicam \
+    ${bindir}/rs-pointcloud \
+    ${bindir}/rs-post-processing \
+    ${bindir}/rs-record-playback \
+    ${bindir}/rs-sensor-control \
+    ${bindir}/rs-software-device \
+    ${bindir}/rs-trajectory \
 "
 
 FILES_${PN}-tools = "\
     ${bindir}/realsense-viewer \
-	${bindir}/rs-convert \
+    ${bindir}/rs-convert \
     ${bindir}/rs-depth-quality \
 "
 

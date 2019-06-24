@@ -11,8 +11,8 @@ DEPENDS += "\
 "
 
 SRC_URI = "\
-	git://github.com/IntelRealSense/librealsense.git;tag=v${PV} \
-	file://Fix-CMake-for-standalone-compilation.patch \
+    git://github.com/IntelRealSense/librealsense.git;tag=v${PV} \
+    file://Fix-CMake-for-standalone-compilation.patch \
 "
 
 PR = "r0"
@@ -20,7 +20,7 @@ PR = "r0"
 S = "${WORKDIR}/git/wrappers/python"
 
 EXTRA_OECMAKE = " \
-	-DPYTHON_EXECUTABLE=${PYTHON} \
+    -DPYTHON_EXECUTABLE=${PYTHON} \
 "
 
 do_install() {

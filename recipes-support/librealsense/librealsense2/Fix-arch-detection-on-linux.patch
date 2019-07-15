@@ -1,6 +1,6 @@
-From 88ee86f60c5454100e5bfa3c7a28201fbf244b3a Mon Sep 17 00:00:00 2001
+From 0b240f1def08da222a921d720697131aca0d7e54 Mon Sep 17 00:00:00 2001
 From: Scott Ware <scott.r.ware@intel.com>
-Date: Mon, 15 Jul 2019 11:33:51 +0100
+Date: Mon, 15 Jul 2019 15:11:38 +0100
 Subject: [PATCH] Fix arch detection on linux
 
 Signed-off-by: Scott Ware <scott.r.ware@intel.com>
@@ -9,10 +9,10 @@ Signed-off-by: Scott Ware <scott.r.ware@intel.com>
  1 file changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/CMake/unix_config.cmake b/CMake/unix_config.cmake
-index a44d6e7..3d399b5 100644
+index ba9210b..6457766 100644
 --- a/CMake/unix_config.cmake
 +++ b/CMake/unix_config.cmake
-@@ -6,18 +6,17 @@ macro(os_set_flags)
+@@ -5,18 +5,17 @@ macro(os_set_flags)
      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -pedantic -g -Wno-missing-field-initializers")
      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-switch -Wno-multichar -Wsequence-point -Wformat-security")
  
@@ -32,8 +32,8 @@ index a44d6e7..3d399b5 100644
 -    endif(${MACHINE} MATCHES "arm-linux-gnueabihf")
 +    endif(${CMAKE_SYSTEM_PROCESSOR} MATCHES "arm")
  
-     if(NOT BUILD_WITH_OPENMP)
-         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pthread")
+     if(BUILD_WITH_OPENMP)
+         find_package(OpenMP REQUIRED)
 -- 
 2.7.4
 

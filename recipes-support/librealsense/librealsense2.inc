@@ -22,6 +22,7 @@ EXTRA_OECMAKE = " \
     -DBUILD_SHARED_LIBS:BOOL=ON \
     -DBUILD_UNIT_TESTS:BOOL=OFF \
     -DBUILD_EXAMPLES:BOOL=ON \
+    -DBUILD_WITH_OPENMP:BOOL=OFF \
     -DUSE_SYSTEM_LIBUSB:BOOL=ON \
     -DBUILD_GRAPHICAL_EXAMPLES:BOOL=${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', 'ON', 'OFF', d)} \
     -DBUILD_WITH_TM2:BOOL=OFF \
@@ -41,7 +42,7 @@ do_install_append() {
 }
 
 FILES_${PN} = "\
-    ${libdir}/${PN}.so.* \
+    ${libdir}/${PN}*.so.* \
     ${sysconfdir}/udev/rules.d/* \
 "
 
@@ -62,6 +63,7 @@ FILES_${PN}-graphical-examples = "\
     ${bindir}/rs-ar-basic \
     ${bindir}/rs-callback \
     ${bindir}/rs-capture \
+    ${bindir}/rs-gl \
     ${bindir}/rs-measure \
     ${bindir}/rs-motion \
     ${bindir}/rs-multicam \
@@ -80,9 +82,11 @@ FILES_${PN}-tools = "\
 "
 
 FILES_${PN}-debug-tools = "\
+    ${bindir}/rs-benchmark \
     ${bindir}/rs-data-collect \
     ${bindir}/rs-enumerate-devices \
     ${bindir}/rs-fw-logger \
+    ${bindir}/rs-record \
     ${bindir}/rs-rosbag-inspector \
     ${bindir}/rs-terminal \
 "

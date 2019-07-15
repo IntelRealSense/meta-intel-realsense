@@ -1,0 +1,39 @@
+From 5869bc57418df4fb0970d0610902ff1058782e5a Mon Sep 17 00:00:00 2001
+From: Scott Ware <scott.r.ware@intel.com>
+Date: Mon, 15 Jul 2019 14:27:01 +0100
+Subject: [PATCH] Fix arch detection on linux
+
+Signed-off-by: Scott Ware <scott.r.ware@intel.com>
+---
+ CMake/unix_config.cmake | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/CMake/unix_config.cmake b/CMake/unix_config.cmake
+index 3bcfb55..67548b5 100644
+--- a/CMake/unix_config.cmake
++++ b/CMake/unix_config.cmake
+@@ -8,18 +8,17 @@ macro(os_set_flags)
+ 
+     add_definitions(-DUSE_SYSTEM_LIBUSB)
+ 
+-    execute_process(COMMAND ${CMAKE_C_COMPILER} -dumpmachine OUTPUT_VARIABLE MACHINE)
+-    if(${MACHINE} MATCHES "arm-linux-gnueabihf")
++    if(${CMAKE_C_COMPILER} MATCHES "arm")
+         set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -mfpu=neon -mfloat-abi=hard -ftree-vectorize")
+         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mfpu=neon -mfloat-abi=hard -ftree-vectorize")
+-    elseif(${MACHINE} MATCHES "aarch64-linux-gnu")
++    elseif(${CMAKE_C_COMPILER} MATCHES "aarch64")
+         set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -mstrict-align -ftree-vectorize")
+         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mstrict-align -ftree-vectorize")
+     else()
+         set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -mssse3")
+         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mssse3")
+         set(LRS_TRY_USE_AVX true)
+-    endif(${MACHINE} MATCHES "arm-linux-gnueabihf")
++    endif(${CMAKE_C_COMPILER} MATCHES "arm")
+ 
+     if(NOT BUILD_WITH_OPENMP)
+         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pthread")
+-- 
+2.7.4
+

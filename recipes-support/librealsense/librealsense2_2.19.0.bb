@@ -9,6 +9,7 @@ SRC_URI = "\
 	git://github.com/IntelRealSense/librealsense.git;tag=v${PV} \
 	file://Remove-R200-fix-from-udev-rules.patch \
 	file://Use-system-GLFW-library.patch \
+	file://Fix-arch-detection-on-linux.patch \
 "
 
 PR = "r0"

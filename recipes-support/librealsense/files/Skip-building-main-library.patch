@@ -1,20 +1,20 @@
-From 59dbf8ac20f3b89b1d02bae742277a039ed7adf1 Mon Sep 17 00:00:00 2001
+From adcb602fd8b68af4e8166ffac810967b8530cf52 Mon Sep 17 00:00:00 2001
 From: Scott Ware <scott.r.ware@intel.com>
-Date: Thu, 18 Jul 2019 15:34:45 +0100
+Date: Tue, 8 Oct 2019 13:52:14 +0100
 Subject: [PATCH] Skip building main library
 
 Signed-off-by: Scott Ware <scott.r.ware@intel.com>
 ---
  CMake/global_config.cmake      | 23 -----------------------
- CMakeLists.txt                 | 18 ------------------
+ CMakeLists.txt                 | 19 -------------------
  wrappers/python/CMakeLists.txt | 16 ++++++++++++----
- 3 files changed, 12 insertions(+), 45 deletions(-)
+ 3 files changed, 12 insertions(+), 46 deletions(-)
 
 diff --git a/CMake/global_config.cmake b/CMake/global_config.cmake
-index c25c0f0..233ce30 100644
+index bb81220..71076c8 100644
 --- a/CMake/global_config.cmake
 +++ b/CMake/global_config.cmake
-@@ -19,9 +19,6 @@ if(ENABLE_CCACHE)
+@@ -18,9 +18,6 @@ if(ENABLE_CCACHE)
  endif()
  
  macro(global_set_flags)
@@ -24,7 +24,7 @@ index c25c0f0..233ce30 100644
      add_definitions(-DELPP_THREAD_SAFE)
      add_definitions(-DELPP_NO_DEFAULT_LOG_FILE)
  
-@@ -70,26 +67,6 @@ macro(global_set_flags)
+@@ -73,26 +70,6 @@ macro(global_set_flags)
      add_definitions(-D${BACKEND} -DUNICODE)
  endmacro()
  
@@ -52,10 +52,10 @@ index c25c0f0..233ce30 100644
      message(STATUS "Building with TM2")
      add_subdirectory(third-party/libtm)
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 46c4306..3571e22 100644
+index c560e36..1c1dac5 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -22,35 +22,17 @@ os_set_flags()
+@@ -37,29 +37,10 @@ os_set_flags()
  # macro definition located at "CMake/global_config.cmake"
  global_set_flags()
  
@@ -68,11 +68,6 @@ index 46c4306..3571e22 100644
 -# set library version
 -set_target_properties(${LRS_TARGET} PROPERTIES VERSION ${REALSENSE_VERSION_STRING} SOVERSION "${REALSENSE_VERSION_MAJOR}.${REALSENSE_VERSION_MINOR}")
 -
- # Checking Internet connection, as TM2 needs to download the FW from amazon cloud
- if(BUILD_WITH_TM2)
-     include(CMake/tm2_connectivity_check.cmake)
- endif()
- 
 -include(include/CMakeLists.txt)
 -include(src/CMakeLists.txt)
 -include(third-party/CMakeLists.txt)
@@ -84,18 +79,17 @@ index 46c4306..3571e22 100644
 -# global project configuration
 -# macro definition located at "CMake/global_config.cmake"
 -global_target_config()
- option(BUILD_CV_KINFU_EXAMPLE "Build OpenCV KinectFusion example" OFF)
- 
+-
 -include(CMake/install_config.cmake)
 -
  add_subdirectory(wrappers)
  
  if (BUILD_EXAMPLES AND BUILD_GLSL_EXTENSIONS)
 diff --git a/wrappers/python/CMakeLists.txt b/wrappers/python/CMakeLists.txt
-index aa03959..fd12ca4 100644
+index 28107ab..9bd4c89 100644
 --- a/wrappers/python/CMakeLists.txt
 +++ b/wrappers/python/CMakeLists.txt
-@@ -7,12 +7,20 @@ if (NOT BUILD_PYTHON_BINDINGS)
+@@ -7,7 +7,15 @@ if (NOT BUILD_PYTHON_BINDINGS)
      message(WARNING "Python Bindings being built despite unset option because they are required for python documentation")
  endif()
  
@@ -112,13 +106,16 @@ index aa03959..fd12ca4 100644
  
  add_subdirectory(third_party/pybind11)
  
- pybind11_add_module(pyrealsense2 SHARED python.cpp)
+@@ -30,7 +38,7 @@ set(PYRS_CPP
+ )
+ 
+ pybind11_add_module(pyrealsense2 SHARED python.hpp ${PYRS_CPP})
 -target_link_libraries(pyrealsense2 PRIVATE ${DEPENDENCIES})
 +target_link_libraries(pyrealsense2 PRIVATE ${REALSENSE2_LIBRARIES})
  set_target_properties(pyrealsense2 PROPERTIES VERSION
      ${REALSENSE_VERSION_STRING} SOVERSION "${REALSENSE_VERSION_MAJOR}.${REALSENSE_VERSION_MINOR}")
  set_target_properties(pyrealsense2 PROPERTIES FOLDER Wrappers/python)
-@@ -99,7 +107,7 @@ set_target_properties(pybackend2 PROPERTIES
+@@ -117,7 +125,7 @@ set_target_properties(pybackend2 PROPERTIES
                          VERSION     ${REALSENSE_VERSION_STRING}
                          SOVERSION   ${REALSENSE_VERSION_MAJOR})
  set_target_properties(pybackend2 PROPERTIES FOLDER Wrappers/python)
@@ -127,7 +124,7 @@ index aa03959..fd12ca4 100644
  
  install(TARGETS pybackend2
          EXPORT realsense2Targets
-@@ -110,4 +118,4 @@ install(TARGETS pybackend2
+@@ -128,4 +136,4 @@ install(TARGETS pybackend2
  
  if (BUILD_PYTHON_DOCS)
      add_subdirectory(docs)

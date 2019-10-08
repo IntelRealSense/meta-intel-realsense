@@ -77,6 +77,7 @@ FILES_${PN}-graphical-examples = "\
     ${bindir}/rs-record-playback \
     ${bindir}/rs-sensor-control \
     ${bindir}/rs-software-device \
+    ${bindir}/rs-tracking-and-depth \
     ${bindir}/rs-trajectory \
 "
 
@@ -84,6 +85,7 @@ FILES_${PN}-tools = "\
     ${bindir}/realsense-viewer \
     ${bindir}/rs-convert \
     ${bindir}/rs-depth-quality \
+    ${bindir}/rs-fw-update \
 "
 
 FILES_${PN}-debug-tools = "\

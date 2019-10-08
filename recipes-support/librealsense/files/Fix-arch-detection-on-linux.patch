@@ -1,7 +1,7 @@
-From 0b240f1def08da222a921d720697131aca0d7e54 Mon Sep 17 00:00:00 2001
+From 0671cf458287a3e4f5d9877213471cb5c3c5cd70 Mon Sep 17 00:00:00 2001
 From: Scott Ware <scott.r.ware@intel.com>
-Date: Mon, 15 Jul 2019 15:11:38 +0100
-Subject: [PATCH] Fix arch detection on linux
+Date: Tue, 8 Oct 2019 12:07:04 +0100
+Subject: [PATCH 1/2] Fix arch detection on linux
 
 Signed-off-by: Scott Ware <scott.r.ware@intel.com>
 ---
@@ -9,12 +9,12 @@ Signed-off-by: Scott Ware <scott.r.ware@intel.com>
  1 file changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/CMake/unix_config.cmake b/CMake/unix_config.cmake
-index ba9210b..6457766 100644
+index 2cb54c7..e851fd4 100644
 --- a/CMake/unix_config.cmake
 +++ b/CMake/unix_config.cmake
 @@ -5,18 +5,17 @@ macro(os_set_flags)
      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -pedantic -g -Wno-missing-field-initializers")
-     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-switch -Wno-multichar -Wsequence-point -Wformat-security")
+     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-switch -Wno-multichar -Wsequence-point -Wformat -Wformat-security")
  
 -    execute_process(COMMAND ${CMAKE_C_COMPILER} -dumpmachine OUTPUT_VARIABLE MACHINE)
 -    if(${MACHINE} MATCHES "arm-linux-gnueabihf")

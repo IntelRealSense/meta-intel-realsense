@@ -97,3 +97,6 @@ FILES_${PN}-debug-tools = "\
     ${bindir}/rs-rosbag-inspector \
     ${bindir}/rs-terminal \
 "
+
+FILES_${PN}-dev += " /usr/lib/cmake "
+

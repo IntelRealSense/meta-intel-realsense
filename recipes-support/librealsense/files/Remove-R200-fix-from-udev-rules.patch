@@ -1,7 +1,7 @@
-From dd470e89d5635b3b94e1bfdecc5b51cdf161b8d5 Mon Sep 17 00:00:00 2001
+From a0a068b3ba9bc6d46348367cecf7a4248be8e420 Mon Sep 17 00:00:00 2001
 From: Scott Ware <scott.r.ware@intel.com>
-Date: Tue, 8 Oct 2019 12:08:04 +0100
-Subject: [PATCH 2/2] Remove R200 fix from udev rules
+Date: Tue, 28 Jan 2020 15:48:58 +0000
+Subject: [PATCH 2/3] Remove R200 fix from udev rules
 
 Signed-off-by: Scott Ware <scott.r.ware@intel.com>
 ---
@@ -9,7 +9,7 @@ Signed-off-by: Scott Ware <scott.r.ware@intel.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/config/99-realsense-libusb.rules b/config/99-realsense-libusb.rules
-index 30f522d..8b6e96a 100644
+index 0144322..e3eb567 100644
 --- a/config/99-realsense-libusb.rules
 +++ b/config/99-realsense-libusb.rules
 @@ -1,5 +1,5 @@

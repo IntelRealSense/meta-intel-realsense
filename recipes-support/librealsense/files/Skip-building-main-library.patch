@@ -1,7 +1,7 @@
-From adcb602fd8b68af4e8166ffac810967b8530cf52 Mon Sep 17 00:00:00 2001
+From 59580857b7c749e5bc75adcb4c8449bb09dba513 Mon Sep 17 00:00:00 2001
 From: Scott Ware <scott.r.ware@intel.com>
-Date: Tue, 8 Oct 2019 13:52:14 +0100
-Subject: [PATCH] Skip building main library
+Date: Tue, 28 Jan 2020 15:55:18 +0000
+Subject: [PATCH 3/3] Skip building main library
 
 Signed-off-by: Scott Ware <scott.r.ware@intel.com>
 ---
@@ -11,7 +11,7 @@ Signed-off-by: Scott Ware <scott.r.ware@intel.com>
  3 files changed, 12 insertions(+), 46 deletions(-)
 
 diff --git a/CMake/global_config.cmake b/CMake/global_config.cmake
-index bb81220..71076c8 100644
+index 0cdc748..2300cfa 100644
 --- a/CMake/global_config.cmake
 +++ b/CMake/global_config.cmake
 @@ -18,9 +18,6 @@ if(ENABLE_CCACHE)
@@ -24,7 +24,7 @@ index bb81220..71076c8 100644
      add_definitions(-DELPP_THREAD_SAFE)
      add_definitions(-DELPP_NO_DEFAULT_LOG_FILE)
  
-@@ -73,26 +70,6 @@ macro(global_set_flags)
+@@ -68,26 +65,6 @@ macro(global_set_flags)
      add_definitions(-D${BACKEND} -DUNICODE)
  endmacro()
  
@@ -52,10 +52,10 @@ index bb81220..71076c8 100644
      message(STATUS "Building with TM2")
      add_subdirectory(third-party/libtm)
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index c560e36..1c1dac5 100644
+index 16ced1b..7320459 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -37,29 +37,10 @@ os_set_flags()
+@@ -43,29 +43,10 @@ os_set_flags()
  # macro definition located at "CMake/global_config.cmake"
  global_set_flags()
  
@@ -86,7 +86,7 @@ index c560e36..1c1dac5 100644
  
  if (BUILD_EXAMPLES AND BUILD_GLSL_EXTENSIONS)
 diff --git a/wrappers/python/CMakeLists.txt b/wrappers/python/CMakeLists.txt
-index 28107ab..9bd4c89 100644
+index a070973..52d0018 100644
 --- a/wrappers/python/CMakeLists.txt
 +++ b/wrappers/python/CMakeLists.txt
 @@ -7,7 +7,15 @@ if (NOT BUILD_PYTHON_BINDINGS)
@@ -115,7 +115,7 @@ index 28107ab..9bd4c89 100644
  set_target_properties(pyrealsense2 PROPERTIES VERSION
      ${REALSENSE_VERSION_STRING} SOVERSION "${REALSENSE_VERSION_MAJOR}.${REALSENSE_VERSION_MINOR}")
  set_target_properties(pyrealsense2 PROPERTIES FOLDER Wrappers/python)
-@@ -117,7 +125,7 @@ set_target_properties(pybackend2 PROPERTIES
+@@ -125,7 +133,7 @@ set_target_properties(pybackend2 PROPERTIES
                          VERSION     ${REALSENSE_VERSION_STRING}
                          SOVERSION   ${REALSENSE_VERSION_MAJOR})
  set_target_properties(pybackend2 PROPERTIES FOLDER Wrappers/python)
@@ -124,7 +124,7 @@ index 28107ab..9bd4c89 100644
  
  install(TARGETS pybackend2
          EXPORT realsense2Targets
-@@ -128,4 +136,4 @@ install(TARGETS pybackend2
+@@ -136,4 +144,4 @@ install(TARGETS pybackend2
  
  if (BUILD_PYTHON_DOCS)
      add_subdirectory(docs)

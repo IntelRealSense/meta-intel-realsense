@@ -16,7 +16,7 @@ DEPENDS = "\
 
 REQUIRED_DISTRO_FEATURES = "x11"
 
-inherit pkgconfig cmake distro_features_check
+inherit pkgconfig cmake features_check
 
 SRC_URI = "https://github.com/glfw/glfw/releases/download/${PV}/${BPN}-${PV}.zip"
 SRC_URI[md5sum] = "e4f3c4848710093f29b1781f2d1b7acc"

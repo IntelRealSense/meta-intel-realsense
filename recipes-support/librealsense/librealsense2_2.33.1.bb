@@ -29,7 +29,6 @@ PR = "r0"
 
 EXTRA_OECMAKE += " \
     -DBUILD_SHARED_LIBS:BOOL=ON \
-    -DBUILD_WITH_TM2:BOOL=ON \
     -DBUILD_EXAMPLES:BOOL=ON \
     -DBUILD_GRAPHICAL_EXAMPLES:BOOL=${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', 'ON', 'OFF', d)} \
 "
@@ -66,6 +65,7 @@ FILES_${PN}-examples = "\
 FILES_${PN}-graphical-examples = "\
     ${bindir}/rs-align \
     ${bindir}/rs-align-advanced \
+    ${bindir}/rs-ar-advanced \
     ${bindir}/rs-ar-basic \
     ${bindir}/rs-callback \
     ${bindir}/rs-capture \

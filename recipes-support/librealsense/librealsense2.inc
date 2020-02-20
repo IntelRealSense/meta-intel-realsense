@@ -11,6 +11,7 @@ SRC_URI = "\
 
 SRC_URI += "\
     file://Fix-arch-detection-on-linux.patch \
+    file://Fix-libusb-detection.patch \
 "
 
 S = "${WORKDIR}/git"
@@ -18,6 +19,5 @@ S = "${WORKDIR}/git"
 EXTRA_OECMAKE = " \
     -DBUILD_UNIT_TESTS:BOOL=OFF \
     -DBUILD_WITH_OPENMP:BOOL=OFF \
-    -DUSE_SYSTEM_LIBUSB:BOOL=ON \
-    -DBUILD_WITH_TM2:BOOL=OFF \
+    -DUSE_EXTERNAL_USB:BOOL=ON \
 "

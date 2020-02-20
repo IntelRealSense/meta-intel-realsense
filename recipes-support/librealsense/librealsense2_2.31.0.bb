@@ -29,6 +29,7 @@ PR = "r0"
 
 EXTRA_OECMAKE += " \
     -DBUILD_SHARED_LIBS:BOOL=ON \
+    -DBUILD_WITH_TM2:BOOL=ON \
     -DBUILD_EXAMPLES:BOOL=ON \
     -DBUILD_GRAPHICAL_EXAMPLES:BOOL=${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', 'ON', 'OFF', d)} \
 "

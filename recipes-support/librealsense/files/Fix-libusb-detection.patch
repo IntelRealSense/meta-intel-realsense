@@ -1,0 +1,38 @@
+From d297a8662216de6e6d368bb5cc8c24f00daf8e43 Mon Sep 17 00:00:00 2001
+From: Scott Ware <scott.r.ware@intel.com>
+Date: Thu, 20 Feb 2020 22:12:51 +0000
+Subject: [PATCH] Fix libusb detection
+
+Signed-off-by: Scott Ware <scott.r.ware@intel.com>
+---
+ CMake/global_config.cmake | 2 +-
+ src/linux/CMakeLists.txt  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/CMake/global_config.cmake b/CMake/global_config.cmake
+index bb81220..4e2c5fb 100644
+--- a/CMake/global_config.cmake
++++ b/CMake/global_config.cmake
+@@ -98,7 +98,7 @@ macro(add_tm2)
+     add_subdirectory(third-party/libtm)
+     include(libusb_config)
+     if(USE_EXTERNAL_USB)
+-        add_dependencies(tm libusb)
++        add_dependencies(tm usb)
+     endif()
+     target_compile_definitions(${LRS_TARGET} PRIVATE WITH_TRACKING=1 BUILD_STATIC=1)
+     target_link_libraries(${LRS_TARGET} PRIVATE tm ${CMAKE_THREAD_LIBS_INIT})
+diff --git a/src/linux/CMakeLists.txt b/src/linux/CMakeLists.txt
+index 62f0bcd..7c3e051 100644
+--- a/src/linux/CMakeLists.txt
++++ b/src/linux/CMakeLists.txt
+@@ -11,5 +11,5 @@ target_sources(${LRS_TARGET}
+ include(libusb_config)
+ target_link_libraries(${LRS_TARGET} PRIVATE usb)
+ if(USE_EXTERNAL_USB)
+-    add_dependencies(${LRS_TARGET} libusb)
++    add_dependencies(${LRS_TARGET} usb)
+ endif()
+-- 
+2.7.4
+

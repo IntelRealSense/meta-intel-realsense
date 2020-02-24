@@ -1,7 +1,7 @@
-From 15d3e3ee748be3f8950970f82416a23c94b61494 Mon Sep 17 00:00:00 2001
+From 0e8f9554c777c400ed54e561317118a396af02cf Mon Sep 17 00:00:00 2001
 From: Scott Ware <scott.r.ware@intel.com>
-Date: Wed, 2 Oct 2019 11:13:34 +0100
-Subject: [PATCH 2/4] Add missing HID timestamp patch for Gyro sensor.
+Date: Mon, 24 Feb 2020 13:43:12 +0000
+Subject: [PATCH 3/4] Add missing HID timestamp patch for Gyro sensor
 
 Signed-off-by: Scott Ware <scott.r.ware@intel.com>
 ---
@@ -22,7 +22,7 @@ index 0d9e2de..ad90203 100644
  	default:
  		break;
 diff --git a/drivers/iio/gyro/hid-sensor-gyro-3d.c b/drivers/iio/gyro/hid-sensor-gyro-3d.c
-index 08cacbb..f55ae60 100644
+index 08cacbb..a182c23 100644
 --- a/drivers/iio/gyro/hid-sensor-gyro-3d.c
 +++ b/drivers/iio/gyro/hid-sensor-gyro-3d.c
 @@ -29,11 +29,13 @@ struct gyro_3d_state {
@@ -73,14 +73,14 @@ index 08cacbb..f55ae60 100644
 +	if (atomic_read(&gyro_state->common_attributes.data_ready)) {
 +		if (!gyro_state->timestamp)
 +			gyro_state->timestamp = iio_get_time_ns(indio_dev);
-+
++			
  		hid_sensor_push_data(indio_dev,
  				gyro_state->gyro_val,
 -				sizeof(gyro_state->gyro_val));
 +				sizeof(gyro_state->gyro_val),
-+				gyro_state->timestamp);		
++				gyro_state->timestamp);
 +		gyro_state->timestamp = 0;
-+   }
++	}
  
  	return 0;
  }

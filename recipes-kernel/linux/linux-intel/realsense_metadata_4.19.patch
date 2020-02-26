@@ -1,20 +1,20 @@
-From 039cc0df98338a95b21f552d80306b3a6b6be2fc Mon Sep 17 00:00:00 2001
+From a0b8ba8e3eb792329e99d55e41ffe3c96bf14238 Mon Sep 17 00:00:00 2001
 From: Scott Ware <scott.r.ware@intel.com>
-Date: Thu, 4 Apr 2019 14:39:29 +0100
-Subject: [PATCH 2/4] Enable UVC Metadata
+Date: Wed, 26 Feb 2020 13:43:40 +0000
+Subject: [PATCH 2/2] Enable UVC Metadata
 
 Signed-off-by: Scott Ware <scott.r.ware@intel.com>
 ---
- drivers/media/usb/uvc/uvc_driver.c | 172 +++++++++++++++++++++++++++++++++++++
+ drivers/media/usb/uvc/uvc_driver.c | 227 +++++++++++++++++++++++++++++++++++++
  drivers/media/usb/uvc/uvcvideo.h   |   2 +-
  include/uapi/linux/videodev2.h     |   1 +
- 3 files changed, 174 insertions(+), 1 deletion(-)
+ 3 files changed, 229 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
-index d46dc43..a8b21d4 100644
+index a95c7fd..48c1091 100644
 --- a/drivers/media/usb/uvc/uvc_driver.c
 +++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -2345,6 +2345,8 @@ static const struct uvc_device_info uvc_quirk_force_y8 = {
+@@ -2424,6 +2424,8 @@ static const struct uvc_device_info uvc_quirk_force_y8 = {
  };
  
  #define UVC_QUIRK_INFO(q) (kernel_ulong_t)&(struct uvc_device_info){.quirks = q}
@@ -23,7 +23,7 @@ index d46dc43..a8b21d4 100644
  
  /*
   * The Logitech cameras listed below have their interface class set to
-@@ -2818,6 +2820,176 @@ static const struct usb_device_id uvc_ids[] = {
+@@ -2897,6 +2899,231 @@ static const struct usb_device_id uvc_ids[] = {
  	  .bInterfaceSubClass	= 1,
  	  .bInterfaceProtocol	= 0,
  	  .driver_info		= (kernel_ulong_t)&uvc_quirk_force_y8 },
@@ -35,7 +35,7 @@ index d46dc43..a8b21d4 100644
 +	  .bInterfaceClass	= USB_CLASS_VIDEO,
 +	  .bInterfaceSubClass	= 1,
 +	  .bInterfaceProtocol	= 0,
-+	  .driver_info           = UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
++	  .driver_info		= UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
 +	/* Intel D410/ASR depth camera */
 +	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
 +				| USB_DEVICE_ID_MATCH_INT_INFO,
@@ -44,7 +44,7 @@ index d46dc43..a8b21d4 100644
 +	  .bInterfaceClass	= USB_CLASS_VIDEO,
 +	  .bInterfaceSubClass	= 1,
 +	  .bInterfaceProtocol	= 0,
-+	  .driver_info           = UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
++	  .driver_info		= UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
 +	/* Intel D415/ASRC depth camera */
 +	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
 +				| USB_DEVICE_ID_MATCH_INT_INFO,
@@ -53,7 +53,7 @@ index d46dc43..a8b21d4 100644
 +	  .bInterfaceClass	= USB_CLASS_VIDEO,
 +	  .bInterfaceSubClass	= 1,
 +	  .bInterfaceProtocol	= 0,
-+	  .driver_info           = UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
++	  .driver_info		= UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
 +	/* Intel D430/AWG depth camera */
 +	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
 +				| USB_DEVICE_ID_MATCH_INT_INFO,
@@ -62,7 +62,7 @@ index d46dc43..a8b21d4 100644
 +	  .bInterfaceClass	= USB_CLASS_VIDEO,
 +	  .bInterfaceSubClass	= 1,
 +	  .bInterfaceProtocol	= 0,
-+	  .driver_info           = UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
++	  .driver_info		= UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
 +	/* Intel D450/AWGT depth camera */
 +	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
 +				| USB_DEVICE_ID_MATCH_INT_INFO,
@@ -71,7 +71,16 @@ index d46dc43..a8b21d4 100644
 +	  .bInterfaceClass	= USB_CLASS_VIDEO,
 +	  .bInterfaceSubClass	= 1,
 +	  .bInterfaceProtocol	= 0,
-+	  .driver_info           = UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
++	  .driver_info		= UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
++	/* USB2 Descriptor, Depth Sensor */
++	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
++				| USB_DEVICE_ID_MATCH_INT_INFO,
++	  .idVendor			= 0x8086,
++	  .idProduct		= 0x0ad6,
++	  .bInterfaceClass	= USB_CLASS_VIDEO,
++	  .bInterfaceSubClass	= 1,
++	  .bInterfaceProtocol	= 0,
++	  .driver_info		= UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
 +	/* Intel D400 IMU Module */
 +	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
 +				| USB_DEVICE_ID_MATCH_INT_INFO,
@@ -89,7 +98,7 @@ index d46dc43..a8b21d4 100644
 +	  .bInterfaceClass	= USB_CLASS_VIDEO,
 +	  .bInterfaceSubClass	= 1,
 +	  .bInterfaceProtocol	= 0,
-+	  .driver_info           = UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
++	  .driver_info		= UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
 +	/* Intel D420_MM/PWGT depth camera */
 +	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
 +				| USB_DEVICE_ID_MATCH_INT_INFO,
@@ -98,7 +107,7 @@ index d46dc43..a8b21d4 100644
 +	  .bInterfaceClass	= USB_CLASS_VIDEO,
 +	  .bInterfaceSubClass	= 1,
 +	  .bInterfaceProtocol	= 0,
-+	  .driver_info           = UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
++	  .driver_info		= UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
 +	/* Intel D410_MM/ASRT depth camera */
 +	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
 +				| USB_DEVICE_ID_MATCH_INT_INFO,
@@ -107,7 +116,7 @@ index d46dc43..a8b21d4 100644
 +	  .bInterfaceClass	= USB_CLASS_VIDEO,
 +	  .bInterfaceSubClass	= 1,
 +	  .bInterfaceProtocol	= 0,
-+	  .driver_info           = UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
++	  .driver_info		= UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
 +	/* Intel D400_MM/PSRT depth camera */
 +	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
 +				| USB_DEVICE_ID_MATCH_INT_INFO,
@@ -116,7 +125,7 @@ index d46dc43..a8b21d4 100644
 +	  .bInterfaceClass	= USB_CLASS_VIDEO,
 +	  .bInterfaceSubClass	= 1,
 +	  .bInterfaceProtocol	= 0,
-+	  .driver_info           = UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
++	  .driver_info		= UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
 +	/* Intel D430_MM/AWGCT depth camera */
 +	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
 +				| USB_DEVICE_ID_MATCH_INT_INFO,
@@ -125,7 +134,7 @@ index d46dc43..a8b21d4 100644
 +	  .bInterfaceClass	= USB_CLASS_VIDEO,
 +	  .bInterfaceSubClass	= 1,
 +	  .bInterfaceProtocol	= 0,
-+	  .driver_info           = UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
++	  .driver_info		= UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
 +	/* Intel D460/DS5U depth camera */
 +	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
 +				| USB_DEVICE_ID_MATCH_INT_INFO,
@@ -134,7 +143,7 @@ index d46dc43..a8b21d4 100644
 +	  .bInterfaceClass	= USB_CLASS_VIDEO,
 +	  .bInterfaceSubClass	= 1,
 +	  .bInterfaceProtocol	= 0,
-+	  .driver_info           = UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
++	  .driver_info		= UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
 +	/* Intel D435/AWGC depth camera */
 +	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
 +				| USB_DEVICE_ID_MATCH_INT_INFO,
@@ -143,7 +152,7 @@ index d46dc43..a8b21d4 100644
 +	  .bInterfaceClass	= USB_CLASS_VIDEO,
 +	  .bInterfaceSubClass	= 1,
 +	  .bInterfaceProtocol	= 0,
-+	  .driver_info           = UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
++	  .driver_info		= UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
 +	/* Intel SR300 depth camera */
 +	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
 +				| USB_DEVICE_ID_MATCH_INT_INFO,
@@ -152,7 +161,7 @@ index d46dc43..a8b21d4 100644
 +	  .bInterfaceClass	= USB_CLASS_VIDEO,
 +	  .bInterfaceSubClass	= 1,
 +	  .bInterfaceProtocol	= 0,
-+	  .driver_info           = UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
++	  .driver_info		= UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
 +	/* Intel D405 S depth camera */
 +	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
 +				| USB_DEVICE_ID_MATCH_INT_INFO,
@@ -161,7 +170,7 @@ index d46dc43..a8b21d4 100644
 +	  .bInterfaceClass	= USB_CLASS_VIDEO,
 +	  .bInterfaceSubClass	= 1,
 +	  .bInterfaceProtocol	= 0,
-+	  .driver_info           = UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
++	  .driver_info		= UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
 +	/* Intel L500 depth camera */
 +	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
 +				| USB_DEVICE_ID_MATCH_INT_INFO,
@@ -170,12 +179,39 @@ index d46dc43..a8b21d4 100644
 +	  .bInterfaceClass	= USB_CLASS_VIDEO,
 +	  .bInterfaceSubClass	= 1,
 +	  .bInterfaceProtocol	= 0,
-+	  .driver_info           = UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
++	  .driver_info		= UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
 +	/* Intel D435i depth camera */
 +	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
 +				| USB_DEVICE_ID_MATCH_INT_INFO,
 +	  .idVendor			= 0x8086,
 +	  .idProduct		= 0x0b3a,
++	  .bInterfaceClass	= USB_CLASS_VIDEO,
++	  .bInterfaceSubClass	= 1,
++	  .bInterfaceProtocol	= 0,
++	  .driver_info		= UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
++	/* Intel L515 */
++	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
++				| USB_DEVICE_ID_MATCH_INT_INFO,
++	  .idVendor			= 0x8086,
++	  .idProduct		= 0x0b3d,
++	  .bInterfaceClass	= USB_CLASS_VIDEO,
++	  .bInterfaceSubClass	= 1,
++	  .bInterfaceProtocol	= 0,
++	  .driver_info		= UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
++	/* Intel SR305 Depth Camera*/
++	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
++				| USB_DEVICE_ID_MATCH_INT_INFO,
++	  .idVendor			= 0x8086,
++	  .idProduct		= 0x0b48,
++	  .bInterfaceClass	= USB_CLASS_VIDEO,
++	  .bInterfaceSubClass	= 1,
++	  .bInterfaceProtocol	= 0,
++	  .driver_info		= UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
++	/* Intel D416 Depth Camera */
++	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
++				| USB_DEVICE_ID_MATCH_INT_INFO,
++	  .idVendor			= 0x8086,
++	  .idProduct		= 0x0b49,
 +	  .bInterfaceClass	= USB_CLASS_VIDEO,
 +	  .bInterfaceSubClass	= 1,
 +	  .bInterfaceProtocol	= 0,
@@ -189,10 +225,29 @@ index d46dc43..a8b21d4 100644
 +	  .bInterfaceSubClass	= 1,
 +	  .bInterfaceProtocol	= 0,
 +	  .driver_info		= UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
++	/* Intel D465 */
 +	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
 +				| USB_DEVICE_ID_MATCH_INT_INFO,
 +	  .idVendor			= 0x8086,
-+	  .idProduct		= 0x0b3d,
++	  .idProduct		= 0x0b4d,
++	  .bInterfaceClass	= USB_CLASS_VIDEO,
++	  .bInterfaceSubClass	= 1,
++	  .bInterfaceProtocol	= 0,
++	  .driver_info		= UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
++	/* Intel D405 */
++	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
++				| USB_DEVICE_ID_MATCH_INT_INFO,
++	  .idVendor			= 0x8086,
++	  .idProduct		= 0x0b5b,
++	  .bInterfaceClass	= USB_CLASS_VIDEO,
++	  .bInterfaceSubClass	= 1,
++	  .bInterfaceProtocol	= 0,
++	  .driver_info		= UVC_QUIRK_META(V4L2_META_FMT_D4XX) },
++	/* Intel D455 */
++	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
++				| USB_DEVICE_ID_MATCH_INT_INFO,
++	  .idVendor			= 0x8086,
++	  .idProduct		= 0x0b5c,
 +	  .bInterfaceClass	= USB_CLASS_VIDEO,
 +	  .bInterfaceSubClass	= 1,
 +	  .bInterfaceProtocol	= 0,
@@ -201,10 +256,10 @@ index d46dc43..a8b21d4 100644
  	{ USB_INTERFACE_INFO(USB_CLASS_VIDEO, 1, UVC_PC_PROTOCOL_UNDEFINED) },
  	{ USB_INTERFACE_INFO(USB_CLASS_VIDEO, 1, UVC_PC_PROTOCOL_15) },
 diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
-index e5f5d84..adf3a3e 100644
+index f8e0e1d..74c3e9d 100644
 --- a/drivers/media/usb/uvc/uvcvideo.h
 +++ b/drivers/media/usb/uvc/uvcvideo.h
-@@ -174,7 +174,7 @@
+@@ -199,7 +199,7 @@
  /* Maximum number of packets per URB. */
  #define UVC_MAX_PACKETS		32
  /* Maximum status buffer size in bytes of interrupt URB. */
@@ -214,10 +269,10 @@ index e5f5d84..adf3a3e 100644
  #define UVC_CTRL_CONTROL_TIMEOUT	500
  #define UVC_CTRL_STREAMING_TIMEOUT	5000
 diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
-index 6964ab3..fce26ec 100644
+index 650d3a3..0df3812 100644
 --- a/include/uapi/linux/videodev2.h
 +++ b/include/uapi/linux/videodev2.h
-@@ -744,6 +744,7 @@ struct v4l2_pix_format {
+@@ -753,6 +753,7 @@ struct v4l2_pix_format {
  #define V4L2_META_FMT_VSP1_HGO    v4l2_fourcc('V', 'S', 'P', 'H') /* R-Car VSP1 1-D Histogram */
  #define V4L2_META_FMT_VSP1_HGT    v4l2_fourcc('V', 'S', 'P', 'T') /* R-Car VSP1 2-D Histogram */
  #define V4L2_META_FMT_UVC         v4l2_fourcc('U', 'V', 'C', 'H') /* UVC Payload Header metadata */

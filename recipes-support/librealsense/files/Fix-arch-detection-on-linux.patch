@@ -1,19 +1,19 @@
-From 874501f0cda8dc5c22fa6e17b19ecb1032bf387b Mon Sep 17 00:00:00 2001
+From 90f6e255e45dcd0e774c7d0995a5519c9712a2a3 Mon Sep 17 00:00:00 2001
 From: Scott Ware <scott.r.ware@intel.com>
-Date: Tue, 28 Jan 2020 15:48:02 +0000
+Date: Mon, 8 Jun 2020 10:56:57 +0100
 Subject: [PATCH 1/3] Fix arch detection on linux
 
 Signed-off-by: Scott Ware <scott.r.ware@intel.com>
 ---
- CMake/unix_config.cmake | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ CMake/unix_config.cmake | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/CMake/unix_config.cmake b/CMake/unix_config.cmake
-index 7642c8c..34350f6 100644
+index 2ecd1ed..50dd01e 100644
 --- a/CMake/unix_config.cmake
 +++ b/CMake/unix_config.cmake
-@@ -5,18 +5,17 @@ macro(os_set_flags)
-     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -pedantic -g -Wno-missing-field-initializers")
+@@ -6,21 +6,20 @@ macro(os_set_flags)
+     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic -g -Wno-missing-field-initializers")
      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-switch -Wno-multichar -Wsequence-point -Wformat -Wformat-security")
  
 -    execute_process(COMMAND ${CMAKE_C_COMPILER} -dumpmachine OUTPUT_VARIABLE MACHINE)
@@ -25,6 +25,10 @@ index 7642c8c..34350f6 100644
 +    elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES "aarch64")
          set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -mstrict-align -ftree-vectorize")
          set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mstrict-align -ftree-vectorize")
+-    elseif(${MACHINE} MATCHES "powerpc64(le)?-linux-gnu")
++    elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES "powerpc64")
+         set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -ftree-vectorize")
+         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ftree-vectorize")
      else()
          set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -mssse3")
          set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mssse3")

@@ -2,7 +2,7 @@ DESCRIPTION = "GLFW is an Open Source, multi-platform library for creating windo
 AUTHOR = "Camilla Berglund"
 HOMEPAGE = "http://www.glfw.org/"
 LICENSE = "Zlib | Libpng"
-LIC_FILES_CHKSUM = "file://LICENSE.md;md5=90c6dd54408744b0f8a55f2a6c7ad870"
+LIC_FILES_CHKSUM = "file://LICENSE.md;md5=98d93d1ddc537f9b9ea6def64e046b5f"
 
 DEPENDS = "\
     libpng \
@@ -19,8 +19,7 @@ REQUIRED_DISTRO_FEATURES = "x11"
 inherit pkgconfig cmake features_check
 
 SRC_URI = "https://github.com/glfw/glfw/releases/download/${PV}/${BPN}-${PV}.zip"
-SRC_URI[md5sum] = "e4f3c4848710093f29b1781f2d1b7acc"
-SRC_URI[sha256sum] = "36fda4cb173e3eb2928c976b0e9b5014e2e5d12b9b787efa0aa29ffc41c37c4a"
+SRC_URI[sha256sum] = "08a33a512f29d7dbf78eab39bd7858576adcc95228c9efe8e4bc5f0f3261efc7"
 
 PR = "r0"
 

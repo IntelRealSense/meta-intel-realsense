@@ -1,6 +1,6 @@
-From a0a068b3ba9bc6d46348367cecf7a4248be8e420 Mon Sep 17 00:00:00 2001
+From e3151a52558c6882003d69602c6ebc86ff47c35a Mon Sep 17 00:00:00 2001
 From: Scott Ware <scott.r.ware@intel.com>
-Date: Tue, 28 Jan 2020 15:48:58 +0000
+Date: Mon, 8 Jun 2020 10:58:12 +0100
 Subject: [PATCH 2/3] Remove R200 fix from udev rules
 
 Signed-off-by: Scott Ware <scott.r.ware@intel.com>

@@ -1,5 +1,6 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
 
+SRC_URI += "file://hid.cfg"
 SRC_URI += "file://uvc.cfg"
 SRC_URI += "file://realsense_hid_4.9.patch"
 SRC_URI += "file://realsense_metadata_4.9.patch"

@@ -32,6 +32,7 @@ EXTRA_OECMAKE += " \
     -DBUILD_WITH_TM2:BOOL=ON \
     -DBUILD_EXAMPLES:BOOL=ON \
     -DBUILD_GRAPHICAL_EXAMPLES:BOOL=${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', 'ON', 'OFF', d)} \
+    -DBUILD_GLSL_EXTENSIONS:BOOL=${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', 'ON', 'OFF', d)} \
 "
 
 PACKAGES += "\

@@ -18,11 +18,7 @@ Usage
 ```bitbake
     BBLAYERS += "path/to/meta-openembedded/meta-oe"
 ```
-4. Create a new `conf/auto.conf` file in your `build` directory with the following contents
-```bitbake
-    require include/intel-librealsense.inc
-```
-5. Include librealsense in your image by adding the following to `conf/auto.conf`
+4. Include librealsense in your image by adding the following to `conf/auto.conf`
 ```bitbake
     CORE_IMAGE_EXTRA_INSTALL += "librealsense2 librealsense2-tools"
 
@@ -43,10 +39,6 @@ If you are building an image with a graphical desktop you can also add the follo
 To include Python support in your image include the following in your `conf/auto.conf`
 
 ```bitbake
-    # Python 2.x
-    CORE_IMAGE_EXTRA_INSTALL += "python-pyrealsense2"
-
-    # Python 3.x
     CORE_IMAGE_EXTRA_INSTALL += "python3-pyrealsense2"
 ```
 

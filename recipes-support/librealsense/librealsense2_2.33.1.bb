@@ -43,6 +43,9 @@ PACKAGES += "\
 
 PACKAGES += "${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', '${PN}-graphical-examples', '', d)}"
 
+PACKAGECONFIG ??= ""
+PACKAGECONFIG[rsusb] = "-DFORCE_RSUSB_BACKEND:BOOL=ON,--DFORCE_RSUSB_BACKEND:BOOL=OFF"
+
 do_install_append() {
     install -d "${D}${sysconfdir}/udev/rules.d"
     install -m 0644 ${S}/config/99-realsense-libusb.rules ${D}${sysconfdir}/udev/rules.d/99-${BPN}-libusb.rules

@@ -4,6 +4,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=a1692f06943fa281fd047a22d7e10800"
 SRC_URI = "\
 	git://github.com/IntelRealSense/librealsense.git;branch=development;tag=v${PV} \
 	file://Remove-R200-fix-from-udev-rules.patch \
+	file://Make-sure-graphical-examples-flag-extends-to-tools.patch \
 "
 
 PR = "r0"

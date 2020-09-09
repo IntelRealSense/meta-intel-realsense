@@ -1,0 +1,37 @@
+From cfa0f9a5f7e5310aff3fc366c63b7db8da10eb53 Mon Sep 17 00:00:00 2001
+From: Scott Ware <scott.r.ware@intel.com>
+Date: Wed, 9 Sep 2020 21:47:59 +0100
+Subject: [PATCH] Make sure graphical examples flag extends to tools
+
+Signed-off-by: Scott Ware <scott.r.ware@intel.com>
+---
+ tools/CMakeLists.txt | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/tools/CMakeLists.txt b/tools/CMakeLists.txt
+index 275fd53..d799dec 100644
+--- a/tools/CMakeLists.txt
++++ b/tools/CMakeLists.txt
+@@ -61,6 +61,10 @@ if(BUILD_GRAPHICAL_EXAMPLES)
+         endif()
+         list(APPEND DEPENDENCIES m ${GLFW_LIBRARIES} ${LIBUSB1_LIBRARIES})
+         include_directories(${GLFW_INCLUDE_DIR})
++        
++        add_subdirectory(depth-quality)
++        add_subdirectory(rosbag-inspector)
++        add_subdirectory(realsense-viewer)
+     endif()
+ else()
+     set(DEPENDENCIES realsense2)
+@@ -72,7 +76,4 @@ endif()
+ add_subdirectory(terminal)
+ add_subdirectory(fw-logger)
+ add_subdirectory(enumerate-devices)
+-add_subdirectory(realsense-viewer)
+ add_subdirectory(data-collect)
+-add_subdirectory(depth-quality)
+-add_subdirectory(rosbag-inspector)
+\ No newline at end of file
+-- 
+2.7.4
+

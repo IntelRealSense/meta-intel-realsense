@@ -1,4 +1,4 @@
-SUMMARY = "Intel® RealSense™ SDK 2.0 is a cross-platform library for Intel® RealSense™ depth cameras (D400 series and the SR300) and the T265 tracking camera."
+DESCRIPTION = "Intel® RealSense™ SDK 2.0 is a cross-platform library for Intel® RealSense™ depth cameras (D400 series and the SR300) and the T265 tracking camera."
 SECTION = "libs"
 
 require librealsense2.inc
@@ -44,7 +44,7 @@ PACKAGES += "\
 PACKAGES += "${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', '${PN}-graphical-examples', '', d)}"
 
 PACKAGECONFIG ??= ""
-PACKAGECONFIG[rsusb] = "-DFORCE_RSUSB_BACKEND:BOOL=ON,--DFORCE_RSUSB_BACKEND:BOOL=OFF"
+PACKAGECONFIG[rsusb] = "-DFORCE_RSUSB_BACKEND:BOOL=ON,-DFORCE_RSUSB_BACKEND:BOOL=OFF"
 
 do_install_append() {
     install -d "${D}${sysconfdir}/udev/rules.d"
@@ -75,6 +75,7 @@ FILES_${PN}-graphical-examples = "\
     ${bindir}/rs-callback \
     ${bindir}/rs-capture \
     ${bindir}/rs-gl \
+    ${bindir}/rs-hdr \
     ${bindir}/rs-measure \
     ${bindir}/rs-motion \
     ${bindir}/rs-multicam \

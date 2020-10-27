@@ -5,17 +5,17 @@ Subject: [PATCH 1/4] Add support for RealSense camera formats
 
 Signed-off-by: Scott Ware <scott.r.ware@intel.com>
 ---
- drivers/media/usb/uvc/uvc_driver.c   | 37 ++++++++++++++++++++++++++++++++++++
+ drivers/media/usb/uvc/uvc_driver.c   | 52 ++++++++++++++++++++++++++++++++++++
  drivers/media/usb/uvc/uvcvideo.h     | 22 +++++++++++++++++++++
  drivers/media/v4l2-core/v4l2-ioctl.c |  8 ++++++++
  include/uapi/linux/videodev2.h       |  8 ++++++++
- 4 files changed, 75 insertions(+)
+ 4 files changed, 90 insertions(+)
 
 diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
 index 2b688cc..4ada7db 100644
 --- a/drivers/media/usb/uvc/uvc_driver.c
 +++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -214,6 +214,43 @@ static struct uvc_format_desc uvc_fmts[] = {
+@@ -214,6 +214,58 @@ static struct uvc_format_desc uvc_fmts[] = {
  		.guid		= UVC_GUID_FORMAT_CNF4,
  		.fcc		= V4L2_PIX_FMT_CNF4,
  	},
@@ -56,6 +56,21 @@ index 2b688cc..4ada7db 100644
 +		.guid		= UVC_GUID_FORMAT_Z16H,
 +		.fcc		= V4L2_PIX_FMT_Z16H,
 +	},
++	{
++		.name		= "Frame Grabber (FG  )",
++		.guid		= UVC_GUID_FORMAT_FG,
++		.fcc		= V4L2_PIX_FMT_FG,
++	},
++	{
++		.name		= "SR300 Depth/Confidence (INZC)",
++		.guid		= UVC_GUID_FORMAT_INZC,
++		.fcc		= V4L2_PIX_FMT_INZC,
++	},
++	{
++		.name		= "Relative IR (PAIR)",
++		.guid		= UVC_GUID_FORMAT_PAIR,
++		.fcc		= V4L2_PIX_FMT_PAIR,
++	},
  };
  
  /* ------------------------------------------------------------------------
@@ -63,7 +78,7 @@ diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
 index c7c1baa..2d61cb0 100644
 --- a/drivers/media/usb/uvc/uvcvideo.h
 +++ b/drivers/media/usb/uvc/uvcvideo.h
-@@ -157,6 +157,28 @@
+@@ -157,6 +157,37 @@
  #define UVC_GUID_FORMAT_CNF4 \
  	{ 'C',  ' ',  ' ',  ' ', 0x00, 0x00, 0x10, 0x00, \
  	 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71}
@@ -89,7 +104,16 @@ index c7c1baa..2d61cb0 100644
 +#define UVC_GUID_FORMAT_Z16H \
 +	{ 'Z',  '1',  '6',  'H', 0x00, 0x00, 0x10, 0x00, \
 +	 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71}
- 
++#define UVC_GUID_FORMAT_FG \
++	{ 'F',  'G',  ' ',  ' ', 0x00, 0x00, 0x10, 0x00, \
++	 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71}
++#define UVC_GUID_FORMAT_INZC \
++	{ 'I',  'N',  'Z',  'C', 0x02, 0xb6, 0x0f, 0x48, \
++	 0x97, 0x8c, 0xe4, 0xe8, 0x8a, 0xe8, 0x9b, 0x89}
++#define UVC_GUID_FORMAT_PAIR \
++	{ 'P',  'A',  'I',  'R', 0x36, 0x85, 0x41, 0x48, \
++	 0xb6, 0xbf, 0x8f, 0xc6, 0xff, 0xb0, 0x83, 0xa8}
+
  #define UVC_GUID_FORMAT_D3DFMT_L8 \
  	{0x32, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, \
 diff --git a/drivers/media/v4l2-core/v4l2-ioctl.c b/drivers/media/v4l2-core/v4l2-ioctl.c

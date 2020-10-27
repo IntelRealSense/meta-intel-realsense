@@ -1,4 +1,4 @@
-SUMMARY = "Python Wrapper for Intel Realsense SDK 2.0"
+DESCRIPTION = "Python Wrapper for Intel Realsense SDK 2.0"
 
 PR = "r0"
 

@@ -9,10 +9,6 @@ SRC_URI = "\
     git://github.com/IntelRealSense/librealsense.git;tag=v${PV} \
 "
 
-SRC_URI += "\
-    file://Fix-arch-detection-on-linux.patch \
-"
-
 S = "${WORKDIR}/git"
 
 EXTRA_OECMAKE = " \

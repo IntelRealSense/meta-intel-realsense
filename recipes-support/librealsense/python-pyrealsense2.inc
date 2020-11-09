@@ -21,10 +21,11 @@ EXTRA_OECMAKE += " \
 "
 
 do_install() {
-    install -d ${D}/${PYTHON_SITEPACKAGES_DIR}
-    install -m 0644 ${B}/wrappers/python/*.so ${D}/${PYTHON_SITEPACKAGES_DIR}
+    install -d ${D}/${PYTHON_SITEPACKAGES_DIR}/pyrealsense2
+    install -m 0644 ${S}/wrappers/python/pyrealsense2/__init__.py ${D}/${PYTHON_SITEPACKAGES_DIR}/pyrealsense2
+    install -m 0644 ${B}/wrappers/python/*.so ${D}/${PYTHON_SITEPACKAGES_DIR}/pyrealsense2
 }
 
 FILES_${PN} += "\
-    ${PYTHON_SITEPACKAGES_DIR}/*.so \
+    ${PYTHON_SITEPACKAGES_DIR}/pyrealsense2 \
 "

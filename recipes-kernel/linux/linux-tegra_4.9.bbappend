@@ -1,1 +1,6 @@
-require realsense-linux-4.9.inc
+FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+
+SRC_URI += "file://hid.cfg"
+SRC_URI += "file://uvc.cfg"
+SRC_URI += "file://realsense_powerlinefrequency_control_fix_4.9.patch"
+SRC_URI += "file://discard-frame-on-buffer-overflow.patch"

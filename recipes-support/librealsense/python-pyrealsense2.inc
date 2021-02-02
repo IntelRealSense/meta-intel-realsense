@@ -8,9 +8,7 @@ DEPENDS += "\
     librealsense2 \
 "
 
-SRC_URI += "\
-    file://Skip-building-main-library.patch \
-"
+SRC_URI += "file://Skip-building-main-library.patch"
 
 EXTRA_OECMAKE += " \
     -DPYTHON_EXECUTABLE=${PYTHON} \

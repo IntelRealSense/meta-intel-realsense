@@ -1,0 +1,22 @@
+From 974d3cdb15ab6a7ab43f3ca618ba574f9dde93a9 Mon Sep 17 00:00:00 2001
+From: Scott Ware <scott2.ware@gmail.com>
+Date: Tue, 2 Feb 2021 17:27:11 +0000
+Subject: [PATCH] Bug fix for incomplete PowerLineFrequency enumeration map
+
+Signed-off-by: Scott Ware <scott2.ware@gmail.com>
+---
+ drivers/media/usb/uvc/uvc_ctrl.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
+index f479d8971dfb..472ca1b7fee4 100644
+--- a/drivers/media/usb/uvc/uvc_ctrl.c
++++ b/drivers/media/usb/uvc/uvc_ctrl.c
+@@ -353,6 +353,7 @@ static const struct uvc_menu_info power_line_frequency_controls[] = {
+ 	{ 0, "Disabled" },
+ 	{ 1, "50 Hz" },
+ 	{ 2, "60 Hz" },
++	{ 3, "Auto" },
+ };
+ 
+ static const struct uvc_menu_info exposure_auto_controls[] = {

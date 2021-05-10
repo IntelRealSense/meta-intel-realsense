@@ -21,6 +21,8 @@ RDEPENDS_${PN}-graphical-examples += "\
     libgl-mesa \
 "
 
+RRECOMMENDS_${PN} += "kernel-module-uvcvideo"
+
 SRC_URI += "file://Remove-R200-fix-from-udev-rules.patch"
 
 PR = "r0"

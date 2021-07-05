@@ -23,7 +23,10 @@ RDEPENDS_${PN}-graphical-examples += "\
 
 RRECOMMENDS_${PN} += "kernel-module-uvcvideo"
 
-SRC_URI += "file://Remove-R200-fix-from-udev-rules.patch"
+SRC_URI += "\
+    file://Enable-riscv-arch-compilation.patch \
+    file://Remove-R200-fix-from-udev-rules.patch \
+"
 
 PR = "r0"
 

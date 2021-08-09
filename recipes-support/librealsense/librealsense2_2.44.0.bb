@@ -10,18 +10,18 @@ DEPENDS = "\
 
 DEPENDS += "${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', 'libpng libglu glfw gtk+3', '', d)}"
 
-RDEPENDS_${PN} = "\
+RDEPENDS:${PN} = "\
     bash \
 "
-RDEPENDS_${PN}-examples += "\
+RDEPENDS:${PN}-examples += "\
     ${PN} \
 "
-RDEPENDS_${PN}-graphical-examples += "\
+RDEPENDS:${PN}-graphical-examples += "\
     ${PN} \
     libgl-mesa \
 "
 
-RRECOMMENDS_${PN} += "kernel-module-uvcvideo"
+RRECOMMENDS:${PN} += "kernel-module-uvcvideo"
 
 SRC_URI += "\
     file://Enable-riscv-arch-compilation.patch \
@@ -49,17 +49,17 @@ PACKAGES += "${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', '${PN}-graphi
 PACKAGECONFIG ??= ""
 PACKAGECONFIG[rsusb] = "-DFORCE_RSUSB_BACKEND:BOOL=ON,-DFORCE_RSUSB_BACKEND:BOOL=OFF"
 
-do_install_append() {
+do_install:append() {
     install -d "${D}${sysconfdir}/udev/rules.d"
     install -m 0644 ${S}/config/99-realsense-libusb.rules ${D}${sysconfdir}/udev/rules.d/99-${BPN}-libusb.rules
 }
 
-FILES_${PN} = "\
+FILES:${PN} = "\
     ${libdir}/${PN}*.so.* \
     ${sysconfdir}/udev/rules.d/* \
 "
 
-FILES_${PN}-examples = "\
+FILES:${PN}-examples = "\
     ${bindir}/rs-color \
     ${bindir}/rs-depth \
     ${bindir}/rs-distance \
@@ -70,7 +70,7 @@ FILES_${PN}-examples = "\
     ${bindir}/rs-save-to-disk \
 "
 
-FILES_${PN}-graphical-examples = "\
+FILES:${PN}-graphical-examples = "\
     ${bindir}/rs-align \
     ${bindir}/rs-align-advanced \
     ${bindir}/rs-ar-advanced \
@@ -91,14 +91,14 @@ FILES_${PN}-graphical-examples = "\
     ${bindir}/rs-trajectory \
 "
 
-FILES_${PN}-tools = "\
+FILES:${PN}-tools = "\
     ${bindir}/realsense-viewer \
     ${bindir}/rs-convert \
     ${bindir}/rs-depth-quality \
     ${bindir}/rs-fw-update \
 "
 
-FILES_${PN}-debug-tools = "\
+FILES:${PN}-debug-tools = "\
     ${bindir}/rs-benchmark \
     ${bindir}/rs-data-collect \
     ${bindir}/rs-enumerate-devices \

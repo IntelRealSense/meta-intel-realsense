@@ -1,7 +1,7 @@
-From 2a8d2a66926d951ad79f7763a352417a9ecf45b3 Mon Sep 17 00:00:00 2001
+From 06588060470e305b388e2e862c739b25241d2bcf Mon Sep 17 00:00:00 2001
 From: Scott Ware <scott.r.ware@intel.com>
-Date: Fri, 7 May 2021 22:38:28 +0100
-Subject: [PATCH] Skip building main library
+Date: Wed, 26 Jan 2022 20:42:49 +0000
+Subject: [PATCH] Skip building the main library
 
 Signed-off-by: Scott Ware <scott.r.ware@intel.com>
 ---
@@ -10,10 +10,10 @@ Signed-off-by: Scott Ware <scott.r.ware@intel.com>
  2 files changed, 11 insertions(+), 22 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 1ddedfb18..0eebff3eb 100644
+index 902e549..a864fa7 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -43,30 +43,10 @@ os_set_flags()
+@@ -47,30 +47,10 @@ os_set_flags()
  # macro definition located at "CMake/global_config.cmake"
  global_set_flags()
  
@@ -42,10 +42,10 @@ index 1ddedfb18..0eebff3eb 100644
 -include(CMake/install_config.cmake)
 -
  add_subdirectory(wrappers)
- 
- if (BUILD_EXAMPLES AND BUILD_GLSL_EXTENSIONS)
+ if ( ( BUILD_EXAMPLES OR BUILD_PC_STITCHING ) AND BUILD_GLSL_EXTENSIONS )
+     find_package(glfw3 3.3 QUIET)
 diff --git a/wrappers/python/CMakeLists.txt b/wrappers/python/CMakeLists.txt
-index aa83e4c77..424958de8 100644
+index 0c2f416..8edfc83 100644
 --- a/wrappers/python/CMakeLists.txt
 +++ b/wrappers/python/CMakeLists.txt
 @@ -7,7 +7,16 @@ if (NOT BUILD_PYTHON_BINDINGS)
@@ -66,7 +66,7 @@ index aa83e4c77..424958de8 100644
  # In order for the external project clone to occur during cmake configure step(rather than during compilation, as would normally happen),
  # we copy the external project declaration to the build folder and then execute it
  configure_file(${CMAKE_SOURCE_DIR}/third-party/pybind11/CMakeLists.txt ${CMAKE_BINARY_DIR}/external-projects/pybind11/CMakeLists.txt)
-@@ -64,7 +73,7 @@ else()
+@@ -65,7 +74,7 @@ else()
    set(CMAKECONFIG_PY_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/pyrealsense2")
  endif()
  
@@ -75,3 +75,6 @@ index aa83e4c77..424958de8 100644
  set_target_properties(pyrealsense2 PROPERTIES VERSION
      ${REALSENSE_VERSION_STRING} SOVERSION "${REALSENSE_VERSION_MAJOR}.${REALSENSE_VERSION_MINOR}")
  set_target_properties(pyrealsense2 PROPERTIES FOLDER Wrappers/python)
+-- 
+2.7.4
+

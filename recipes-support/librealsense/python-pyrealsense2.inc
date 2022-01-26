@@ -8,12 +8,13 @@ DEPENDS += "\
     librealsense2 \
 "
 
-SRC_URI += "file://Skip-building-main-library.patch"
+SRC_URI += "file://Skip-building-the-main-library.patch"
 
 EXTRA_OECMAKE += " \
     -DPYTHON_EXECUTABLE=${PYTHON} \
     -DBUILD_PYTHON_BINDINGS:BOOL=ON \
     -DBUILD_EXAMPLES:BOOL=OFF \
+    -DBUILD_TOOLS:BOOL=OFF \
     -DBUILD_GRAPHICAL_EXAMPLES:BOOL=OFF \
     -DBUILD_WITH_TM2:BOOL=OFF \
 "

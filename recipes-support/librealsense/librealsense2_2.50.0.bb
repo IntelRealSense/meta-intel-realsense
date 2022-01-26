@@ -1,11 +1,11 @@
-DESCRIPTION = "Intel® RealSense™ SDK 2.0 is a cross-platform library for Intel® RealSense™ depth cameras (D400 series and the SR300) and the T265 tracking camera."
+DESCRIPTION = "Intel RealSense SDK 2.0 is a cross-platform library for Intel RealSense depth cameras (D400 series and the SR300) and the T265 tracking camera."
 SECTION = "libs"
 
 require librealsense2.inc
 
 DEPENDS = "\
-    udev \
     libusb1 \
+    udev \
 "
 
 DEPENDS += "${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', 'libpng libglu glfw gtk+3', '', d)}"
@@ -26,6 +26,7 @@ RRECOMMENDS:${PN} += "kernel-module-uvcvideo"
 SRC_URI += "\
     file://Enable-riscv-arch-compilation.patch \
     file://Remove-R200-fix-from-udev-rules.patch \
+    file://Avoid-installing-viewer-presets.patch \
 "
 
 PR = "r0"
@@ -95,6 +96,7 @@ FILES:${PN}-tools = "\
     ${bindir}/realsense-viewer \
     ${bindir}/rs-convert \
     ${bindir}/rs-depth-quality \
+    ${bindir}/rs-embed \
     ${bindir}/rs-fw-update \
 "
 

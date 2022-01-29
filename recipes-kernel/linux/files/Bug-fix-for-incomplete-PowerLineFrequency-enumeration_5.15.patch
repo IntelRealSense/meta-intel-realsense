@@ -1,0 +1,25 @@
+From 4584c8d978dc364501087bcf041c97c9b0707138 Mon Sep 17 00:00:00 2001
+From: OpenEmbedded <oe.patch@oe>
+Date: Fri, 28 Jan 2022 22:05:57 +0000
+Subject: [PATCH 2/2] Bug fix for incomplete PowerLineFrequency enumeration map
+
+Signed-off-by: OpenEmbedded <oe.patch@oe>
+---
+ drivers/media/usb/uvc/uvc_ctrl.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
+index b3dde98..63b9bf3 100644
+--- a/drivers/media/usb/uvc/uvc_ctrl.c
++++ b/drivers/media/usb/uvc/uvc_ctrl.c
+@@ -361,6 +361,7 @@ static const struct uvc_menu_info power_line_frequency_controls[] = {
+ 	{ 0, "Disabled" },
+ 	{ 1, "50 Hz" },
+ 	{ 2, "60 Hz" },
++	{ 3, "Auto" },
+ };
+ 
+ static const struct uvc_menu_info exposure_auto_controls[] = {
+-- 
+2.7.4
+

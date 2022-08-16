@@ -1,0 +1,36 @@
+From 85186ef38d1fafa2ee6de4e8c6f6f0eb253dbd2d Mon Sep 17 00:00:00 2001
+From: Scott Ware <scott.r.ware@intel.com>
+Date: Tue, 16 Aug 2022 10:35:42 +0100
+Subject: [PATCH] Avoid pulling pybind11 during configuration
+
+Signed-off-by: Scott Ware <scott.r.ware@intel.com>
+---
+ wrappers/python/CMakeLists.txt | 14 ++------------
+ 1 file changed, 2 insertions(+), 12 deletions(-)
+
+diff --git a/wrappers/python/CMakeLists.txt b/wrappers/python/CMakeLists.txt
+index 8edfc831c..5b1020f54 100644
+--- a/wrappers/python/CMakeLists.txt
++++ b/wrappers/python/CMakeLists.txt
+@@ -17,19 +17,9 @@ if(NOT REALSENSE2_FOUND)
+     message( FATAL_ERROR "Failed to find realsense2" )
+ endif()
+ 
+-# In order for the external project clone to occur during cmake configure step(rather than during compilation, as would normally happen),
+-# we copy the external project declaration to the build folder and then execute it
+-configure_file(${CMAKE_SOURCE_DIR}/third-party/pybind11/CMakeLists.txt ${CMAKE_BINARY_DIR}/external-projects/pybind11/CMakeLists.txt)
+-execute_process(COMMAND "${CMAKE_COMMAND}" -G "${CMAKE_GENERATOR}" .
+-    WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/external-projects/pybind11"
+-)
+-execute_process(COMMAND "${CMAKE_COMMAND}" --build .
+-    WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/external-projects/pybind11"
+-)
+-
+ # Add pybind11 makefile
+-add_subdirectory("${CMAKE_BINARY_DIR}/third-party/pybind11"
+-                 "${CMAKE_BINARY_DIR}/third-party/pybind11"
++add_subdirectory("${CMAKE_SOURCE_DIR}/third-party/pybind11"
++                 "${CMAKE_SOURCE_DIR}/third-party/pybind11"
+                  EXCLUDE_FROM_ALL
+ )
+ 

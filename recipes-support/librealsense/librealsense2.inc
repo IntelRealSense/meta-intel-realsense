@@ -5,7 +5,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=a1692f06943fa281fd047a22d7e10800"
 
 inherit cmake pkgconfig
 
-SRC_URI = "git://github.com/IntelRealSense/librealsense.git;tag=v${PV}"
+SRC_URI = "git://github.com/IntelRealSense/librealsense.git;protocol=https;tag=v${PV}"
 
 S = "${WORKDIR}/git"
 

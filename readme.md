@@ -38,7 +38,7 @@ If you are building an image with a graphical desktop you can also add the follo
 ```
 
 ### Python
-To include Python support in your image include the following in your `conf/auto.conf`
+To include Python support in your image, include the following in your `conf/auto.conf`
 
 ```bitbake
     CORE_IMAGE_EXTRA_INSTALL += "python3-pyrealsense2"

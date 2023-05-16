@@ -1,0 +1,26 @@
+From d1aaaef7f02dda420a682d271363b691b3279352 Mon Sep 17 00:00:00 2001
+From: Scott Ware <scott.r.ware@intel.com>
+Date: Tue, 16 May 2023 22:04:31 +0100
+Subject: [PATCH] remove redundant soabi checks
+
+Signed-off-by: Scott Ware <scott.r.ware@intel.com>
+---
+ tools/pybind11NewTools.cmake | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/tools/pybind11NewTools.cmake b/tools/pybind11NewTools.cmake
+index 7d7424a7..3adfa23a 100644
+--- a/tools/pybind11NewTools.cmake
++++ b/tools/pybind11NewTools.cmake
+@@ -216,11 +216,6 @@ function(pybind11_add_module target_name)
+     set_target_properties(${target_name} PROPERTIES CUDA_VISIBILITY_PRESET "hidden")
+   endif()
+ 
+-  # If we don't pass a WITH_SOABI or WITHOUT_SOABI, use our own default handling of extensions
+-  if(NOT ARG_WITHOUT_SOABI AND NOT "WITH_SOABI" IN_LIST ARG_UNPARSED_ARGUMENTS)
+-    pybind11_extension(${target_name})
+-  endif()
+-
+   if(ARG_NO_EXTRAS)
+     return()
+   endif()

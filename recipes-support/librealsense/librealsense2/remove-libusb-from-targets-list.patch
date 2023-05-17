@@ -1,0 +1,19 @@
+From 98f8902aae419addd1426b31d631829753be09d3 Mon Sep 17 00:00:00 2001
+From: Scott Ware <scott.r.ware@intel.com>
+Date: Wed, 17 May 2023 12:19:14 +0100
+Subject: [PATCH] remove libusb from targets list
+
+---
+ CMake/libusb_config.cmake | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/CMake/libusb_config.cmake b/CMake/libusb_config.cmake
+index ca221ca66..f38e38f73 100644
+--- a/CMake/libusb_config.cmake
++++ b/CMake/libusb_config.cmake
+@@ -10,5 +10,4 @@ if (NOT TARGET usb)
+     else()
+         include(CMake/external_libusb.cmake)
+     endif()
+-    install(TARGETS usb EXPORT realsense2Targets)
+ endif()

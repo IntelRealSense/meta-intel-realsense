@@ -1,0 +1,87 @@
+From 965ebfaf21d03d8b7fe4e145fcaebf295650b9dd Mon Sep 17 00:00:00 2001
+From: Scott Ware <scott.r.ware@intel.com>
+Date: Tue, 16 May 2023 21:55:55 +0100
+Subject: [PATCH] use provided pybind11
+
+---
+ wrappers/python/CMakeLists.txt  | 24 +++++-------------------
+ wrappers/python/pyrs_device.cpp |  1 +
+ 2 files changed, 6 insertions(+), 19 deletions(-)
+
+diff --git a/wrappers/python/CMakeLists.txt b/wrappers/python/CMakeLists.txt
+index 738ce8c8a..8e448605c 100644
+--- a/wrappers/python/CMakeLists.txt
++++ b/wrappers/python/CMakeLists.txt
+@@ -17,28 +17,11 @@ if(NOT REALSENSE2_FOUND)
+     message( FATAL_ERROR "Failed to find realsense2" )
+ endif()
+ 
+-# In order for the external project clone to occur during cmake configure step(rather than during compilation, as would normally happen),
+-# we copy the external project declaration to the build folder and then execute it
+-configure_file(${CMAKE_SOURCE_DIR}/third-party/pybind11/CMakeLists.txt ${CMAKE_BINARY_DIR}/external-projects/pybind11/CMakeLists.txt)
+-execute_process(COMMAND "${CMAKE_COMMAND}" -G "${CMAKE_GENERATOR}" .
+-    WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/external-projects/pybind11"
+-)
+-execute_process(COMMAND "${CMAKE_COMMAND}" --build .
+-    WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/external-projects/pybind11"
+-)
+-
+-# Add pybind11 makefile
+-add_subdirectory("${CMAKE_BINARY_DIR}/third-party/pybind11"
+-                 "${CMAKE_BINARY_DIR}/third-party/pybind11"
+-                 EXCLUDE_FROM_ALL
+-)
+-
+ set(PYBIND11_CPP_STANDARD -std=c++11)
+ # Force Pybind11 not to share pyrealsense2 resources with other pybind modules.
+ # With this definition we force the ABI version to be unique and not risk crashes on different modules.
+ # (workaround for RS5-10582; see also https://github.com/pybind/pybind11/issues/2898)
+ add_definitions(-DPYBIND11_COMPILER_TYPE="_librs_abi")
+-include_directories(${CMAKE_BINARY_DIR}/third-party/pybind11/include)
+ 
+ set(PYRS_CPP
+     python.cpp
+@@ -59,8 +42,6 @@ set(PYRS_CPP
+     ../../common/metadata-helper.cpp
+ )
+ 
+-pybind11_add_module(pyrealsense2 SHARED python.hpp ${PYRS_CPP})
+-
+ # pybind11 version 2.6.1 require find_package to run after pybind11_add_module call,
+ # This way the pybind takes the python version set in PYTHON_EXECUTABLE variable.
+ if (CMAKE_VERSION VERSION_LESS 3.12)
+@@ -70,10 +51,13 @@ if (CMAKE_VERSION VERSION_LESS 3.12)
+   set(CMAKECONFIG_PY_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/pyrealsense2")
+ else()
+   find_package(Python REQUIRED COMPONENTS Interpreter Development)
++  find_package(pybind11 CONFIG REQUIRED)
+   set(PYTHON_INSTALL_DIR "${Python_SITEARCH}/pyrealsense2" CACHE PATH "Installation directory for Python bindings")
+   set(CMAKECONFIG_PY_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/pyrealsense2")
+ endif()
+ 
++pybind11_add_module(pyrealsense2 SHARED python.hpp ${PYRS_CPP})
++
+ target_link_libraries(pyrealsense2 PRIVATE ${REALSENSE2_LIBRARIES})
+ set_target_properties(pyrealsense2 PROPERTIES VERSION
+     ${REALSENSE_VERSION_STRING} SOVERSION "${REALSENSE_VERSION_MAJOR}.${REALSENSE_VERSION_MINOR}")
+@@ -190,6 +174,8 @@ if(APPLE)
+ endif()
+ endif()
+ 
++include(CMakePackageConfigHelpers)
++
+ write_basic_package_version_file("${CMAKE_CURRENT_BINARY_DIR}/pyrealsense2ConfigVersion.cmake"
+     VERSION ${REALSENSE_VERSION_STRING} COMPATIBILITY AnyNewerVersion)
+ 
+diff --git a/wrappers/python/pyrs_device.cpp b/wrappers/python/pyrs_device.cpp
+index 711678171..79e4a022b 100644
+--- a/wrappers/python/pyrs_device.cpp
++++ b/wrappers/python/pyrs_device.cpp
+@@ -6,6 +6,7 @@ Copyright(c) 2017 Intel Corporation. All Rights Reserved. */
+ #include <librealsense2/hpp/rs_device.hpp>
+ #include <librealsense2/hpp/rs_record_playback.hpp> // for downcasts
+ #include <../common/metadata-helper.h>
++#include <iostream>
+ 
+ void init_device(py::module &m) {
+     /** rs_device.hpp **/

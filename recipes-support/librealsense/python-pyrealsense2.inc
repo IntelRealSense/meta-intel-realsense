@@ -5,16 +5,15 @@ PR = "r0"
 require librealsense2.inc
 
 DEPENDS += "\
-    librealsense2 \
     python3-pybind11-native \
 "
 
 SRC_URI += "\
-    file://skip-building-the-main-library.patch \
     file://use-provided-pybind11.patch \
 "
 
 EXTRA_OECMAKE += " \
+	-DBUILD_SHARED_LIBS:BOOL=OFF \
     -DPYTHON_EXECUTABLE=${PYTHON} \
     -DBUILD_PYTHON_BINDINGS:BOOL=ON \
     -DBUILD_EXAMPLES:BOOL=OFF \
@@ -27,7 +26,7 @@ EXTRA_OECMAKE += " \
 do_install() {
     install -d ${D}/${PYTHON_SITEPACKAGES_DIR}/pyrealsense2
     install -m 0644 ${S}/wrappers/python/pyrealsense2/__init__.py ${D}/${PYTHON_SITEPACKAGES_DIR}/pyrealsense2
-    install -m 0644 ${B}/wrappers/python/*.so ${D}/${PYTHON_SITEPACKAGES_DIR}/pyrealsense2
+    install -m 0644 ${B}/DEBUG/* ${D}/${PYTHON_SITEPACKAGES_DIR}/pyrealsense2
 }
 
 FILES:${PN} += "\

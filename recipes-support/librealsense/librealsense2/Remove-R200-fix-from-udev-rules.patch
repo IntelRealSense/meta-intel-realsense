@@ -3,6 +3,8 @@ From: Scott Ware <scott.r.ware@intel.com>
 Date: Tue, 25 Jan 2022 22:04:09 +0000
 Subject: [PATCH] Remove R200 fix from udev rules
 
+Upstream-Status: Inappropriate [OE-Specific]
+
 Signed-off-by: Scott Ware <scott.r.ware@intel.com>
 ---
  config/99-realsense-libusb.rules | 2 +-

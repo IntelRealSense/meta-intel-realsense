@@ -3,6 +3,7 @@ From: Scott Ware <scott.r.ware@intel.com>
 Date: Wed, 17 May 2023 12:19:14 +0100
 Subject: [PATCH] remove libusb from targets list
 
+Upstream-Status: Inappropriate [OE-Specific]
 ---
  CMake/libusb_config.cmake | 1 -
  1 file changed, 1 deletion(-)

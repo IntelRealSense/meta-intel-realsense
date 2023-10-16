@@ -3,11 +3,6 @@ SECTION = "libs"
 
 require librealsense2.inc
 
-DEPENDS = "\
-    libusb1 \
-    udev \
-"
-
 DEPENDS += "${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', 'libpng libglu glfw gtk+3', '', d)}"
 
 RDEPENDS:${PN} = "\
@@ -21,13 +16,10 @@ RDEPENDS:${PN}-graphical-examples += "\
     libgl-mesa \
 "
 
-RRECOMMENDS:${PN} += "kernel-module-uvcvideo"
-
 SRC_URI += "\
-    file://Enable-riscv-arch-compilation.patch \
-    file://Remove-R200-fix-from-udev-rules.patch \
-    file://Avoid-installing-viewer-presets.patch \
-    file://remove-libusb-from-targets-list.patch \
+	file://Remove-R200-fix-from-udev-rules.patch \
+	file://Avoid-installing-viewer-presets.patch \
+	file://remove-libusb-from-targets-list.patch \
 "
 
 PR = "r0"
@@ -47,9 +39,6 @@ PACKAGES += "\
 "
 
 PACKAGES += "${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', '${PN}-graphical-examples', '', d)}"
-
-PACKAGECONFIG ??= ""
-PACKAGECONFIG[rsusb] = "-DFORCE_RSUSB_BACKEND:BOOL=ON,-DFORCE_RSUSB_BACKEND:BOOL=OFF"
 
 do_install:append() {
     install -d "${D}${sysconfdir}/udev/rules.d"

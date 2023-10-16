@@ -5,7 +5,19 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=a1692f06943fa281fd047a22d7e10800"
 
 inherit cmake pkgconfig
 
-SRC_URI = "git://github.com/IntelRealSense/librealsense.git;protocol=https;branch=master;rev=23b0904ba126e87327bc2908c1a5f79342eae867"
+DEPENDS = "\
+    libusb1 \
+    udev \
+"
+
+RRECOMMENDS:${PN} += "kernel-module-uvcvideo"
+
+SRC_URI = "git://github.com/IntelRealSense/librealsense.git;protocol=https;branch=master;rev=2dbaaf5964490cb02f811cf2ed38c8a893f5c027"
+
+SRC_URI += "\
+	file://enable-riscv-arch-compilation.patch \
+	file://add-missing-rsutil-include.patch \
+"
 
 S = "${WORKDIR}/git"
 
@@ -14,3 +26,7 @@ EXTRA_OECMAKE = " \
     -DBUILD_WITH_OPENMP:BOOL=OFF \
     -DCHECK_FOR_UPDATES:BOOL=OFF \
 "
+
+PACKAGECONFIG ??= ""
+PACKAGECONFIG[rsusb] = "-DFORCE_RSUSB_BACKEND:BOOL=ON,-DFORCE_RSUSB_BACKEND:BOOL=OFF"
+

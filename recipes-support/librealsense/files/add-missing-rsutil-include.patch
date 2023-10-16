@@ -1,0 +1,22 @@
+From 60954feb20b7ad73fc6e8680e61f97db750853ca Mon Sep 17 00:00:00 2001
+From: Scott Ware <scott.r.ware@intel.com>
+Date: Fri, 13 Oct 2023 20:57:54 +0100
+Subject: [PATCH] add missing rsutil include
+
+Signed-off-by: Scott Ware <scott.r.ware@intel.com>
+---
+ third-party/rsutils/include/rsutils/version.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/third-party/rsutils/include/rsutils/version.h b/third-party/rsutils/include/rsutils/version.h
+index bf8330cef..1006d3862 100644
+--- a/third-party/rsutils/include/rsutils/version.h
++++ b/third-party/rsutils/include/rsutils/version.h
+@@ -3,6 +3,7 @@
+ 
+ #pragma once
+ 
++#include <cstdint>
+ #include <string>
+ #include <iosfwd>
+ 

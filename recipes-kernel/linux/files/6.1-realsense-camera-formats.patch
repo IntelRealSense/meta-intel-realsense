@@ -3,6 +3,8 @@ From: OpenEmbedded <oe.patch@oe>
 Date: Fri, 17 Feb 2023 10:52:25 +0000
 Subject: [PATCH] realsense camera formats
 
+Upstream-Status: Pending
+
 Signed-off-by: OpenEmbedded <oe.patch@oe>
 ---
  drivers/media/v4l2-core/v4l2-ioctl.c |  9 +++

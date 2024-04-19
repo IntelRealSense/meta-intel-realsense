@@ -44,6 +44,14 @@ To include Python support in your image, include the following in your `conf/aut
     CORE_IMAGE_EXTRA_INSTALL += "python3-pyrealsense2"
 ```
 
+Patches
+=======
+
+Please submit any patches against the meta-intel-realsense layer to the
+maintainer:
+
+Maintainer: Scott Ware <scott.r.ware@intel.com>
+
 License
 =======
 This project is Copyright (C) 2015 Intel Corporation. Please see the LICENSE file for more information.

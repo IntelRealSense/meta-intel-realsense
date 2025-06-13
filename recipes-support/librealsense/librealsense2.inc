@@ -1,4 +1,4 @@
-AUTHOR = "Intel(R) RealSense(TM)"
+AUTHOR = "Intel® RealSense™"
 HOMEPAGE = "https://github.com/IntelRealSense/librealsense"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=a1692f06943fa281fd047a22d7e10800"
@@ -12,11 +12,10 @@ DEPENDS = "\
 
 RRECOMMENDS:${PN} += "kernel-module-uvcvideo"
 
-SRC_URI = "git://github.com/IntelRealSense/librealsense.git;protocol=https;branch=master;rev=2dbaaf5964490cb02f811cf2ed38c8a893f5c027"
+SRC_URI = "git://github.com/IntelRealSense/librealsense.git;protocol=https;branch=master;rev=e196cefa896e312d79c2df400c7623aa1e9c62ac"
 
 SRC_URI += "\
-	file://enable-riscv-arch-compilation.patch \
-	file://add-missing-rsutil-include.patch \
+	file://0001-Enable-riscv-arch-compilation.patch \
 "
 
 S = "${WORKDIR}/git"

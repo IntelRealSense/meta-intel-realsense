@@ -1,8 +1,7 @@
-From 0bd532ea7069f71c1cb50d0d7734acdb4eb0747a Mon Sep 17 00:00:00 2001
+From 8eee83c68e99f15d09d6aac8ad933b84a86a2700 Mon Sep 17 00:00:00 2001
 From: Scott Ware <scott.r.ware@intel.com>
-Date: Wed, 26 Jan 2022 15:58:21 +0000
-Subject: [PATCH 3/3] Avoid installing viewer presets
-
+Date: Fri, 13 Jun 2025 12:53:20 +0100
+Subject: [PATCH 2/5] Avoid installing viewer presets
 Upstream-Status: Inappropriate [OE-Specific]
 
 Signed-off-by: Scott Ware <scott.r.ware@intel.com>
@@ -11,11 +10,11 @@ Signed-off-by: Scott Ware <scott.r.ware@intel.com>
  1 file changed, 5 deletions(-)
 
 diff --git a/tools/realsense-viewer/CMakeLists.txt b/tools/realsense-viewer/CMakeLists.txt
-index 1ca7b0d..d087f0a 100644
+index 4e6c1768e..f3728b610 100644
 --- a/tools/realsense-viewer/CMakeLists.txt
 +++ b/tools/realsense-viewer/CMakeLists.txt
-@@ -260,9 +260,4 @@ install(
-     TARGETS realsense-viewer
+@@ -252,9 +252,4 @@ install(
+     TARGETS ${PROJECT_NAME}
      RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
  )
 -#https://cmake.org/cmake/help/latest/command/install.html
@@ -25,5 +24,5 @@ index 1ca7b0d..d087f0a 100644
 -)
  endif()
 -- 
-2.7.4
+2.43.0
 

@@ -1,8 +1,7 @@
-From c8dd29c4df9fb1061446f31cf78ee388fdd6a7fb Mon Sep 17 00:00:00 2001
+From 3b7d7ede6747a5bcba6697b9766f4dcba32ca956 Mon Sep 17 00:00:00 2001
 From: Scott Ware <scott.r.ware@intel.com>
-Date: Tue, 25 Jan 2022 22:04:09 +0000
-Subject: [PATCH] Remove R200 fix from udev rules
-
+Date: Fri, 13 Jun 2025 12:58:51 +0100
+Subject: [PATCH 4/5] Remove R200 fix from udev rules
 Upstream-Status: Inappropriate [OE-Specific]
 
 Signed-off-by: Scott Ware <scott.r.ware@intel.com>
@@ -11,7 +10,7 @@ Signed-off-by: Scott Ware <scott.r.ware@intel.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/config/99-realsense-libusb.rules b/config/99-realsense-libusb.rules
-index ca9dd16dc..032d66dd7 100644
+index f220c7715..69361544b 100644
 --- a/config/99-realsense-libusb.rules
 +++ b/config/99-realsense-libusb.rules
 @@ -1,6 +1,6 @@
@@ -22,3 +21,6 @@ index ca9dd16dc..032d66dd7 100644
  SUBSYSTEMS=="usb", ATTRS{idVendor}=="8086", ATTRS{idProduct}=="0a66", MODE:="0666", GROUP:="plugdev"
  SUBSYSTEMS=="usb", ATTRS{idVendor}=="8086", ATTRS{idProduct}=="0aa3", MODE:="0666", GROUP:="plugdev"
  SUBSYSTEMS=="usb", ATTRS{idVendor}=="8086", ATTRS{idProduct}=="0aa2", MODE:="0666", GROUP:="plugdev"
+-- 
+2.43.0
+

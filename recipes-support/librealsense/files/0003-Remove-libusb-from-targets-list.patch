@@ -1,9 +1,10 @@
-From 98f8902aae419addd1426b31d631829753be09d3 Mon Sep 17 00:00:00 2001
+From f6a5595b394c95b454cb691c1a65532da55daf5d Mon Sep 17 00:00:00 2001
 From: Scott Ware <scott.r.ware@intel.com>
-Date: Wed, 17 May 2023 12:19:14 +0100
-Subject: [PATCH] remove libusb from targets list
-
+Date: Fri, 13 Jun 2025 12:54:03 +0100
+Subject: [PATCH 3/5] Remove libusb from targets list
 Upstream-Status: Inappropriate [OE-Specific]
+
+Signed-off-by: Scott Ware <scott.r.ware@intel.com>
 ---
  CMake/libusb_config.cmake | 1 -
  1 file changed, 1 deletion(-)
@@ -18,3 +19,6 @@ index ca221ca66..f38e38f73 100644
      endif()
 -    install(TARGETS usb EXPORT realsense2Targets)
  endif()
+-- 
+2.43.0
+

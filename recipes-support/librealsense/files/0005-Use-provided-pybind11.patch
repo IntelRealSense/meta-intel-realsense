@@ -1,33 +1,25 @@
-From 11300accd2ac009152ab0ed28becbd42cd519c1d Mon Sep 17 00:00:00 2001
+From 3724abeb08920182a08074462b9a030b6cda8a49 Mon Sep 17 00:00:00 2001
 From: Scott Ware <scott.r.ware@intel.com>
-Date: Mon, 16 Oct 2023 12:39:53 +0100
-Subject: [PATCH] use provided pybind11
-
-Upstream-Status: Pending
+Date: Fri, 13 Jun 2025 13:06:01 +0100
+Subject: [PATCH 5/5] Use provided pybind11
+Upstream-Status: Inappropriate [OE-Specific]
 
 Signed-off-by: Scott Ware <scott.r.ware@intel.com>
 ---
- CMake/external_pybind11.cmake | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ CMake/external_pybind11.cmake | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/CMake/external_pybind11.cmake b/CMake/external_pybind11.cmake
-index 43c5b86a7..a4543d45c 100644
+index a2ab2f868..39cba3de0 100644
 --- a/CMake/external_pybind11.cmake
 +++ b/CMake/external_pybind11.cmake
-@@ -1,6 +1,6 @@
- cmake_minimum_required(VERSION 3.6)
- include(ExternalProject)
--
-+include(CMakePackageConfigHelpers)
- 
- 
- # We use a function to enforce a scoped variables creation only for the build
-@@ -79,8 +79,11 @@ function(get_pybind11)
+@@ -117,9 +117,11 @@ function(get_pybind11_json)
  
  endfunction()
  
 -# Trigger the build
 -get_pybind11()
+-get_pybind11_json()
 +find_package(Python REQUIRED COMPONENTS Interpreter Development)
 +find_package(pybind11 CONFIG REQUIRED)
 +option( PYTHON_INSTALL_DIR "Installation directory for Python libraries"
@@ -36,3 +28,6 @@ index 43c5b86a7..a4543d45c 100644
  
  # This function overrides "pybind11_add_module" function,  arguments is same as "pybind11_add_module" arguments
  # pybind11_add_module(<name> SHARED [file, file2, ...] )
+-- 
+2.43.0
+

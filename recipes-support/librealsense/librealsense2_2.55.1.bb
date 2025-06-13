@@ -1,4 +1,4 @@
-DESCRIPTION = "Intel RealSense SDK 2.0 is a cross-platform library for Intel RealSense depth cameras (D400 series and the SR300) and the T265 tracking camera."
+DESCRIPTION = "Intel® RealSense™ SDK 2.0 is a cross-platform library for Intel® RealSense™ depth cameras."
 SECTION = "libs"
 
 require librealsense2.inc
@@ -17,16 +17,15 @@ RDEPENDS:${PN}-graphical-examples += "\
 "
 
 SRC_URI += "\
-	file://Remove-R200-fix-from-udev-rules.patch \
-	file://Avoid-installing-viewer-presets.patch \
-	file://remove-libusb-from-targets-list.patch \
+	file://0002-Avoid-installing-viewer-presets.patch \
+	file://0003-Remove-libusb-from-targets-list.patch \
+	file://0004-Remove-R200-fix-from-udev-rules.patch \
 "
 
 PR = "r0"
 
 EXTRA_OECMAKE += " \
     -DBUILD_SHARED_LIBS:BOOL=ON \
-    -DBUILD_WITH_TM2:BOOL=ON \
     -DBUILD_EXAMPLES:BOOL=ON \
     -DBUILD_GRAPHICAL_EXAMPLES:BOOL=${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', 'ON', 'OFF', d)} \
     -DBUILD_GLSL_EXTENSIONS:BOOL=${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', 'ON', 'OFF', d)} \
@@ -64,6 +63,7 @@ FILES:${PN}-examples = "\
 FILES:${PN}-graphical-examples = "\
     ${bindir}/rs-align \
     ${bindir}/rs-align-advanced \
+    ${bindir}/rs-align-gl \
     ${bindir}/rs-ar-advanced \
     ${bindir}/rs-ar-basic \
     ${bindir}/rs-callback \

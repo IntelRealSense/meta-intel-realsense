@@ -1,6 +1,6 @@
-From 249f2d18c099f352c80b54237089b78d6edb50c2 Mon Sep 17 00:00:00 2001
+From e6cf1ea1c13b8165c33aa2f21dc027e98dfb5ab1 Mon Sep 17 00:00:00 2001
 From: Scott Ware <scott.r.ware@intel.com>
-Date: Fri, 13 Jun 2025 11:40:42 +0100
+Date: Fri, 25 Jul 2025 14:42:22 +0100
 Subject: [PATCH] Realsense camera formats
 Upstream-Status: Inappropriate [OE-Specific]
 
@@ -14,12 +14,12 @@ Signed-off-by: Scott Ware <scott.r.ware@intel.com>
  5 files changed, 68 insertions(+)
 
 diff --git a/drivers/media/common/uvc.c b/drivers/media/common/uvc.c
-index 9c0ba7a6c185..292a3b7b303d 100644
+index c54c2268fee6..682f29ad2a61 100644
 --- a/drivers/media/common/uvc.c
 +++ b/drivers/media/common/uvc.c
-@@ -120,6 +120,26 @@ static const struct uvc_format_desc uvc_fmts[] = {
- 		.guid		= UVC_GUID_FORMAT_Y12I,
- 		.fcc		= V4L2_PIX_FMT_Y12I,
+@@ -164,6 +164,26 @@ static const struct uvc_format_desc uvc_fmts[] = {
+ 		.guid		= UVC_GUID_FORMAT_HEVC,
+ 		.fcc		= V4L2_PIX_FMT_HEVC,
  	},
 +	{
 +		.guid		= UVC_GUID_FORMAT_Y16I,
@@ -41,18 +41,18 @@ index 9c0ba7a6c185..292a3b7b303d 100644
 +		.guid		= UVC_GUID_FORMAT_W10,
 +		.fcc		= V4L2_PIX_FMT_W10,
 +	},
- 	{
- 		.guid		= UVC_GUID_FORMAT_Z16,
- 		.fcc		= V4L2_PIX_FMT_Z16,
+ };
+ 
+ const struct uvc_format_desc *uvc_format_by_guid(const u8 guid[16])
 diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
-index 1385cbf462d1..48c68a209f77 100644
+index 241b3f95f327..4b2820a9fe44 100644
 --- a/drivers/media/usb/uvc/uvc_driver.c
 +++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -3229,6 +3229,33 @@ static const struct usb_device_id uvc_ids[] = {
+@@ -3185,6 +3185,33 @@ static const struct usb_device_id uvc_ids[] = {
  	  .bInterfaceSubClass	= 1,
  	  .bInterfaceProtocol	= 0,
  	  .driver_info		= UVC_INFO_META(V4L2_META_FMT_D4XX) },
-+	/* Intel D555e Depth Camera */
++	/* Intel D555 Depth Camera */
 +	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
 +				| USB_DEVICE_ID_MATCH_INT_INFO,
 +	  .idVendor		= 0x8086,
@@ -83,11 +83,11 @@ index 1385cbf462d1..48c68a209f77 100644
  	{ USB_INTERFACE_INFO(USB_CLASS_VIDEO, 1, UVC_PC_PROTOCOL_UNDEFINED) },
  	{ USB_INTERFACE_INFO(USB_CLASS_VIDEO, 1, UVC_PC_PROTOCOL_15) },
 diff --git a/drivers/media/v4l2-core/v4l2-ioctl.c b/drivers/media/v4l2-core/v4l2-ioctl.c
-index f4d9d6279094..1e518bf11339 100644
+index e14db67be97c..652d469a43b7 100644
 --- a/drivers/media/v4l2-core/v4l2-ioctl.c
 +++ b/drivers/media/v4l2-core/v4l2-ioctl.c
-@@ -1314,6 +1314,9 @@ static void v4l_fill_fmtdesc(struct v4l2_fmtdesc *fmt)
- 	case V4L2_PIX_FMT_IPU3_Y10:	descr = "10-bit greyscale (IPU3 Packed)"; break;
+@@ -1327,6 +1327,9 @@ static void v4l_fill_fmtdesc(struct v4l2_fmtdesc *fmt)
+ 	case V4L2_PIX_FMT_Y14P:		descr = "14-bit Greyscale (MIPI Packed)"; break;
  	case V4L2_PIX_FMT_Y8I:		descr = "Interleaved 8-bit Greyscale"; break;
  	case V4L2_PIX_FMT_Y12I:		descr = "Interleaved 12-bit Greyscale"; break;
 +	case V4L2_PIX_FMT_Y16I:		descr = "Interleaved 16-bit Greyscale"; break;
@@ -123,10 +123,10 @@ index 88d96095bcb1..11456a01478f 100644
  	{ 'Z',  '1',  '6',  ' ', 0x00, 0x00, 0x10, 0x00, \
  	 0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71}
 diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
-index 05f98a228e65..ea2cab7ea337 100644
+index 27239cb64065..f85d3f7a2969 100644
 --- a/include/uapi/linux/videodev2.h
 +++ b/include/uapi/linux/videodev2.h
-@@ -793,6 +793,9 @@ struct v4l2_pix_format {
+@@ -798,6 +798,9 @@ struct v4l2_pix_format {
  #define V4L2_PIX_FMT_S5C_UYVY_JPG v4l2_fourcc('S', '5', 'C', 'I') /* S5C73M3 interleaved UYVY/JPEG */
  #define V4L2_PIX_FMT_Y8I      v4l2_fourcc('Y', '8', 'I', ' ') /* Greyscale 8-bit L/R interleaved */
  #define V4L2_PIX_FMT_Y12I     v4l2_fourcc('Y', '1', '2', 'I') /* Greyscale 12-bit L/R interleaved */

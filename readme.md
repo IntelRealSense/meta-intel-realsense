@@ -2,8 +2,6 @@ Yocto Layer for librealsense
 ============================
 This layer adds the packages necessary for adding support for Intel® RealSense™ cameras via [librealsense](https://github.com/IntelRealSense/librealsense) to your Yocto distribution.
 
-> Note: The 'python-pyrealsense2' package in 'master' is currently broken due to lack of upstream Python 3.11 support.
-
 ## Dependencies
 This layer depends on packages provided by the following layers:
 * `meta-openembedded` [http://cgit.openembedded.org/meta-openembedded/]
@@ -27,14 +25,10 @@ Usage
     # Optional
     CORE_IMAGE_EXTRA_INSTALL += "librealsense2-debug-tools"
 ```
-### Samples
-To include sample apps in your image add the following to `conf/auto.conf`
+### Examples
+To include example apps in your image add the following to `conf/auto.conf`
 ```bitbake
     CORE_IMAGE_EXTRA_INSTALL += "librealsense2-examples"
-```
-If you are building an image with a graphical desktop you can also add the following
-```bitbake
-    CORE_IMAGE_EXTRA_INSTALL += "librealsense2-graphical-examples"
 ```
 
 ### Python

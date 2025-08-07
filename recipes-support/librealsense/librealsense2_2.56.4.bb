@@ -11,15 +11,11 @@ RDEPENDS:${PN} = "\
 RDEPENDS:${PN}-examples += "\
     ${PN} \
 "
-RDEPENDS:${PN}-graphical-examples += "\
-    ${PN} \
-    libgl-mesa \
-"
+RDEPENDS:${PN}-examples += "${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', 'libgl-mesa', '', d)}"
 
 SRC_URI += "\
-	file://0002-Avoid-installing-viewer-presets.patch \
-	file://0003-Remove-libusb-from-targets-list.patch \
-	file://0004-Remove-R200-fix-from-udev-rules.patch \
+	file://remove-libusb-from-targets-list.patch \
+	file://remove-R200-fix-from-udev-rules.patch \
 "
 
 PR = "r0"
@@ -37,11 +33,12 @@ PACKAGES += "\
     ${PN}-debug-tools \
 "
 
-PACKAGES += "${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', '${PN}-graphical-examples', '', d)}"
-
 do_install:append() {
     install -d "${D}${sysconfdir}/udev/rules.d"
     install -m 0644 ${S}/config/99-realsense-libusb.rules ${D}${sysconfdir}/udev/rules.d/99-${BPN}-libusb.rules
+    
+    # Remove preset file
+    rm -rf ${D}/tmp
 }
 
 FILES:${PN} = "\
@@ -58,9 +55,6 @@ FILES:${PN}-examples = "\
     ${bindir}/rs-pose-and-image \
     ${bindir}/rs-pose-predict \
     ${bindir}/rs-save-to-disk \
-"
-
-FILES:${PN}-graphical-examples = "\
     ${bindir}/rs-align \
     ${bindir}/rs-align-advanced \
     ${bindir}/rs-align-gl \

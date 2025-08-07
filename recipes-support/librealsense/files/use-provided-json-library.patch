@@ -1,0 +1,26 @@
+From ad4dce7eecc252c46c0df6c060c4f139b3c868a1 Mon Sep 17 00:00:00 2001
+From: kas User <kas@example.com>
+Date: Thu, 7 Aug 2025 16:20:02 +0000
+Subject: [PATCH 3/3] use provided json library
+Upstream-Status: Inappropriate [OE-Specific]
+
+Signed-off-by: kas User <kas@example.com>
+---
+ third-party/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/third-party/CMakeLists.txt b/third-party/CMakeLists.txt
+index c70314062..a5d579d94 100644
+--- a/third-party/CMakeLists.txt
++++ b/third-party/CMakeLists.txt
+@@ -1,6 +1,6 @@
+ string(REPLACE ${PROJECT_SOURCE_DIR}/ "" _rel_path ${CMAKE_CURRENT_LIST_DIR})
+ 
+-include(CMake/external_json.cmake)
++find_package(nlohmann_json REQUIRED)
+ 
+ add_subdirectory( "${CMAKE_CURRENT_LIST_DIR}/rsutils" )
+ 
+-- 
+2.39.5
+

@@ -7,6 +7,7 @@ inherit cmake pkgconfig
 
 DEPENDS = "\
     libusb1 \
+    nlohmann-json \
     udev \
 "
 
@@ -16,6 +17,7 @@ SRC_URI = "git://github.com/IntelRealSense/librealsense.git;protocol=https;branc
 
 SRC_URI += "\
 	file://0001-Enable-riscv-arch-compilation.patch \
+	file://0006-use-provided-json-library.patch \
 "
 
 S = "${WORKDIR}/git"

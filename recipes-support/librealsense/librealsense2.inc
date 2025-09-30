@@ -13,13 +13,11 @@ DEPENDS = "\
 
 RRECOMMENDS:${PN} += "kernel-module-uvcvideo"
 
-SRC_URI = "git://github.com/IntelRealSense/librealsense.git;protocol=https;branch=master;rev=e196cefa896e312d79c2df400c7623aa1e9c62ac"
+SRC_URI = "git://github.com/IntelRealSense/librealsense.git;protocol=https;branch=r/257_3;rev=5e046e509995cda79b42d89fa95ab65f90678641"
 
-SRC_URI += "\
-	file://use-provided-json-library.patch \
-"
-
-S = "${WORKDIR}/git"
+#SRC_URI += "\
+#	file://use-provided-json-library.patch \
+#"
 
 EXTRA_OECMAKE = " \
     -DBUILD_UNIT_TESTS:BOOL=OFF \

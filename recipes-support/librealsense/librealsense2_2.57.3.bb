@@ -62,14 +62,17 @@ FILES:${PN}-examples = "\
     ${bindir}/rs-ar-basic \
     ${bindir}/rs-callback \
     ${bindir}/rs-capture \
+    ${bindir}/rs-eth-config \
     ${bindir}/rs-gl \
     ${bindir}/rs-hdr \
     ${bindir}/rs-measure \
     ${bindir}/rs-motion \
     ${bindir}/rs-multicam \
+    ${bindir}/rs-on-chip-calib \
     ${bindir}/rs-pointcloud \
     ${bindir}/rs-post-processing \
     ${bindir}/rs-record-playback \
+    ${bindir}/rs-labeled-pointcloud \
     ${bindir}/rs-sensor-control \
     ${bindir}/rs-software-device \
     ${bindir}/rs-tracking-and-depth \

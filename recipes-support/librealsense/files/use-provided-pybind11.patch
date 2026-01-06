@@ -10,7 +10,7 @@ Signed-off-by: Scott Ware <scott.r.ware@intel.com>
  1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/CMake/external_pybind11.cmake b/CMake/external_pybind11.cmake
-index a2ab2f868..39cba3de0 100644
+index 23adc41ac..486a4391f 100644
 --- a/CMake/external_pybind11.cmake
 +++ b/CMake/external_pybind11.cmake
 @@ -117,9 +117,11 @@ function(get_pybind11_json)

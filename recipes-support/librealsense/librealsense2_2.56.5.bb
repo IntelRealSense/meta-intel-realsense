@@ -17,9 +17,9 @@ RDEPENDS:${PN}-graphical-examples += "\
 "
 
 SRC_URI += "\
-	file://0002-Avoid-installing-viewer-presets.patch \
-	file://0003-Remove-libusb-from-targets-list.patch \
-	file://0004-Remove-R200-fix-from-udev-rules.patch \
+	file://avoid-installing-viewer-presets.patch \
+	file://remove-libusb-from-targets-list.patch \
+	file://remove-R200-fix-from-udev-rules.patch \
 "
 
 PR = "r0"
@@ -88,6 +88,7 @@ FILES:${PN}-tools = "\
     ${bindir}/rs-depth-quality \
     ${bindir}/rs-embed \
     ${bindir}/rs-fw-update \
+    ${bindir}/rs-on-chip-calib \
 "
 
 FILES:${PN}-debug-tools = "\

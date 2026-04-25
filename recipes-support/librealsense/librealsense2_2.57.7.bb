@@ -50,6 +50,7 @@ FILES:${PN}-examples = "\
     ${bindir}/rs-color \
     ${bindir}/rs-depth \
     ${bindir}/rs-distance \
+    ${bindir}/rs-embedded-filters \
     ${bindir}/rs-hello-realsense \
     ${bindir}/rs-pose \
     ${bindir}/rs-pose-and-image \
@@ -65,6 +66,7 @@ FILES:${PN}-examples = "\
     ${bindir}/rs-eth-config \
     ${bindir}/rs-gl \
     ${bindir}/rs-hdr \
+    ${bindir}/rs-infrared \
     ${bindir}/rs-measure \
     ${bindir}/rs-motion \
     ${bindir}/rs-multicam \
